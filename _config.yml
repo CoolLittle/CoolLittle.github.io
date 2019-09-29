@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: jinbao
+title: CHZ个人博客
 subtitle:
 description:
 keywords:
 author: czh
-language: en
+language: zh-cn
 timezone:
 
 # URL
@@ -73,11 +73,12 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: hexo-theme-next-7.4.0
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
   repository: https://github.com/CoolLittle/blog.git
-  branch: gh-pages
+  branch: master
+  message: Site updated at {{now("YYYY-MM-DD HH:mm:ss")}}
