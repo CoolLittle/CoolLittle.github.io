@@ -78,4 +78,6 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: https://github.com/CoolLittle/CoolLittle.github.io.git
+  type: git
+  repository: https://github.com/CoolLittle/CoolLittle.github.io.git
+  branch: gh-pages
