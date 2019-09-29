@@ -83,8 +83,8 @@ theme: hexo-theme-next-7.4.0
 deploy:
   type: git
   repository: https://github.com/CoolLittle/blog.git
-  branch: master
-  message: Site updated at {{now("YYYY-MM-DD HH:mm:ss")}}
+  branch: gh-pages
+  message: 部署 {{now("YYYY-MM-DD HH:mm:ss")}}
 # hexo-admin authentification
 admin:
   username: wangjin
