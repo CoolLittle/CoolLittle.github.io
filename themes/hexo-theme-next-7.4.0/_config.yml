@@ -156,14 +156,15 @@ baidu_push: false
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash from link value (/archives -> archives).
 # External url should start with http:// or https://
 menu:
-  home: / || home
-  #about: /about/ || user
-  tags: /tags/ || tags
+  首页: / || home
+  归档: /archives/ || archive
+  标签: /tags/ || tags
+  关于: /about/ || user
+  #commonweal: /404/ || heartbeat
   #categories: /categories/ || th
-  archives: /archives/ || archive
   #schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
-  commonweal: /404/ || heartbeat
+ 
 
 # Enable / Disable menu icons / item badges.
 menu_settings:
@@ -459,7 +460,7 @@ bookmark:
 
 # `Follow me on GitHub` banner in the top-right corner.
 github_banner:
-  enable: true
+  enable: false
   permalink: https://github.com/CoolLittle
   title: Follow me on GitHub
 
