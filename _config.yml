@@ -34,8 +34,8 @@ default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
-render_drafts: false
-post_asset_folder: false
+render_drafts: true
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -82,3 +82,8 @@ deploy:
   repository: https://github.com/CoolLittle/blog.git
   branch: master
   message: Site updated at {{now("YYYY-MM-DD HH:mm:ss")}}
+# hexo-admin authentification
+admin:
+  username: wangjin
+  password_hash: $2a$10$1nRfA6oPq/o.hPEKEFXSOuvSXSSHn/.SDVfcRiQe.JLn9SeIMn0E6
+  secret: pEShw4uohzaKVujj8X0P2bxJq3b2Ezyx
