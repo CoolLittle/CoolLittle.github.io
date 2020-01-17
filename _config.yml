@@ -8,14 +8,14 @@ subtitle:
 description: 博客
 keywords:
 author: czh
-language: zh-cn
+language: zh-CN
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://yoursite.com
 root: /blog/
-permalink: :year/:month/:day/:title/
+permalink: :category/:title/
 permalink_defaults:
 
 # Directory
@@ -76,7 +76,7 @@ plugin:
   - hexo-admin
     
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-next-7.4.0
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -87,6 +87,6 @@ deploy:
   message: 部署 {{now("YYYY-MM-DD HH:mm:ss")}}
 # hexo-admin authentification
 admin:
-  username: wangjin
-  password_hash: $2a$10$1nRfA6oPq/o.hPEKEFXSOuvSXSSHn/.SDVfcRiQe.JLn9SeIMn0E6
-  secret: pEShw4uohzaKVujj8X0P2bxJq3b2Ezyx
+  username: wangjing
+  password_hash: $2a$10$VJvxEz5yPiO68xCjq0YmfuwgmWFluORAPAyBBxrgOVLPU.iKuJLMu
+  secret: ndndndndndndndndndnndndsss
