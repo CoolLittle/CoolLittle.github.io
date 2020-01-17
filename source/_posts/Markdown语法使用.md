@@ -4,6 +4,7 @@ tags:
   - Markdown  
 categories:
   - Markdown    
+description: Markdown语法小白学习.....
 date: 2019-09-29 15:19:00
 ---
 ### Markdown标题
@@ -246,6 +247,52 @@ Markdown 支持有序列表、无序列表、任务列表。
 - [ ] 打开拉取请求
 
 ### 链接
+
+#### 章节链接
+
+使用方法：  
+```
+require "标题名"
+```
+
+例如：aa 
+
+[TOC]   
+
+"任务列表"
+
+#### 相对链接
+* 常规链接使用方法如下：
+```
+[链接名称](链接地址)
+
+或者
+
+<链接地址>
+
+例如：这是一个链接 [Markdown教程](https://coollittle.github.io/blog/)
+```
+效果如下：  这是一个链接 [Markdown教程](https://coollittle.github.io/blog/)
+
+* 变量名链接使用如下：   
+
+```
+使用变量名进行链接
+
+[链接名称][变量名]
+## 此处需要换行
+[变量名]：链接地址
+
+例如：   [Markdown教程][blog]  ##此处必须换行
+
+[blog]: https://coollittle.github.io/blog/
+
+```
+
+效果如下： [Markdown教程][blog]
+
+[blog]:   https://coollittle.github.io/blog/
+
 
 ### 参考
 >菜鸟教程：<https://www.runoob.com/markdown/md-tutorial.html>   
