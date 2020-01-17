@@ -1,3 +1,4 @@
+---
 title: Hexo入门、安装、配置
 tags:
   - Hexo
