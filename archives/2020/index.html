@@ -4,7 +4,7 @@
 
 
 
-<html lang="zh-cn">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -47,9 +47,9 @@
     path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Kopieren',
-      copy_success: 'Kopiert',
-      copy_failure: 'Kopieren fehlgeschlagen'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     },
     sidebarPadding: 40
   };
@@ -57,16 +57,15 @@
 
   <meta name="description" content="博客">
 <meta property="og:type" content="website">
-<meta property="og:title" content="aaaaa">
-<meta property="og:url" content="http://yoursite.com/aaaaa/index-1.html">
+<meta property="og:title" content="CHZ个人博客">
+<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="博客">
-<meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2019-09-29T10:22:08.070Z">
+<meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="aaaaa">
+<meta name="twitter:title" content="CHZ个人博客">
 <meta name="twitter:description" content="博客">
-  <link rel="canonical" href="http://yoursite.com/aaaaa/index-1">
+  <link rel="canonical" href="http://yoursite.com/archives/2020/">
 
 
 <script id="page-configurations">
@@ -75,12 +74,12 @@
     sidebar: "",
     isHome: false,
     isPost: false,
-    isPage: true,
-    isArchive: false
+    isPage: false,
+    isArchive: true
   };
 </script>
 
-  <title>aaaaa | CHZ个人博客</title>
+  <title>归档 | CHZ个人博客</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -117,7 +116,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-cn">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
   <div class="container use-motion">
     <div class="headband"></div>
 
@@ -135,7 +134,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Navigationsleiste an/ausschalten">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -151,7 +150,7 @@
       
       
         
-        <li class="menu-item menu-item-首页">
+        <li class="menu-item menu-item-home">
       
     
 
@@ -162,18 +161,18 @@
       
       
         
-        <li class="menu-item menu-item-归档">
+        <li class="menu-item menu-item-categories">
       
     
 
-    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
 
   </li>
       
       
       
         
-        <li class="menu-item menu-item-标签">
+        <li class="menu-item menu-item-tags">
       
     
 
@@ -184,7 +183,18 @@
       
       
         
-        <li class="menu-item menu-item-关于">
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
       
     
 
@@ -223,6 +233,9 @@
       
       
     
+      
+      
+    
     
 
   
@@ -230,42 +243,66 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-    
-    
-    <div class="post-block page">
-      <header class="post-header">
-
-<h1 class="post-title" itemprop="name headline">aaaaa
-
-</h1>
-
-<div class="post-meta">
   
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
+  
+  
+  <div class="post-block archive">
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        
+        
         
           
         
+        <span class="collection-header">嗯..! 目前共计 2 篇日志。 继续努力。</span>
       </div>
       
-      
-      
-    </div>
-    
 
+      
+
+  
+  
+
+  
     
-    
-    
+    <div class="collection-year">
+      <h1 class="collection-header">2020</h1>
+    </div>
+  
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+          <a class="post-title-link" href="/blog/uncategorized/hello-world/" itemprop="url">
+            <span itemprop="name">Hello World</span>
+          </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2020-01-17T06:19:06+00:00"
+              content="2020-01-17">
+          01-17
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+
+    </div>
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
@@ -284,18 +321,13 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          Inhaltsverzeichnis
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Übersicht
+          站点概览
         </li>
       </ul>
 
@@ -312,10 +344,44 @@
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
         
-          <a href="/blog/archives">
+          <a href="/blog/archives/">
         
           <span class="site-state-item-count">2</span>
-          <span class="site-state-item-name">Artikel</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/blog/categories/">
+          
+        
+        
+        
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/blog/tags/">
+          
+        
+        
+        
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -348,15 +414,12 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">czh</span>
 </div>
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.0</div>
 
         
 
