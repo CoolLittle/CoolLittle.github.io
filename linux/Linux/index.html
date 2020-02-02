@@ -64,7 +64,7 @@
 <meta property="og:description" content="linux持续学习.....">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/linux/Linux/vim.gif">
-<meta property="og:updated_time" content="2020-02-02T03:11:45.139Z">
+<meta property="og:updated_time" content="2020-02-02T09:10:57.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux学习">
 <meta name="twitter:description" content="linux持续学习.....">
@@ -271,7 +271,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-02 03:11:45" itemprop="dateModified" datetime="2020-02-02T03:11:45+00:00">2020-02-02</time>
+                <time title="修改时间：2020-02-02 09:10:57" itemprop="dateModified" datetime="2020-02-02T09:10:57+00:00">2020-02-02</time>
               </span>
             
           
@@ -480,8 +480,20 @@
 <td>n 为数字。删除光标所在的向下 n 行，例如 20dd 则是删除 20 行(常用)</td>
 </tr>
 <tr>
-<td>d1G</td>
-<td>删除光标所在到第一行的所有数据</td>
+<td>d1k</td>
+<td>向上删除1行</td>
+</tr>
+<tr>
+<td>d1j</td>
+<td>向下删除1行</td>
+</tr>
+<tr>
+<td>d1h</td>
+<td>向左删除1个字符</td>
+</tr>
+<tr>
+<td>d1l</td>
+<td>向右删除1个字符</td>
 </tr>
 <tr>
 <td>dG</td>
@@ -502,6 +514,22 @@
 <tr>
 <td>nyy</td>
 <td>n 为数字。复制光标所在的向下 n 行，例如 20yy 则是复制 20 行(常用)</td>
+</tr>
+<tr>
+<td>y1k</td>
+<td>向上复制1行</td>
+</tr>
+<tr>
+<td>y1j</td>
+<td>向下复制1行</td>
+</tr>
+<tr>
+<td>y1h</td>
+<td>向左复制1个字符</td>
+</tr>
+<tr>
+<td>y1l</td>
+<td>向右复制1个字符</td>
 </tr>
 <tr>
 <td>y1G</td>
@@ -571,10 +599,6 @@
 <td>[Esc]</td>
 <td>退出编辑模式，回到一般模式中(常用)</td>
 </tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
 </tbody></table>
 <h4 id="底线命令模式"><a href="#底线命令模式" class="headerlink" title="底线命令模式"></a>底线命令模式</h4><table>
 <thead>
@@ -604,6 +628,10 @@
 <td>储存后离开，若为 :wq! 则为强制储存后离开(常用)</td>
 </tr>
 <tr>
+<td>ZQ</td>
+<td>这是大写的 Z 喔！不存储档案离开！</td>
+</tr>
+<tr>
 <td>ZZ</td>
 <td>这是大写的 Z 喔！若档案没有更动，则不储存离开，若档案已经被更动过，则储存后离开！</td>
 </tr>
@@ -630,7 +658,98 @@
 </tbody></table>
 <h4 id="块选择模式"><a href="#块选择模式" class="headerlink" title="块选择模式"></a>块选择模式</h4><p>批量注释：<br><code>Ctrl + v</code> 进入块选择模式，然后移动光标选中你要注释的行，再按大写的 <code>I</code> 进入行首插入模式输入注释符号如 <code>//</code> 或 <code>#</code>，输入完毕之后，按两下 <code>ESC</code>，Vim 会自动将你选中的所有行首都加上注释，保存退出完成注释。</p>
 <p>取消注释：<br><code>Ctrl + v</code> 进入块选择模式，选中你要删除的行首的注释符号，注意 <code>//</code> 要选中两个，选好之后按 <code>d</code> 即可删除注释，<code>ESC</code> 保存退出</p>
-<h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a></p>
+<h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><h4 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd [选项] 用户名</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<pre><code>* 选项：
+    * -b, --base-dir BASE_DIR       新账户的主目录的基目录
+    * --btrfs-subvolume-home        use BTRFS subvolume for home directory
+    * -c, --comment COMMENT         新账户的 GECOS 字段
+    * -d, --home-dir HOME_DIR       新账户的主目录
+    * -D, --defaults                显示或更改默认的 useradd 配置
+    * -e, --expiredate EXPIRE_DATE  新账户的过期日期
+    * -f, --inactive INACTIVE       新账户的密码不活动期
+    * -g, --gid GROUP               新账户主组的名称或 ID
+    * -G, --groups GROUPS           新账户的附加组列表
+    * -h, --help                    显示此帮助信息并退出
+    * -k, --skel SKEL_DIR           使用此目录作为骨架目录
+    * -K, --key KEY=VALUE           不使用 /etc/login.defs 中的默认值
+    * -l, --no-log-init             不要将此用户添加到最近登录和登录失败数据库
+    * -m, --create-home             创建用户的主目录
+    * -M, --no-create-home          不创建用户的主目录
+    * -N, --no-user-group           不创建同名的组
+    * -o, --non-unique              允许使用重复的 UID 创建用户
+    * -p, --password PASSWORD       加密后的新账户密码
+    * -r, --system                  创建一个系统账户
+    * -R, --root CHROOT_DIR         chroot 到的目录
+    * -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+    * -s, --shell SHELL             新账户的登录 shell
+    * -u, --uid UID                 新账户的用户 ID
+    * -U, --user-group              创建与用户同名的组
+    * -Z, --selinux-user SEUSER     为 SELinux 用户映射使用指定 SEUSER
+
+
+* 用户名：
+    * 指定新账号的登录名</code></pre><p>实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">	# useradd -d /home/sam -m sam </span><br><span class="line">	# 创建一个用户sam,其中 `-d` 和 `-m` 选项用来为登录名sam产生一个主目录 `/home/sam` 。</span><br><span class="line">	</span><br><span class="line">	# useradd -s /bin/sh -g group –G adm,root gem</span><br><span class="line"></span><br><span class="line">此命令新建了一个用户gem，该用户的登录Shell是 /bin/sh，它属于group用户组，同时又属于adm和root用户组，其中group用户组是其主组。</span><br><span class="line">这里可能新建组：#groupadd group及groupadd adm。</span><br><span class="line">增加用户账号就是在/etc/passwd文件中为新用户增加一条记录，同时更新其他系统文件如/etc/shadow, /etc/group等。</span><br><span class="line">Linux提供了集成的系统管理工具userconf，它可以用来对用户账号进行统一管理。</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除账号"><a href="#删除账号" class="headerlink" title="删除账号"></a>删除账号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdel [选项] 用户名</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<pre><code>* 选项：
+    * -f, --force                   即使不属于此用户，也强制删除文件
+    * -h, --help                    显示此帮助信息并退出
+    * -r, --remove                  删除主目录和信件池
+    * -R, --root CHROOT_DIR         chroot 到的目录
+    * -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+    * -Z, --selinux-user            为用户删除所有的 SELinux 用户映射</code></pre><p>实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># userdel -r sam</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改账号"><a href="#修改账号" class="headerlink" title="修改账号"></a>修改账号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod [选项] 登录名</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<pre><code>* 选项：
+    * -c, --comment COMMENT         GECOS 字段的新值
+    * -d, --home HOME_DIR           用户的新主目录
+    * -e, --expiredate EXPIRE_DATE  设定帐户过期的日期为 EXPIRE_DATE
+    * -f, --inactive INACTIVE       过期 INACTIVE 天数后，设定密码为失效状态
+    * -g, --gid GROUP               强制使用 GROUP 为新主组
+    * -G, --groups GROUPS           新的附加组列表 GROUPS
+    * -a, --append GROUP            将用户追加至上边 -G 中提到的附加组中，并不从其它组中删除此用户
+    * -h, --help                    显示此帮助信息并退出
+    * -l, --login NEW_LOGIN         新的登录名称
+    * -L, --lock                    锁定用户帐号
+    * -m, --move-home               将家目录内容移至新位置 (仅于 -d 一起使用)
+    * -o, --non-unique              允许使用重复的(非唯一的) UID
+    * -p, --password PASSWORD       将加密过的密码 (PASSWORD) 设为新密码
+    * -R, --root CHROOT_DIR         chroot 到的目录
+    * -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+    * -s, --shell SHELL             该用户帐号的新登录 shell
+    * -u, --uid UID                 用户帐号的新 UID
+    * -U, --unlock                  解锁用户帐号
+    * -v, --add-subuids FIRST-LAST  添加子 UID 范围
+    * -V, --del-subuids FIRST-LAST  移除子 UID 范围
+    * -w, --add-subgids FIRST-LAST  添加子 GID 范围
+    * -W, --del-subgids FIRST-LAST  移除子 GID 范围
+    * -Z, --selinux-user SEUSER     用户的新的 SELinux 用户映射</code></pre><h4 id="用户口令管理"><a href="#用户口令管理" class="headerlink" title="用户口令管理"></a>用户口令管理</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd [选项] [登录名]</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：   </p>
+<pre><code>* 选项：
+    * -a, --all                     报告所有帐户的密码状态
+    * -d, --delete                  删除指定帐户的密码
+    * -e, --expire                  强制使指定帐户的密码过期
+    * -h, --help                    显示此帮助信息并退出
+    * -k, --keep-tokens             仅在过期后修改密码
+    * -i, --inactive INACTIVE       密码过期后设置密码不活动为 INACTIVE
+    * -l, --lock                    锁定指定的帐户
+    * -n, --mindays MIN_DAYS        设置到下次修改密码所须等待的最短天数为 MIN_DAYS
+    * -q, --quiet                   安静模式
+    * -r, --repository REPOSITORY   在 REPOSITORY 库中改变密码
+    * -R, --root CHROOT_DIR         chroot 到的目录
+    * -S, --status                  报告指定帐户密码的状态
+    * -u, --unlock                  解锁被指定帐户
+    * -w, --warndays WARN_DAYS      设置过期警告天数为 WARN_DAYS
+    * -x, --maxdays MAX_DAYS        设置到下次修改密码所须等待的最多天数为 MAX_DAYS</code></pre><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a></p>
 
     </div>
 
@@ -717,7 +836,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux目录介绍"><span class="nav-number">1.</span> <span class="nav-text">Linux目录介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim编辑器的使用"><span class="nav-number">2.</span> <span class="nav-text">Vim编辑器的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命令模式"><span class="nav-number">2.1.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入模式"><span class="nav-number">2.2.</span> <span class="nav-text">输入模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#底线命令模式"><span class="nav-number">2.3.</span> <span class="nav-text">底线命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#块选择模式"><span class="nav-number">2.4.</span> <span class="nav-text">块选择模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户管理"><span class="nav-number">3.</span> <span class="nav-text">用户管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux目录介绍"><span class="nav-number">1.</span> <span class="nav-text">Linux目录介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim编辑器的使用"><span class="nav-number">2.</span> <span class="nav-text">Vim编辑器的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命令模式"><span class="nav-number">2.1.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入模式"><span class="nav-number">2.2.</span> <span class="nav-text">输入模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#底线命令模式"><span class="nav-number">2.3.</span> <span class="nav-text">底线命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#块选择模式"><span class="nav-number">2.4.</span> <span class="nav-text">块选择模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户管理"><span class="nav-number">3.</span> <span class="nav-text">用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加用户"><span class="nav-number">3.1.</span> <span class="nav-text">添加用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除账号"><span class="nav-number">3.2.</span> <span class="nav-text">删除账号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改账号"><span class="nav-number">3.3.</span> <span class="nav-text">修改账号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户口令管理"><span class="nav-number">3.4.</span> <span class="nav-text">用户口令管理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
