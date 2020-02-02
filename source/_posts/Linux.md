@@ -46,7 +46,7 @@ date: 2020-02-01 15:19:00
 ### Vim编辑器的使用
 
 Vim键位图：
-<img src="vim.jpg" /> 
+<img src="vim.gif" /> 
 
 #### 命令模式
 
