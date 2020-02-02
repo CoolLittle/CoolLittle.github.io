@@ -63,12 +63,12 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="linux持续学习.....">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/linux/Linux/vim.jpg">
-<meta property="og:updated_time" content="2020-02-01T08:46:14.728Z">
+<meta property="og:image" content="http://yoursite.com/linux/Linux/vim.gif">
+<meta property="og:updated_time" content="2020-02-02T03:11:45.139Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux学习">
 <meta name="twitter:description" content="linux持续学习.....">
-<meta name="twitter:image" content="http://yoursite.com/linux/Linux/vim.jpg">
+<meta name="twitter:image" content="http://yoursite.com/linux/Linux/vim.gif">
   <link rel="canonical" href="http://yoursite.com/linux/Linux/">
 
 
@@ -260,11 +260,19 @@
                 
               
 
-              <time title="创建时间：2020-02-01 15:19:00 / 修改时间：08:46:14" itemprop="dateCreated datePublished" datetime="2020-02-01T15:19:00+00:00">2020-02-01</time>
+              <time title="创建时间：2020-02-01 15:19:00" itemprop="dateCreated datePublished" datetime="2020-02-01T15:19:00+00:00">2020-02-01</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-02 03:11:45" itemprop="dateModified" datetime="2020-02-02T03:11:45+00:00">2020-02-02</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -322,7 +330,7 @@
 <li><strong>/run:</strong> 是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。</li>
 </ul>
 <p>在 Linux 系统中，有几个目录是比较重要的，平时需要注意不要误删除或者随意更改内部文件。<br><strong>/etc：</strong> 上边也提到了，这个是系统中的配置文件，如果你更改了该目录下的某个文件可能会导致系统不能启动。<br><strong>/bin, /sbin, /usr/bin, /usr/sbin:</strong> 这是系统预设的执行文件的放置目录，比如<code>ls</code>就是在 <strong>/bin/ls</strong> 目录下的。<br>值得提出的是，<strong>/bin, /usr/bin</strong> 是给系统用户使用的指令（除<code>root</code>外的通用户），而 <strong>/sbin, /usr/sbin</strong> 则是给<code>root</code>使用的指令。<br><strong>/var：</strong> 这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在 <code>/var/log</code> 目录下，另外mail的预设放置也是在这里。</p>
-<h3 id="Vim编辑器的使用"><a href="#Vim编辑器的使用" class="headerlink" title="Vim编辑器的使用"></a>Vim编辑器的使用</h3><p>Vim键位图：<br><img src="vim.jpg"> </p>
+<h3 id="Vim编辑器的使用"><a href="#Vim编辑器的使用" class="headerlink" title="Vim编辑器的使用"></a>Vim编辑器的使用</h3><p>Vim键位图：<br><img src="vim.gif"> </p>
 <h4 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h4><table>
 <thead>
 <tr>
@@ -648,8 +656,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/blog/uncategorized/hello-world/" rel="next" title="Hello World">
-                  <i class="fa fa-chevron-left"></i> Hello World
+                <a href="/blog/Markdown/Markdown语法使用/" rel="next" title="Markdown语法">
+                  <i class="fa fa-chevron-left"></i> Markdown语法
                 </a>
               
             </div>
@@ -657,6 +665,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/uncategorized/hello-world/" rel="prev" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
