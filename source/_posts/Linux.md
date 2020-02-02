@@ -91,12 +91,19 @@ Vim键位图：
 | nx               	| n 为数字，连续向后删除 n 个字符。举例来说，我要连续删除 10 个字符，『10x』。                                            	|
 | dd               	| 删除游标所在的那一整行(常用)                                                                                            	|
 | ndd              	| n 为数字。删除光标所在的向下 n 行，例如 20dd 则是删除 20 行(常用)                                                       	|
-| d1G              	| 删除光标所在到第一行的所有数据                                                                                          	|
+| d1k              	| 向上删除1行                                                                                          						|
+| d1j              	| 向下删除1行                                                                                          						|
+| d1h              	| 向左删除1个字符                                                                                         					|
+| d1l              	| 向右删除1个字符                                                                                          					|
 | dG               	| 删除光标所在到最后一行的所有数据                                                                                        	|
 | d$               	| 删除游标所在处，到该行的最后一个字符                                                                                    	|
 | d0               	| 那个是数字的 0 ，删除游标所在处，到该行的最前面一个字符                                                                 	|
 | yy               	| 复制游标所在的那一行(常用)                                                                                              	|
 | nyy              	| n 为数字。复制光标所在的向下 n 行，例如 20yy 则是复制 20 行(常用)                                                       	|
+| y1k              	| 向上复制1行                                                                                          						|
+| y1j              	| 向下复制1行                                                                                          						|
+| y1h              	| 向左复制1个字符                                                                                         					|
+| y1l              	| 向右复制1个字符                                                                                          					|
 | y1G              	| 复制游标所在行到第一行的所有数据                                                                                        	|
 | yG               	| 复制游标所在行到最后一行的所有数据                                                                                      	|
 | y0               	| 复制光标所在的那个字符到该行行首的所有数据                                                                              	|
@@ -117,7 +124,6 @@ Vim键位图：
 | o, O                     	| 这是英文字母 o 的大小写。o 为『在目前光标所在的下一行处输入新的一行』；O 为在目前光标所在处的上一行输入新的一行！(常用) 	|
 | r, R                     	| r只会取代光标所在的那一个字符一次；R会一直取代光标所在的文字，直到按下 ESC 为止；(常用)                                 	|
 | [Esc]                    	| 退出编辑模式，回到一般模式中(常用)                                                                                      	|
-|                          	|                                                                                                                         	|
 
 #### 底线命令模式
 
@@ -128,6 +134,7 @@ Vim键位图：
 | :q                       	| 离开 vi (常用)                                                                                                            	|
 | :q!                      	| 若曾修改过档案，又不想储存，使用 ! 为强制离开不储存档案。                                                                 	|
 | :wq                      	| 储存后离开，若为 :wq! 则为强制储存后离开(常用)                                                                            	|
+| ZQ                       	| 这是大写的 Z 喔！不存储档案离开！                                         	|
 | ZZ                       	| 这是大写的 Z 喔！若档案没有更动，则不储存离开，若档案已经被更动过，则储存后离开！                                         	|
 | :w [filename]            	| 将编辑的数据储存成另一个档案（类似另存新档）                                                                              	|
 | :r [filename]            	| 在编辑的数据中，读入另一个档案的数据。亦即将 『filename』这个档案内容加到游标所在行后面                                   	|
@@ -145,6 +152,139 @@ Vim键位图：
 
 
 ### 用户管理
+
+#### 添加用户
+
+```
+	useradd [选项] 用户名
+```
+
+参数说明：
+
+	* 选项：
+		* -b, --base-dir BASE_DIR       新账户的主目录的基目录
+		* --btrfs-subvolume-home        use BTRFS subvolume for home directory
+		* -c, --comment COMMENT         新账户的 GECOS 字段
+		* -d, --home-dir HOME_DIR       新账户的主目录
+		* -D, --defaults                显示或更改默认的 useradd 配置
+		* -e, --expiredate EXPIRE_DATE  新账户的过期日期
+		* -f, --inactive INACTIVE       新账户的密码不活动期
+		* -g, --gid GROUP               新账户主组的名称或 ID
+		* -G, --groups GROUPS           新账户的附加组列表
+		* -h, --help                    显示此帮助信息并退出
+		* -k, --skel SKEL_DIR           使用此目录作为骨架目录
+		* -K, --key KEY=VALUE           不使用 /etc/login.defs 中的默认值
+		* -l, --no-log-init             不要将此用户添加到最近登录和登录失败数据库
+		* -m, --create-home             创建用户的主目录
+		* -M, --no-create-home          不创建用户的主目录
+		* -N, --no-user-group           不创建同名的组
+		* -o, --non-unique              允许使用重复的 UID 创建用户
+		* -p, --password PASSWORD       加密后的新账户密码
+		* -r, --system                  创建一个系统账户
+		* -R, --root CHROOT_DIR         chroot 到的目录
+		* -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+		* -s, --shell SHELL             新账户的登录 shell
+		* -u, --uid UID                 新账户的用户 ID
+		* -U, --user-group              创建与用户同名的组
+		* -Z, --selinux-user SEUSER     为 SELinux 用户映射使用指定 SEUSER
+	 
+		
+	* 用户名：
+		* 指定新账号的登录名
+
+实例：
+
+```
+	# useradd -d /home/sam -m sam 
+	# 创建一个用户sam,其中 `-d` 和 `-m` 选项用来为登录名sam产生一个主目录 `/home/sam` 。
+	
+	# useradd -s /bin/sh -g group –G adm,root gem
+
+此命令新建了一个用户gem，该用户的登录Shell是 /bin/sh，它属于group用户组，同时又属于adm和root用户组，其中group用户组是其主组。
+这里可能新建组：#groupadd group及groupadd adm。
+增加用户账号就是在/etc/passwd文件中为新用户增加一条记录，同时更新其他系统文件如/etc/shadow, /etc/group等。
+Linux提供了集成的系统管理工具userconf，它可以用来对用户账号进行统一管理。   
+```
+#### 删除账号
+
+```
+	userdel [选项] 用户名   
+```
+
+参数说明：
+
+	* 选项：
+		* -f, --force                   即使不属于此用户，也强制删除文件
+		* -h, --help                    显示此帮助信息并退出
+		* -r, --remove                  删除主目录和信件池
+		* -R, --root CHROOT_DIR         chroot 到的目录
+		* -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+		* -Z, --selinux-user            为用户删除所有的 SELinux 用户映射
+
+实例：
+
+```
+	# userdel -r sam 
+```
+
+#### 修改账号
+
+```
+	usermod [选项] 登录名
+```
+
+参数说明：
+
+	* 选项：
+		* -c, --comment COMMENT         GECOS 字段的新值
+		* -d, --home HOME_DIR           用户的新主目录
+		* -e, --expiredate EXPIRE_DATE  设定帐户过期的日期为 EXPIRE_DATE
+		* -f, --inactive INACTIVE       过期 INACTIVE 天数后，设定密码为失效状态
+		* -g, --gid GROUP               强制使用 GROUP 为新主组
+		* -G, --groups GROUPS           新的附加组列表 GROUPS
+		* -a, --append GROUP            将用户追加至上边 -G 中提到的附加组中，并不从其它组中删除此用户
+		* -h, --help                    显示此帮助信息并退出
+		* -l, --login NEW_LOGIN         新的登录名称
+		* -L, --lock                    锁定用户帐号
+		* -m, --move-home               将家目录内容移至新位置 (仅于 -d 一起使用)
+		* -o, --non-unique              允许使用重复的(非唯一的) UID
+		* -p, --password PASSWORD       将加密过的密码 (PASSWORD) 设为新密码
+		* -R, --root CHROOT_DIR         chroot 到的目录
+		* -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+		* -s, --shell SHELL             该用户帐号的新登录 shell
+		* -u, --uid UID                 用户帐号的新 UID
+		* -U, --unlock                  解锁用户帐号
+		* -v, --add-subuids FIRST-LAST  添加子 UID 范围
+		* -V, --del-subuids FIRST-LAST  移除子 UID 范围
+		* -w, --add-subgids FIRST-LAST  添加子 GID 范围
+		* -W, --del-subgids FIRST-LAST  移除子 GID 范围
+		* -Z, --selinux-user SEUSER     用户的新的 SELinux 用户映射
+
+#### 用户口令管理
+
+```
+	passwd [选项] [登录名]
+```
+
+参数说明：   
+
+	* 选项：
+		* -a, --all                     报告所有帐户的密码状态
+		* -d, --delete                  删除指定帐户的密码
+		* -e, --expire                  强制使指定帐户的密码过期
+		* -h, --help                    显示此帮助信息并退出
+		* -k, --keep-tokens             仅在过期后修改密码
+		* -i, --inactive INACTIVE       密码过期后设置密码不活动为 INACTIVE
+		* -l, --lock                    锁定指定的帐户
+		* -n, --mindays MIN_DAYS        设置到下次修改密码所须等待的最短天数为 MIN_DAYS
+		* -q, --quiet                   安静模式
+		* -r, --repository REPOSITORY   在 REPOSITORY 库中改变密码
+		* -R, --root CHROOT_DIR         chroot 到的目录
+		* -S, --status                  报告指定帐户密码的状态
+		* -u, --unlock                  解锁被指定帐户
+		* -w, --warndays WARN_DAYS      设置过期警告天数为 WARN_DAYS
+		* -x, --maxdays MAX_DAYS        设置到下次修改密码所须等待的最多天数为 MAX_DAYS
+
 
 
 ### 参考
