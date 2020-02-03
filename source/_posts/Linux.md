@@ -8,7 +8,9 @@ description: linux持续学习.....
 date: 2020-02-01 15:19:00
 ---
 
-**一切皆文件**
+**一切皆文件...**
+
+----
 
 ### Linux目录介绍
 
@@ -405,8 +407,8 @@ useradd只会添加一个用户，没有创建它的主目录，除了添加一�
 
 #### 切换用户
 
-	从高权限用户切换至低权限用户不需要输入密码。
-	返回原来用户使用 `exit` 即可。
+从高权限用户切换至低权限用户不需要输入密码。
+返回原来用户使用 `exit` 即可。
 
 ```
 	su [options] [-] [<user> [<argument>...]]
@@ -589,9 +591,9 @@ useradd只会添加一个用户，没有创建它的主目录，除了添加一�
 
 #### 批量添加用户
 
-> （1）先编辑一个文本用户文件。
+1. 先编辑一个文本用户文件。
 
->> 每一列按照/etc/passwd密码文件的格式书写，要注意每个用户的用户名、UID、宿主目录都不可以相同，其中密码栏可以留做空白或输入x号。一个范例文件user.txt内容如下:
+> 每一列按照/etc/passwd密码文件的格式书写，要注意每个用户的用户名、UID、宿主目录都不可以相同，其中密码栏可以留做空白或输入x号。一个范例文件user.txt内容如下:
 	
 	user001::600:100:user:/home/user001:/bin/bash
 	user002::601:100:user:/home/user002:/bin/bash
@@ -600,23 +602,27 @@ useradd只会添加一个用户，没有创建它的主目录，除了添加一�
 	user005::604:100:user:/home/user005:/bin/bash
 	user006::605:100:user:/home/user006:/bin/bash	
 	
-> （2）以root身份执行命令 /usr/sbin/newusers，从刚创建的用户文件user.txt中导入数据，创建用户：
-	
+2. 以root身份执行命令 \/usr/sbin/newusers，从刚创建的用户文件user.txt中导入数据，创建用户：
+
+```
 	# newusers < user.txt
-	
->> 然后可以执行命令 vipw 或 vi /etc/passwd 检查 /etc/passwd 文件是否已经出现这些用户的数据，并且用户的宿主目录是否已经创建。
+```
 
-> （3）执行命令/usr/sbin/pwunconv。     
+> 然后可以执行命令 vipw 或 vi /etc/passwd 检查 /etc/passwd 文件是否已经出现这些用户的数据，并且用户的宿主目录是否已经创建。
 
->> 将 /etc/shadow 产生的 shadow 密码解码，然后回写到 /etc/passwd 中，并将/etc/shadow的shadow密码栏删掉。这是为了方便下一步的密码转换工作，即先取消 shadow password 功能。
+3. 执行命令/usr/sbin/pwunconv。     
+
+> 将 /etc/shadow 产生的 shadow 密码解码，然后回写到 /etc/passwd 中，并将/etc/shadow的shadow密码栏删掉。这是为了方便下一步的密码转换工作，即先取消 shadow password 功能。
 
 	# pwunconv
-	
-> （4）编辑每个用户的密码对照文件。	格式为：
+
+4. 编辑每个用户的密码对照文件。	
+
+格式为： 
 
 	用户名:密码
-	
->> 实例文件passwod.txt内容如下：
+
+> 实例文件passwod.txt内容如下：
 
 	user001:123456
 	user002:123456
@@ -625,18 +631,19 @@ useradd只会添加一个用户，没有创建它的主目录，除了添加一�
 	user005:123456
 	user006:123456
 	
-> （5）以 root 身份执行命令 /usr/sbin/chpasswd。
+5. 以 root 身份执行命令 /usr/sbin/chpasswd。
 
->> 创建用户密码，chpasswd 会将经过 /usr/bin/passwd 命令编码过的密码写入 /etc/passwd 的密码栏。
+> 创建用户密码，chpasswd 会将经过 /usr/bin/passwd 命令编码过的密码写入 /etc/passwd 的密码栏。
 
 	# chpasswd < passwd.txt
 	
->（6）确定密码经编码写入/etc/passwd的密码栏后。
+6. 确定密码经编码写入/etc/passwd的密码栏后。
 
->> 执行命令 /usr/sbin/pwconv 将密码编码为 shadow password，并将结果写入 /etc/shadow。
+> 执行命令 /usr/sbin/pwconv 将密码编码为 shadow password，并将结果写入 /etc/shadow。
 
 	# pwconv
 
+7. 验证导入用户。
 
 ### 参考
 
