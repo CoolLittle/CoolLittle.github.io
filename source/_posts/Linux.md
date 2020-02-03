@@ -46,7 +46,7 @@ date: 2020-02-01 15:19:00
 ### Vim编辑器的使用
 
 Vim键位图：
-<img src="vim.gif" /> 
+<img src="vim/vim.gif" /> 
 
 #### 命令模式
 
@@ -156,8 +156,13 @@ Vim键位图：
 #### 添加用户
 
 ```
-	useradd [选项] 用户名
+useradd [选项] 用户名
 ```
+
+使用useradd时，如果后面不添加任何参数选项，
+例如：#sudo useradd test创建出来的用户将是默认“三无”用户：一无Home Directory，二无密码，三无系统Shell。
+因此利用这个用户登录系统，是登录不了的，为了避免这样的情况出现，可以用 （useradd -m +用户名）的方式创建，
+它会在/home目录下创建同名文件夹，然后利用（ passwd + 用户名）为指定的用户名设置密码。
 
 参数说明：
 
@@ -195,16 +200,66 @@ Vim键位图：
 实例：
 
 ```
-	# useradd -d /home/sam -m sam 
-	# 创建一个用户sam,其中 `-d` 和 `-m` 选项用来为登录名sam产生一个主目录 `/home/sam` 。
-	
-	# useradd -s /bin/sh -g group –G adm,root gem
 
-此命令新建了一个用户gem，该用户的登录Shell是 /bin/sh，它属于group用户组，同时又属于adm和root用户组，其中group用户组是其主组。
+# useradd -d /home/sam -m sam 
+# 创建一个用户sam,其中 `-d` 和 `-m` 选项用来为登录名sam产生一个主目录 `/home/sam` 。
+
+# useradd -s /bin/sh -g group –G adm,root gem
+
+此命令新建了一个用户gem，该用户的登录Shell是 /bin/sh，它属于group用户组，
+同时又属于adm和root用户组，其中group用户组是其主组。
 这里可能新建组：#groupadd group及groupadd adm。
-增加用户账号就是在/etc/passwd文件中为新用户增加一条记录，同时更新其他系统文件如/etc/shadow, /etc/group等。
+增加用户账号就是在/etc/passwd文件中为新用户增加一条记录，
+同时更新其他系统文件如/etc/shadow, /etc/group等。
 Linux提供了集成的系统管理工具userconf，它可以用来对用户账号进行统一管理。   
 ```
+
+Linux系统如何添加用户这个问题到网上问一下或者搜一下，很多人可能会说useradd，实际这是不对的。
+useradd只会添加一个用户，没有创建它的主目录，除了添加一个新用户之外什么都没有。这个用户甚至不能登录，因为没有密码。
+正确的做法是man page里说的，adduser，这个命令实际是一个perl脚本，是useradd等类似底层命令的更友好的前端，
+它会用交互性的方式建立新用户，使用它可以指定新用户的家目录，登录密码，是否加密主目录等等，它会：    
+
+1. 建立一个新目录作为家目录
+2. 建立同名新组
+3. 把用户的主要组设为该组(除非命令选项覆盖以上默认动作，比如–disall-homdirecry之类)
+4. 从/etc/SKEL目录下拷贝文件到家目录，完成初始化
+5. 建立新用户的密码
+6. 如果其存在的话，还会执行一个脚本。
+
+```
+# adduser [选项] [用户名]
+```
+参数说明：
+```
+添加一个普通用户:
+	# adduser [--home 主目录] [--shell SHELL] [--no-create-home]
+	   [--uid ID] [--firstuid ID] [--lastuid ID] [--gecos GECOS]
+	   [--ingroup 用户组 | --gid ID][--disabled-password] [--disabled-login]
+	   [--add_extra_groups] 用户名
+
+添加一个系统用户:
+	# adduser --system [--home 主目录] [--shell SHELL] [--no-create-home]
+	   [--uid ID] [--gecos GECOS] [--group | --ingroup 用户组 | --gid ID]
+	   [--disabled-password] [--disabled-login] [--add_extra_groups] 用户名
+	
+添加一个用户组:
+	# adduser --group [--gid ID] 用户组名
+	# addgroup [--gid ID] 用户组名
+
+添加一个系统用户组
+	# addgroup --system [--gid ID] 用户组名
+	
+将一个已存在的用户添加至一个已存在的用户组
+	# adduser 用户名 用户组名
+
+常规设置：
+  --quiet | -q		不在标准输出中给出进度信息
+  --force-badname	允许用户名不匹配：NAME_REGEX[_SYSTEM] 配置变量
+  --help | -h		给出本命令用法
+  --version | -v	版本号和版权信息
+  --conf | -c 文件	使用文件中的配置
+```
+
 #### 删除账号
 
 ```
@@ -224,7 +279,42 @@ Linux提供了集成的系统管理工具userconf，它可以用来对用户账�
 实例：
 
 ```
-	# userdel -r sam 
+# userdel -r sam 
+## 删除sam用户包括主目录
+```
+
+```
+删除普通用户
+  deluser 用户名
+  
+  例： deluser mike
+
+  --remove-home	删除用户的主目录和邮箱
+  --remove-all-files	删除用户拥有的所有文件
+  --backup		删除前将文件备份。
+  --backup-to <DIR>	备份的目标目录。
+			默认是当前目录。
+  --system		只有当该用户是系统用户时才删除。
+
+从系统中删除用户组
+  delgroup GROUP
+  deluser --group GROUP
+  
+  例如: deluser --group students
+
+  --system		只有当该用户组是系统用户组时才删除
+  --only-if-empty	只有当该用户组中无成员时才删除
+
+将用户从一个组中删除
+  deluser USER GROUP
+  
+  例： deluser mike students
+
+常用选项：
+  --quiet | -q			不将进程信息发给 stdout
+  --help | -h		帮助信息
+  --version | -v	版本号和版权
+  --conf | -c 文件	以制定文件作为配置文件
 ```
 
 #### 修改账号
@@ -260,6 +350,8 @@ Linux提供了集成的系统管理工具userconf，它可以用来对用户账�
 		* -W, --del-subgids FIRST-LAST  移除子 GID 范围
 		* -Z, --selinux-user SEUSER     用户的新的 SELinux 用户映射
 
+修改账号参数与添加账号参数意义相同。
+
 #### 用户口令管理
 
 ```
@@ -285,9 +377,269 @@ Linux提供了集成的系统管理工具userconf，它可以用来对用户账�
 		* -w, --warndays WARN_DAYS      设置过期警告天数为 WARN_DAYS
 		* -x, --maxdays MAX_DAYS        设置到下次修改密码所须等待的最多天数为 MAX_DAYS
 
+#### 查询用户
+
+```
+	id [选项] [用户名]
+```
+
+参数说明：
+
+	* 选项：
+		* -a             ignore, for compatibility with other versions
+		* -Z, --context  print only the security context of the process
+		* -g, --group    print only the effective group ID
+		* -G, --groups   print all group IDs
+		* -n, --name     print a name instead of a number, for -ugG
+		* -r, --real     print the real ID instead of the effective ID, with -ugG
+		* -u, --user     print only the effective user ID
+		* -z, --zero     delimit entries with NUL characters, not whitespace;not permitted in default format
+
+实例：
+<img src="用户/id.PNG" />
+
+```
+## 查询当前用户
+# whoami
+```
+
+#### 切换用户
+
+	从高权限用户切换至低权限用户不需要输入密码。
+	返回原来用户使用 `exit` 即可。
+
+```
+	su [options] [-] [<user> [<argument>...]]
+```
+
+参数说明：
+
+	* 选项：
+		* -m, -p, --preserve-environment      do not reset environment variables
+		* -w, --whitelist-environment <list>  don't reset specified variables
+		* -g, --group <group>             specify the primary group
+		* -G, --supp-group <group>        specify a supplemental group
+		* -, -l, --login                  make the shell a login shell
+		* -c, --command <command>         pass a single command to the shell with -c
+		* --session-command <command>     pass a single command to the shell with -c and do not create a new session
+		* -f, --fast                      pass -f to the shell (for csh or tcsh)
+		* -s, --shell <shell>             run <shell> if /etc/shells allows it
+		* -P, --pty                       create a new pseudo-terminal
+		* -h, --help                      display this help
+		* -V, --version                   display version
+
+### 用户组管理
+
+#### 添加用户组
+
+```
+	groupadd [选项] 组名
+```
+
+参数说明：
+
+	* 选项:
+		* -f, --force                   如果组已经存在则成功退出，并且如果 GID 已被使用则取消 -g
+		* -g, --gid GID                 为新组使用 GID
+		* -h, --help                    显示此帮助信息并退出
+		* -K, --key KEY=VALUE           不使用 /etc/login.defs 中的默认值
+		* -o, --non-unique              允许创建有重复 GID 的组
+		* -p, --password PASSWORD       为新组使用此加密过的密码
+		* -r, --system                  创建一个系统账户
+		* -R, --root CHROOT_DIR         chroot 到的目录
+		* -P, --prefix PREFIX_DIR       directory prefix
+
+#### 删除用户组
+
+```
+	groupdel [选项] 组名
+```
+
+参数说明：
+
+	选项:
+		-h, --help                    显示此帮助信息并退出
+		-R, --root CHROOT_DIR         chroot 到的目录
+		-P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+		-f, --force                   即便是用户的主组也继续删除
+
+#### 修改用户组
+
+```
+	groupmod [选项] 组名
+```
+
+参数说明：
+
+	选项:
+		-g, --gid GID                 将组 ID 改为 GID
+		-h, --help                    显示此帮助信息并退出
+		-n, --new-name NEW_GROUP      改名为 NEW_GROUP
+		-o, --non-unique              允许使用重复的 GID
+		-p, --password PASSWORD       将密码更改为(加密过的) PASSWORD
+		-R, --root CHROOT_DIR         chroot 到的目录
+		-P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+
+#### 切换用户组
+
+	newgrp 新用户组
+
+这条命令将当前用户切换到某用户组，前提条件是某用户组确实是该用户的主组或附加组。类似于用户账号的管理，用户组的管理也可以通过集成的系统管理工具来完成。
+
+### 用户配置文件
+
+#### 用户文件
+
+	`/etc/passwd` 文件是用户管理工作涉及的最重要的一个文件。
+
+例如：
+<img src="用户/passwd.PNG" />
+
+/etc/passwd中一行记录对应着一个用户，每行记录又被冒号(:)分隔为7个字段，其格式和具体含义如下：    
+
+	用户名:口令:用户标识号:组标识号:注释性描述:主目录:登录Shell
+	
+1. "用户名"是代表用户账号的字符串。
+
+> 通常长度不超过8个字符，并且由大小写字母和/或数字组成。登录名中不能有冒号(:)，因为冒号在这里是分隔符。为了兼容起见，登录名中最好不要包含点字符(.)，并且不使用连字符(-)和加号(+)打头。
+
+2. “口令”一些系统中，存放着加密后的用户口令字。
+
+> 虽然这个字段存放的只是用户口令的加密串，不是明文，但是由于/etc/passwd文件对所有用户都可读，所以这仍是一个安全隐患。因此，现在许多Linux 系统（如SVR4）都使用了shadow技术，把真正的加密后的用户口令字存放到/etc/shadow文件中，而在/etc/passwd文件的口令字段中只存放一个特殊的字符，例如“x”或者“*”。
+
+3. “用户标识号”是一个整数，系统内部用它来标识用户。
+
+> 一般情况下它与用户名是一一对应的。如果几个用户名对应的用户标识号是一样的，系统内部将把它们视为同一个用户，但是它们可以有不同的口令、不同的主目录以及不同的登录Shell等。
+
+> 通常用户标识号的取值范围是0～65 535。0是超级用户root的标识号，1～99由系统保留，作为管理账号，普通用户的标识号从100开始。在Linux系统中，这个界限是500。
+
+4. “组标识号”字段记录的是用户所属的用户组。
+
+> 它对应着/etc/group文件中的一条记录。
+
+5. “注释性描述”字段记录着用户的一些个人情况。
+
+> 例如用户的真实姓名、电话、地址等，这个字段并没有什么实际的用途。在不同的Linux 系统中，这个字段的格式并没有统一。在许多Linux系统中，这个字段存放的是一段任意的注释性描述文字，用做finger命令的输出。
+
+6. “主目录”，也就是用户的起始工作目录。
+
+> 它是用户在登录到系统之后所处的目录。在大多数系统中，各用户的主目录都被组织在同一个特定的目录下，而用户主目录的名称就是该用户的登录名。各用户对自己的主目录有读、写、执行（搜索）权限，其他用户对此目录的访问权限则根据具体情况设置。
+
+7. 用户登录后，要启动一个进程，负责将用户的操作传给内核，这个进程是用户登录到系统后运行的命令解释器或某个特定的程序，即Shell。
+
+> Shell是用户与Linux系统之间的接口。Linux的Shell有许多种，每种都有不同的特点。常用的有sh(Bourne Shell), csh(C Shell), ksh(Korn Shell), tcsh(TENEX/TOPS-20 type C Shell), bash(Bourne Again Shell)等。
+
+> 系统管理员可以根据系统情况和用户习惯为用户指定某个Shell。如果不指定Shell，那么系统使用sh为默认的登录Shell，即这个字段的值为/bin/sh。
+
+> 用户的登录Shell也可以指定为某个特定的程序（此程序不是一个命令解释器）。
+
+> 利用这一特点，我们可以限制用户只能运行指定的应用程序，在该应用程序运行结束后，用户就自动退出了系统。有些Linux 系统要求只有那些在系统中登记了的程序才能出现在这个字段中。
+
+8. 系统中有一类用户称为伪用户（pseudo users）
+
+> 这些用户在/etc/passwd文件中也占有一条记录，但是不能登录，因为它们的登录Shell为空。它们的存在主要是方便系统管理，满足相应的系统进程对文件属主的要求。
+
+常见的伪用户如下所示：
+
+	伪 用 户 含 义 
+	bin 拥有可执行的用户命令文件 
+	sys 拥有系统文件 
+	adm 拥有帐户文件 
+	uucp UUCP使用 
+	lp lp或lpd子系统使用 
+	nobody NFS使用
+
+除了上面列出的伪用户外，还有许多标准的伪用户，例如：audit, cron, mail, usenet等，它们也都各自为相关的进程和文件所需要。
+
+#### 密码文件
+
+	`/etc/shadow` 是密码文件，其中记录行与/etc/passwd中的一一对应，它由pwconv命令根据/etc/passwd中的数据自动产生。
+
+如下图:
+<img src="用户/shadow.PNG" />
+
+它的文件格式与/etc/passwd类似，由若干个字段组成，字段之间用":"隔开。这些字段是：
+
+	登录名:加密口令:最后一次修改时间:最小时间间隔:最大时间间隔:警告时间:不活动时间:失效时间:标志
+
+1. "登录名"是与/etc/passwd文件中的登录名相一致的用户账号
+2. "口令"字段存放的是加密后的用户口令字，长度为13个字符。如果为空，则对应用户没有口令，登录时不需要口令；如果含有不属于集合 { ./0-9A-Za-z }中的字符，则对应的用户不能登录。
+3. "最后一次修改时间"表示的是从某个时刻起，到用户最后一次修改口令时的天数。时间起点对不同的系统可能不一样。例如在SCO Linux 中，这个时间起点是1970年1月1日。
+4. "最小时间间隔"指的是两次修改口令之间所需的最小天数。
+5. "最大时间间隔"指的是口令保持有效的最大天数。
+6. "警告时间"字段表示的是从系统开始警告用户到用户密码正式失效之间的天数。
+7. "不活动时间"表示的是用户没有登录活动但账号仍能保持有效的最大天数。
+8. "失效时间"字段给出的是一个绝对的天数，如果使用了这个字段，那么就给出相应账号的生存期。期满后，该账号就不再是一个合法的账号，也就不能再用来登录了。
+
+#### 用户组文件
+
+	`/etc/group` 存放所有的用户组信息
+	
+如下图：
+<img src="用户/group.PNG">
+	
+用户组的所有信息都存放在/etc/group文件中。此文件的格式也类似于/etc/passwd文件，由冒号(:)隔开若干个字段，这些字段有：
+
+	组名:口令:组标识号:组内用户列表
+
+1. "组名"是用户组的名称，由字母或数字构成。与/etc/passwd中的登录名一样，组名不应重复。
+2. "口令"字段存放的是用户组加密后的口令字。一般Linux 系统的用户组都没有口令，即这个字段一般为空，或者是*。
+3. "组标识号"与用户标识号类似，也是一个整数，被系统内部用来标识组。
+4. "组内用户列表"是属于这个组的所有用户的列表/b]，不同用户之间用逗号(,)分隔。这个用户组可能是用户的主组，也可能是附加组。
+
+#### 批量添加用户
+
+> （1）先编辑一个文本用户文件。
+
+>> 每一列按照/etc/passwd密码文件的格式书写，要注意每个用户的用户名、UID、宿主目录都不可以相同，其中密码栏可以留做空白或输入x号。一个范例文件user.txt内容如下:
+	
+	user001::600:100:user:/home/user001:/bin/bash
+	user002::601:100:user:/home/user002:/bin/bash
+	user003::602:100:user:/home/user003:/bin/bash
+	user004::603:100:user:/home/user004:/bin/bash
+	user005::604:100:user:/home/user005:/bin/bash
+	user006::605:100:user:/home/user006:/bin/bash	
+	
+> （2）以root身份执行命令 /usr/sbin/newusers，从刚创建的用户文件user.txt中导入数据，创建用户：
+	
+	# newusers < user.txt
+	
+>> 然后可以执行命令 vipw 或 vi /etc/passwd 检查 /etc/passwd 文件是否已经出现这些用户的数据，并且用户的宿主目录是否已经创建。
+
+> （3）执行命令/usr/sbin/pwunconv。     
+
+>> 将 /etc/shadow 产生的 shadow 密码解码，然后回写到 /etc/passwd 中，并将/etc/shadow的shadow密码栏删掉。这是为了方便下一步的密码转换工作，即先取消 shadow password 功能。
+
+	# pwunconv
+	
+> （4）编辑每个用户的密码对照文件。	格式为：
+
+	用户名:密码
+	
+>> 实例文件passwod.txt内容如下：
+
+	user001:123456
+	user002:123456
+	user003:123456
+	user004:123456
+	user005:123456
+	user006:123456
+	
+> （5）以 root 身份执行命令 /usr/sbin/chpasswd。
+
+>> 创建用户密码，chpasswd 会将经过 /usr/bin/passwd 命令编码过的密码写入 /etc/passwd 的密码栏。
+
+	# chpasswd < passwd.txt
+	
+>（6）确定密码经编码写入/etc/passwd的密码栏后。
+
+>> 执行命令 /usr/sbin/pwconv 将密码编码为 shadow password，并将结果写入 /etc/shadow。
+
+	# pwconv
 
 
 ### 参考
 
-[菜鸟教程](https://www.runoob.com/linux)
+[菜鸟教程](https://www.runoob.com/linux)    
+[视频教程](https://www.bilibili.com/video/av21303002)
 
