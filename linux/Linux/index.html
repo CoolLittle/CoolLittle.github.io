@@ -63,16 +63,22 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="linux持续学习.....">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/linux/Linux/启动过程/core.png">
+<meta property="og:image" content="http://yoursite.com/linux/Linux/启动过程/init.png">
+<meta property="og:image" content="http://yoursite.com/linux/Linux/启动过程/runlevel.png">
+<meta property="og:image" content="http://yoursite.com/linux/Linux/启动过程/sysinit.png">
+<meta property="og:image" content="http://yoursite.com/linux/Linux/启动过程/userlogin.png">
+<meta property="og:image" content="http://yoursite.com/linux/Linux/启动过程/loginshell.png">
 <meta property="og:image" content="http://yoursite.com/linux/Linux/vim/vim.gif">
 <meta property="og:image" content="http://yoursite.com/linux/Linux/用户/id.PNG">
 <meta property="og:image" content="http://yoursite.com/linux/Linux/用户/passwd.PNG">
 <meta property="og:image" content="http://yoursite.com/linux/Linux/用户/shadow.PNG">
 <meta property="og:image" content="http://yoursite.com/linux/Linux/用户/group.PNG">
-<meta property="og:updated_time" content="2020-02-04T02:09:25.148Z">
+<meta property="og:updated_time" content="2020-02-04T07:31:10.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux学习">
 <meta name="twitter:description" content="linux持续学习.....">
-<meta name="twitter:image" content="http://yoursite.com/linux/Linux/vim/vim.gif">
+<meta name="twitter:image" content="http://yoursite.com/linux/Linux/启动过程/core.png">
   <link rel="canonical" href="http://yoursite.com/linux/Linux/">
 
 
@@ -275,7 +281,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-04 02:09:25" itemprop="dateModified" datetime="2020-02-04T02:09:25+00:00">2020-02-04</time>
+                <time title="修改时间：2020-02-04 07:31:10" itemprop="dateModified" datetime="2020-02-04T07:31:10+00:00">2020-02-04</time>
               </span>
             
           
@@ -335,7 +341,95 @@
 <li><strong>/run:</strong> 是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。</li>
 </ul>
 <p>在 Linux 系统中，有几个目录是比较重要的，平时需要注意不要误删除或者随意更改内部文件。<br><strong>/etc：</strong> 上边也提到了，这个是系统中的配置文件，如果你更改了该目录下的某个文件可能会导致系统不能启动。<br><strong>/bin, /sbin, /usr/bin, /usr/sbin:</strong> 这是系统预设的执行文件的放置目录，比如<code>ls</code>就是在 <strong>/bin/ls</strong> 目录下的。<br>值得提出的是，<strong>/bin, /usr/bin</strong> 是给系统用户使用的指令（除<code>root</code>外的通用户），而 <strong>/sbin, /usr/sbin</strong> 则是给<code>root</code>使用的指令。<br><strong>/var：</strong> 这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在 <code>/var/log</code> 目录下，另外mail的预设放置也是在这里。</p>
-<h3 id="Vim编辑器的使用"><a href="#Vim编辑器的使用" class="headerlink" title="Vim编辑器的使用"></a>Vim编辑器的使用</h3><p>Vim键位图：<br><img src="vim/vim.gif"> </p>
+<h3 id="Linux系统启动过程"><a href="#Linux系统启动过程" class="headerlink" title="Linux系统启动过程"></a>Linux系统启动过程</h3><p>如下5个阶段：</p>
+<ol>
+<li>内核的引导</li>
+<li>运行 <code>init</code></li>
+<li>系统初始化</li>
+<li>建立终端</li>
+<li>用户登陆系统</li>
+</ol>
+<h4 id="内核引导"><a href="#内核引导" class="headerlink" title="内核引导"></a>内核引导</h4><p>当计算机打开电源后，首先是BIOS开机自检，按照BIOS中设置的启动设备（通常是硬盘）来启动。</p>
+<p>操作系统接管硬件以后，首先读入 /boot 目录下的内核文件。 </p>
+<img src="启动过程/core.png">
+
+<h4 id="运行-init"><a href="#运行-init" class="headerlink" title="运行 init"></a>运行 <code>init</code></h4><p><code>init</code> 进程是系统所有进程的起点，你可以把它比拟成系统所有进程的老祖宗，没有这个进程，系统中任何进程都不会启动。</p>
+<p><code>init</code> 程序首先是需要读取配置文件 <code>/etc/inittab</code>。 </p>
+<img src="启动过程/init.png">
+
+<h4 id="运行级别"><a href="#运行级别" class="headerlink" title="运行级别"></a>运行级别</h4><p>许多程序需要开机启动。它们在Windows叫做”服务”（service），在Linux就叫做”守护进程”（daemon）。</p>
+<p>init进程的一大任务，就是去运行这些开机启动的程序。</p>
+<p>但是，不同的场合需要启动不同的程序，比如用作服务器时，需要启动Apache，用作桌面就不需要。</p>
+<p>Linux允许为不同的场合，分配不同的开机启动程序，这就叫做”运行级别”（runlevel）。也就是说，启动时根据”运行级别”，确定要运行哪些程序。</p>
+<img src="启动过程/runlevel.png">
+
+<p>Linux系统有7个运行级别(runlevel)：    </p>
+<pre><code>运行级别0：系统停机状态，系统默认运行级别不能设为0，否则不能正常启动
+运行级别1：单用户工作状态，root权限，用于系统维护，禁止远程登陆
+运行级别2：多用户状态(没有NFS)
+运行级别3：完全的多用户状态(有NFS)，登陆后进入控制台命令行模式
+运行级别4：系统未使用，保留
+运行级别5：X11控制台，登陆后进入图形GUI模式
+运行级别6：系统正常关闭并重启，默认运行级别不能设为6，否则不能正常启动</code></pre><h4 id="系统初始化"><a href="#系统初始化" class="headerlink" title="系统初始化"></a>系统初始化</h4><p>在init的配置文件中有这么一行： si::sysinit:/etc/rc.d/rc.sysinit　它调用执行了/etc/rc.d/rc.sysinit，而rc.sysinit是一个bash shell的脚本，它主要是完成一些系统初始化的工作，rc.sysinit是每一个运行级别都要首先运行的重要脚本。<br>它主要完成的工作有：激活交换分区，检查磁盘，加载硬件模块以及其它一些需要优先执行任务。        </p>
+<pre><code>l5:5:wait:/etc/rc.d/rc 5</code></pre><p>这一行表示以5为参数运行/etc/rc.d/rc，/etc/rc.d/rc是一个Shell脚本，它接受5作为参数，去执行/etc/rc.d/rc5.d/目录下的所有的rc启动脚本，/etc/rc.d/rc5.d/目录中的这些启动脚本实际上都是一些连接文件，而不是真正的rc启动脚本，真正的rc启动脚本实际上都是放在/etc/rc.d/init.d/目录下。</p>
+<p>而这些rc启动脚本有着类似的用法，它们一般能接受 <code>start</code>、<code>stop</code>、<code>restart</code>、<code>status</code>等参数。</p>
+<p><code>/etc/rc.d/rc5.d/</code> 中的rc启动脚本通常是K或S开头的连接文件，对于以 S 开头的启动脚本，将以start参数来运行。</p>
+<p>而如果发现存在相应的脚本也存在K打头的连接，而且已经处于运行态了(以/var/lock/subsys/下的文件作为标志)，则将首先以stop为参数停止这些已经启动了的守护进程，然后再重新运行。</p>
+<p>这样做是为了保证是当init改变运行级别时，所有相关的守护进程都将重启。</p>
+<p>至于在每个运行级中将运行哪些守护进程，用户可以通过chkconfig或setup中的”System Services”来自行设定。</p>
+<img src="启动过程/sysinit.png">
+
+<h4 id="建立终端"><a href="#建立终端" class="headerlink" title="建立终端"></a>建立终端</h4><p>rc执行完毕后，返回init。这时基本系统环境已经设置好了，各种守护进程也已经启动了。</p>
+<p>init接下来会打开6个终端，以便用户登录系统。在inittab中的以下6行就是定义了6个终端：</p>
+<pre><code>1:2345:respawn:/sbin/mingetty tty1
+2:2345:respawn:/sbin/mingetty tty2
+3:2345:respawn:/sbin/mingetty tty3
+4:2345:respawn:/sbin/mingetty tty4
+5:2345:respawn:/sbin/mingetty tty5
+6:2345:respawn:/sbin/mingetty tty6</code></pre><h4 id="用户登录系统"><a href="#用户登录系统" class="headerlink" title="用户登录系统"></a>用户登录系统</h4><p>一般来说，用户的登录方式有三种：</p>
+<ol>
+<li>命令行登录</li>
+<li>ssh登录</li>
+<li>图形界面登录</li>
+</ol>
+<img src="启动过程/userlogin.png">
+
+<p>对于运行级别为5的图形方式用户来说，他们的登录是通过一个图形化的登录界面。登录成功后可以直接进入 KDE、Gnome 等窗口管理器。</p>
+<p>而本文主要讲的还是文本方式登录的情况：当我们看到mingetty的登录界面时，我们就可以输入用户名和密码来登录系统了。</p>
+<p>Linux 的账号验证程序是 login，login 会接收 mingetty 传来的用户名作为用户名参数。</p>
+<p>然后 login 会对用户名进行分析：如果用户名不是 root，且存在 /etc/nologin 文件，login 将输出 nologin 文件的内容，然后退出。</p>
+<p>这通常用来系统维护时防止非root用户登录。只有/etc/securetty中登记了的终端才允许 root 用户登录，如果不存在这个文件，则 root 用户可以在任何终端上登录。</p>
+<p><code>/etc/usertty</code> 文件用于对用户作出附加访问限制，如果不存在这个文件，则没有其他限制。</p>
+<h4 id="图形模式与文字模式的切换方式"><a href="#图形模式与文字模式的切换方式" class="headerlink" title="图形模式与文字模式的切换方式"></a>图形模式与文字模式的切换方式</h4><p>Linux预设提供了六个命令窗口终端机让我们来登录。</p>
+<p>默认我们登录的就是第一个窗口，也就是tty1，这个六个窗口分别为tty1,tty2 … tty6，你可以按下Ctrl + Alt + F1 ~ F6 来切换它们。</p>
+<p>如果你安装了图形界面，默认情况下是进入图形界面的，此时你就可以按Ctrl + Alt + F1 ~ F6来进入其中一个命令窗口界面。</p>
+<p>当你进入命令窗口界面后再返回图形界面只要按下Ctrl + Alt + F7 就回来了。</p>
+<p>如果你用的vmware 虚拟机，命令窗口切换的快捷键为 Alt + Space + F1<del>F6. 如果你在图形界面下请按Alt + Shift + Ctrl + F1</del>F6 切换至命令窗口。 </p>
+<img src="启动过程/loginshell.png">
+
+<h4 id="Linux关机"><a href="#Linux关机" class="headerlink" title="Linux关机"></a>Linux关机</h4><p>在linux领域内大多用在服务器上，很少遇到关机的操作。毕竟服务器上跑一个服务是永无止境的，除非特殊情况下，不得已才会关机。</p>
+<p>正确的关机流程为：<code>sync &gt; shutdown &gt; reboot &gt; halt</code></p>
+<p>关机指令为：<code>shutdown</code> ，你可以<code>man shutdown</code> 来看一下帮助文档。</p>
+<p>例如你可以运行如下命令关机：</p>
+<pre><code>sync 将数据由内存同步到硬盘中。
+
+shutdown 关机指令，你可以man shutdown 来看一下帮助文档。例如你可以运行如下命令关机：
+
+shutdown –h 10 ‘This server will shutdown after 10 mins’ 这个命令告诉大家，计算机将在10分钟后关机，并且会显示在登陆用户的当前屏幕中。
+
+shutdown –h now 立马关机
+
+shutdown –h 20:25 系统会在今天20:25关机
+
+shutdown –h +10 十分钟后关机
+
+shutdown –r now 系统立马重启
+
+shutdown –r +10 系统十分钟后重启
+
+reboot 就是重启，等同于 shutdown –r now
+
+halt 关闭系统，等同于shutdown –h now 和 poweroff</code></pre><h3 id="Vim编辑器的使用"><a href="#Vim编辑器的使用" class="headerlink" title="Vim编辑器的使用"></a>Vim编辑器的使用</h3><p>Vim键位图：<br><img src="vim/vim.gif"> </p>
 <h4 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h4><table>
 <thead>
 <tr>
@@ -978,6 +1072,7 @@ user006:123456</code></pre><ol start="5">
 <pre><code># pwconv</code></pre><ol start="7">
 <li>验证导入用户。</li>
 </ol>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><h4 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h4><p>显示当前工作目录的绝对路径</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a></p>
 
     </div>
@@ -1065,7 +1160,7 @@ user006:123456</code></pre><ol start="5">
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux目录介绍"><span class="nav-number">1.</span> <span class="nav-text">Linux目录介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim编辑器的使用"><span class="nav-number">2.</span> <span class="nav-text">Vim编辑器的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命令模式"><span class="nav-number">2.1.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入模式"><span class="nav-number">2.2.</span> <span class="nav-text">输入模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#底线命令模式"><span class="nav-number">2.3.</span> <span class="nav-text">底线命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#块选择模式"><span class="nav-number">2.4.</span> <span class="nav-text">块选择模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户管理"><span class="nav-number">3.</span> <span class="nav-text">用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加用户"><span class="nav-number">3.1.</span> <span class="nav-text">添加用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除账号"><span class="nav-number">3.2.</span> <span class="nav-text">删除账号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改账号"><span class="nav-number">3.3.</span> <span class="nav-text">修改账号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户口令管理"><span class="nav-number">3.4.</span> <span class="nav-text">用户口令管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询用户"><span class="nav-number">3.5.</span> <span class="nav-text">查询用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#切换用户"><span class="nav-number">3.6.</span> <span class="nav-text">切换用户</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户组管理"><span class="nav-number">4.</span> <span class="nav-text">用户组管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加用户组"><span class="nav-number">4.1.</span> <span class="nav-text">添加用户组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除用户组"><span class="nav-number">4.2.</span> <span class="nav-text">删除用户组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改用户组"><span class="nav-number">4.3.</span> <span class="nav-text">修改用户组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#切换用户组"><span class="nav-number">4.4.</span> <span class="nav-text">切换用户组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户配置文件"><span class="nav-number">5.</span> <span class="nav-text">用户配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用户文件"><span class="nav-number">5.1.</span> <span class="nav-text">用户文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#密码文件"><span class="nav-number">5.2.</span> <span class="nav-text">密码文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户组文件"><span class="nav-number">5.3.</span> <span class="nav-text">用户组文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#批量添加用户"><span class="nav-number">5.4.</span> <span class="nav-text">批量添加用户</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux目录介绍"><span class="nav-number">1.</span> <span class="nav-text">Linux目录介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux系统启动过程"><span class="nav-number">2.</span> <span class="nav-text">Linux系统启动过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内核引导"><span class="nav-number">2.1.</span> <span class="nav-text">内核引导</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行-init"><span class="nav-number">2.2.</span> <span class="nav-text">运行 init</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行级别"><span class="nav-number">2.3.</span> <span class="nav-text">运行级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#系统初始化"><span class="nav-number">2.4.</span> <span class="nav-text">系统初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建立终端"><span class="nav-number">2.5.</span> <span class="nav-text">建立终端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户登录系统"><span class="nav-number">2.6.</span> <span class="nav-text">用户登录系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图形模式与文字模式的切换方式"><span class="nav-number">2.7.</span> <span class="nav-text">图形模式与文字模式的切换方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux关机"><span class="nav-number">2.8.</span> <span class="nav-text">Linux关机</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim编辑器的使用"><span class="nav-number">3.</span> <span class="nav-text">Vim编辑器的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命令模式"><span class="nav-number">3.1.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入模式"><span class="nav-number">3.2.</span> <span class="nav-text">输入模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#底线命令模式"><span class="nav-number">3.3.</span> <span class="nav-text">底线命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#块选择模式"><span class="nav-number">3.4.</span> <span class="nav-text">块选择模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户管理"><span class="nav-number">4.</span> <span class="nav-text">用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加用户"><span class="nav-number">4.1.</span> <span class="nav-text">添加用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除账号"><span class="nav-number">4.2.</span> <span class="nav-text">删除账号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改账号"><span class="nav-number">4.3.</span> <span class="nav-text">修改账号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户口令管理"><span class="nav-number">4.4.</span> <span class="nav-text">用户口令管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询用户"><span class="nav-number">4.5.</span> <span class="nav-text">查询用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#切换用户"><span class="nav-number">4.6.</span> <span class="nav-text">切换用户</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户组管理"><span class="nav-number">5.</span> <span class="nav-text">用户组管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加用户组"><span class="nav-number">5.1.</span> <span class="nav-text">添加用户组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除用户组"><span class="nav-number">5.2.</span> <span class="nav-text">删除用户组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改用户组"><span class="nav-number">5.3.</span> <span class="nav-text">修改用户组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#切换用户组"><span class="nav-number">5.4.</span> <span class="nav-text">切换用户组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户配置文件"><span class="nav-number">6.</span> <span class="nav-text">用户配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用户文件"><span class="nav-number">6.1.</span> <span class="nav-text">用户文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#密码文件"><span class="nav-number">6.2.</span> <span class="nav-text">密码文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户组文件"><span class="nav-number">6.3.</span> <span class="nav-text">用户组文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#批量添加用户"><span class="nav-number">6.4.</span> <span class="nav-text">批量添加用户</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">7.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pwd"><span class="nav-number">7.1.</span> <span class="nav-text">pwd</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
