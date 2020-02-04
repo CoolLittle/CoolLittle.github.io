@@ -68,7 +68,7 @@
 <meta property="og:image" content="http://yoursite.com/linux/Linux/用户/passwd.PNG">
 <meta property="og:image" content="http://yoursite.com/linux/Linux/用户/shadow.PNG">
 <meta property="og:image" content="http://yoursite.com/linux/Linux/用户/group.PNG">
-<meta property="og:updated_time" content="2020-02-03T06:58:50.517Z">
+<meta property="og:updated_time" content="2020-02-04T02:03:58.277Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux学习">
 <meta name="twitter:description" content="linux持续学习.....">
@@ -275,7 +275,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-03 06:58:50" itemprop="dateModified" datetime="2020-02-03T06:58:50+00:00">2020-02-03</time>
+                <time title="修改时间：2020-02-04 02:03:58" itemprop="dateModified" datetime="2020-02-04T02:03:58+00:00">2020-02-04</time>
               </span>
             
           
@@ -699,7 +699,7 @@
     * 指定新账号的登录名</code></pre><p>实例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># useradd -d /home/sam -m sam </span><br><span class="line"># 创建一个用户sam,其中 `-d` 和 `-m` 选项用来为登录名sam产生一个主目录 `/home/sam` 。</span><br><span class="line"></span><br><span class="line"># useradd -s /bin/sh -g group –G adm,root gem</span><br><span class="line"></span><br><span class="line">此命令新建了一个用户gem，该用户的登录Shell是 /bin/sh，它属于group用户组，</span><br><span class="line">同时又属于adm和root用户组，其中group用户组是其主组。</span><br><span class="line">这里可能新建组：#groupadd group及groupadd adm。</span><br><span class="line">增加用户账号就是在/etc/passwd文件中为新用户增加一条记录，</span><br><span class="line">同时更新其他系统文件如/etc/shadow, /etc/group等。</span><br><span class="line">Linux提供了集成的系统管理工具userconf，它可以用来对用户账号进行统一管理。</span><br></pre></td></tr></table></figure>
 
-<p>Linux系统如何添加用户这个问题到网上问一下或者搜一下，很多人可能会说useradd，实际这是不对的。<br>useradd只会添加一个用户，没有创建它的主目录，除了添加一个新用户之外什么都没有。这个用户甚至不能登录，因为没有密码。<br>正确的做法是man page里说的，adduser，这个命令实际是一个perl脚本，是useradd等类似底层命令的更友好的前端，<br>它会用交互性的方式建立新用户，使用它可以指定新用户的家目录，登录密码，是否加密主目录等等，它会：    </p>
+<p>Linux系统如何添加用户这个问题到网上问一下或者搜一下，很多人可能会说 <code>useradd</code> ，实际这是不对的。<br>useradd只会添加一个用户，没有创建它的主目录，除了添加一个新用户之外什么都没有。这个用户甚至不能登录，因为没有密码。<br>正确的做法是 <code>adduser 用户名</code>，这个命令实际是一个perl脚本，是 <code>useradd</code> 等类似底层命令的更友好的前端，<br>它会用交互性的方式建立新用户，使用它可以指定新用户的家目录，登录密码，是否加密主目录等等，它会：    </p>
 <ol>
 <li>建立一个新目录作为家目录</li>
 <li>建立同名新组</li>
@@ -725,6 +725,7 @@
     * -Z, --selinux-user            为用户删除所有的 SELinux 用户映射</code></pre><p>实例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># userdel -r sam </span><br><span class="line">## 删除sam用户包括主目录</span><br></pre></td></tr></table></figure>
 
+<p>另一种删除用户方式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">删除普通用户</span><br><span class="line">  deluser 用户名</span><br><span class="line">  </span><br><span class="line">  例： deluser mike</span><br><span class="line"></span><br><span class="line">  --remove-home	删除用户的主目录和邮箱</span><br><span class="line">  --remove-all-files	删除用户拥有的所有文件</span><br><span class="line">  --backup		删除前将文件备份。</span><br><span class="line">  --backup-to &lt;DIR&gt;	备份的目标目录。</span><br><span class="line">			默认是当前目录。</span><br><span class="line">  --system		只有当该用户是系统用户时才删除。</span><br><span class="line"></span><br><span class="line">从系统中删除用户组</span><br><span class="line">  delgroup GROUP</span><br><span class="line">  deluser --group GROUP</span><br><span class="line">  </span><br><span class="line">  例如: deluser --group students</span><br><span class="line"></span><br><span class="line">  --system		只有当该用户组是系统用户组时才删除</span><br><span class="line">  --only-if-empty	只有当该用户组中无成员时才删除</span><br><span class="line"></span><br><span class="line">将用户从一个组中删除</span><br><span class="line">  deluser USER GROUP</span><br><span class="line">  </span><br><span class="line">  例： deluser mike students</span><br><span class="line"></span><br><span class="line">常用选项：</span><br><span class="line">  --quiet | -q			不将进程信息发给 stdout</span><br><span class="line">  --help | -h		帮助信息</span><br><span class="line">  --version | -v	版本号和版权</span><br><span class="line">  --conf | -c 文件	以制定文件作为配置文件</span><br></pre></td></tr></table></figure>
 
 <h4 id="修改账号"><a href="#修改账号" class="headerlink" title="修改账号"></a>修改账号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod [选项] 登录名</span><br></pre></td></tr></table></figure>
@@ -832,7 +833,8 @@
     -p, --password PASSWORD       将密码更改为(加密过的) PASSWORD
     -R, --root CHROOT_DIR         chroot 到的目录
     -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files</code></pre><h4 id="切换用户组"><a href="#切换用户组" class="headerlink" title="切换用户组"></a>切换用户组</h4><pre><code>newgrp 新用户组</code></pre><p>这条命令将当前用户切换到某用户组，前提条件是某用户组确实是该用户的主组或附加组。类似于用户账号的管理，用户组的管理也可以通过集成的系统管理工具来完成。</p>
-<h3 id="用户配置文件"><a href="#用户配置文件" class="headerlink" title="用户配置文件"></a>用户配置文件</h3><h4 id="用户文件"><a href="#用户文件" class="headerlink" title="用户文件"></a>用户文件</h4><pre><code>`/etc/passwd` 文件是用户管理工作涉及的最重要的一个文件。</code></pre><p>例如：<br><img src="用户/passwd.PNG"></p>
+<h3 id="用户配置文件"><a href="#用户配置文件" class="headerlink" title="用户配置文件"></a>用户配置文件</h3><h4 id="用户文件"><a href="#用户文件" class="headerlink" title="用户文件"></a>用户文件</h4><p><code>/etc/passwd</code> 文件是用户管理工作涉及的最重要的一个文件。</p>
+<p>例如：<br><img src="用户/passwd.PNG"></p>
 <p>/etc/passwd中一行记录对应着一个用户，每行记录又被冒号(:)分隔为7个字段，其格式和具体含义如下：    </p>
 <pre><code>用户名:口令:用户标识号:组标识号:注释性描述:主目录:登录Shell</code></pre><ol>
 <li>“用户名”是代表用户账号的字符串。</li>
@@ -902,7 +904,8 @@ adm 拥有帐户文件
 uucp UUCP使用 
 lp lp或lpd子系统使用 
 nobody NFS使用</code></pre><p>除了上面列出的伪用户外，还有许多标准的伪用户，例如：audit, cron, mail, usenet等，它们也都各自为相关的进程和文件所需要。</p>
-<h4 id="密码文件"><a href="#密码文件" class="headerlink" title="密码文件"></a>密码文件</h4><pre><code>`/etc/shadow` 是密码文件，其中记录行与/etc/passwd中的一一对应，它由pwconv命令根据/etc/passwd中的数据自动产生。</code></pre><p>如下图:<br><img src="用户/shadow.PNG"></p>
+<h4 id="密码文件"><a href="#密码文件" class="headerlink" title="密码文件"></a>密码文件</h4><p><code>/etc/shadow</code> 是密码文件，其中记录行与/etc/passwd中的一一对应，它由pwconv命令根据/etc/passwd中的数据自动产生。</p>
+<p>如下图:<br><img src="用户/shadow.PNG"></p>
 <p>它的文件格式与/etc/passwd类似，由若干个字段组成，字段之间用”:”隔开。这些字段是：</p>
 <pre><code>登录名:加密口令:最后一次修改时间:最小时间间隔:最大时间间隔:警告时间:不活动时间:失效时间:标志</code></pre><ol>
 <li>“登录名”是与/etc/passwd文件中的登录名相一致的用户账号</li>
@@ -914,7 +917,8 @@ nobody NFS使用</code></pre><p>除了上面列出的伪用户外，还有许多
 <li>“不活动时间”表示的是用户没有登录活动但账号仍能保持有效的最大天数。</li>
 <li>“失效时间”字段给出的是一个绝对的天数，如果使用了这个字段，那么就给出相应账号的生存期。期满后，该账号就不再是一个合法的账号，也就不能再用来登录了。</li>
 </ol>
-<h4 id="用户组文件"><a href="#用户组文件" class="headerlink" title="用户组文件"></a>用户组文件</h4><pre><code>`/etc/group` 存放所有的用户组信息</code></pre><p>如下图：<br><img src="用户/group.PNG"></p>
+<h4 id="用户组文件"><a href="#用户组文件" class="headerlink" title="用户组文件"></a>用户组文件</h4><p><code>/etc/group</code> 存放所有的用户组信息</p>
+<p>如下图：<br><img src="用户/group.PNG"></p>
 <p>用户组的所有信息都存放在/etc/group文件中。此文件的格式也类似于/etc/passwd文件，由冒号(:)隔开若干个字段，这些字段有：</p>
 <pre><code>组名:口令:组标识号:组内用户列表</code></pre><ol>
 <li>“组名”是用户组的名称，由字母或数字构成。与/etc/passwd中的登录名一样，组名不应重复。</li>
