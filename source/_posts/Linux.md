@@ -494,7 +494,7 @@ useradd只会添加一个用户，没有创建它的主目录，除了添加一�
 
 #### 用户文件
 
-`/etc/passwd` 文件是用户管理工作涉及的最重要的一个文件。
+**_/etc/passwd_** 文件是用户管理工作涉及的最重要的一个文件。
 
 例如：
 <img src="用户/passwd.PNG" />
@@ -557,7 +557,7 @@ useradd只会添加一个用户，没有创建它的主目录，除了添加一�
 
 #### 密码文件
 
-`/etc/shadow` 是密码文件，其中记录行与/etc/passwd中的一一对应，它由pwconv命令根据/etc/passwd中的数据自动产生。
+**_/etc/shadow_** 是密码文件，其中记录行与/etc/passwd中的一一对应，它由pwconv命令根据/etc/passwd中的数据自动产生。
 
 如下图:
 <img src="用户/shadow.PNG" />
@@ -577,7 +577,7 @@ useradd只会添加一个用户，没有创建它的主目录，除了添加一�
 
 #### 用户组文件
 
-`/etc/group` 存放所有的用户组信息
+**_/etc/group_** 存放所有的用户组信息
 	
 如下图：
 <img src="用户/group.PNG">
