@@ -4,7 +4,7 @@ tags:
   - girl  
 categories:
   - girl    
-describe: 辣个美丽的女孩    
+description: 辣个美丽的女孩    
 date: 2020-02-06 10:20:00
 ---
 
