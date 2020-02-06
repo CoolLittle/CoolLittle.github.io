@@ -803,15 +803,313 @@ useradd只会添加一个用户，没有创建它的主目录，除了添加一�
 
 ##### cat
 
+连接多个文件并打印到标准输出。
+
+    cat [选项] [文件]
+        选项
+            -n 或 --number：由 1 开始对所有输出的行数编号。
+            -b 或 --number-nonblank：和 -n 相似，只不过对于空白行不编号。
+            -s 或 --squeeze-blank：当遇到有连续两行以上的空白行，就代换为一行的空白行。
+            -v 或 --show-nonprinting：使用 ^ 和 M- 符号，除了 LFD 和 TAB 之外。
+            -E 或 --show-ends : 在每行结束处显示 $。
+            -T 或 --show-tabs: 将 TAB 字符显示为 ^I。
+            -A, --show-all：等价于 -vET。
+            -e：等价于"-vE"选项；
+            -t：等价于"-vT"选项
+    
+        实例
+            # 合并显示多个文件
+            cat ./1.log ./2.log ./3.log
+            # 显示文件中的非打印字符、tab、换行符
+            cat -A test.log
+            # 压缩文件的空行
+            cat -s test.log
+            # 显示文件并在所有行开头附加行号
+            cat -n test.log
+            # 显示文件并在所有非空行开头附加行号
+            cat -b test.log
+            # 将标准输入的内容和文件内容一并显示
+            echo '######' |cat - test.log
+
 ##### chgrp
 
+用来变更文件或目录的所属群组。该命令用来改变指定文件所属的用户组。其中，组名可以是用户组的id，也可以是用户组的组名。文件名可以 是由空格分开的要改变属组的文件列表，也可以是由通配符描述的文件集合。如果用户不是该文件的文件主或超级用户(root)，则不能改变该文件的组。
+
+在UNIX系统家族里，文件或目录权限的掌控以拥有者及所属群组来管理。您可以使用chgrp指令去变更文件与目录的所属群组，设置方式采用群组名称或群组识别码皆可。
+
+    chgrp [选项][组群][文件|目录]
+        选项
+            -R 递归式地改变指定目录及其下的所有子目录和文件的所属的组
+            -c或——changes：效果类似“-v”参数，但仅回报更改的部分；
+            -f或--quiet或——silent：不显示错误信息；
+            -h或--no-dereference：只对符号连接的文件作修改，而不是该其他任何相关文件；
+            -H如果命令行参数是一个通到目录的符号链接，则遍历符号链接
+            -R或——recursive：递归处理，将指令目录下的所有文件及子目录一并处理；
+            -L遍历每一个遇到的通到目录的符号链接
+            -P不遍历任何符号链接（默认）
+            -v或——verbose：显示指令执行过程；
+            --reference=<参考文件或目录>：把指定文件或目录的所属群组全部设成和参考文件或目录的所属群组相同；
+        群组
+            所属新群组
+        文件|目录
+            待修改的文件或者目录
+            
+        实例
+            将/usr/meng及其子目录下的所有文件的用户组改为mengxin
+            chgrp -R mengxin /usr/meng
+            更改文件ah的组群所有者为 newuser
+            [root@rhel ~]# chgrp newuser ah
+            
 ##### chmod
+
+用来变更文件或目录的权限
+
+1. 通过符号组合的方式更改目标文件或目录的权限。
+2. 通过八进制数的方式更改目标文件或目录的权限。
+3. 通过参考文件的权限来更改目标文件或目录的权限。
+
+
+    chmod [选项]... 模式[,模式]... 文件...
+    chmod [选项]... 八进制模式 文件...
+    chmod [选项]... --reference=参考文件 文件...
+    将每个文件的权限模式变更至指定模式。
+    使用 --reference 选项时，把指定文件的模式设置为与参考文件相同。
+    
+        选项
+            -c, --changes          like verbose but report only when a change is made
+            -f, --silent, --quiet  suppress most error messages
+            -v, --verbose          output a diagnostic for every file processed
+              --no-preserve-root  do not treat '/' specially (the default)
+              --preserve-root    fail to operate recursively on '/'
+              --reference=参考文件  使用参考文件的模式而非给定模式的值
+            -R, --recursive        递归修改文件和目录
+              --help		显示此帮助信息并退出
+              --version		显示版本信息并退出
+              
+        实例：
+            # 添加组用户的写权限。
+            chmod g+w ./test.log
+            # 删除其他用户的所有权限。
+            chmod o= ./test.log
+            # 使得所有用户都没有写权限。
+            chmod a-w ./test.log
+            # 当前用户具有所有权限，组用户有读写权限，其他用户只有读权限。
+            chmod u=rwx, g=rw, o=r ./test.log
+            # 等价的八进制数表示：
+            chmod 754 ./test.log
+            # 将目录以及目录下的文件都设置为所有用户拥有读写权限。
+            # 注意，使用'-R'选项一定要保留当前用户的执行和读取权限，否则会报错！
+            chmod -R a=rw ./testdir/
+            # 根据其他文件的权限设置文件权限。
+            chmod --reference=./1.log  ./test.log
+
+说明：
+    
+>   u 符号代表当前用户。  
+    g 符号代表和当前用户在同一个组的用户，以下简称组用户。   
+    o 符号代表其他用户。    
+    a 符号代表所有用户。    
+    r 符号代表读权限以及八进制数4。    
+    w 符号代表写权限以及八进制数2。    
+    x 符号代表执行权限以及八进制数1。    
+    X 符号代表如果目标文件是可执行文件或目录，可给其设置可执行权限。    
+    s 符号代表设置权限suid和sgid，使用权限组合u+s设定文件的用户的ID位，g+s设置组用户ID位。    
+    t 符号代表只有目录或文件的所有者才可以删除目录下的文件。    
+    + 符号代表添加目标用户相应的权限。    
+    - 符号代表删除目标用户相应的权限。   
+    = 符号代表添加目标用户相应的权限，删除未提到的权限。
+
+linux文件的用户权限说明：
+    
+    # 查看当前目录（包含隐藏文件）的长格式。
+    ls -la
+      -rw-r--r--   1 user  staff   651 Oct 12 12:53 .gitmodules
+    
+    # 第1位如果是d则代表目录，是-则代表普通文件。
+    # 更多详情请参阅info coreutils 'ls invocation'（ls命令的info文档）的'-l'选项部分。
+    # 第2到4位代表当前用户的权限。
+    # 第5到7位代表组用户的权限。
+    # 第8到10位代表其他用户的权限。
 
 ##### chown
 
+用来变更文件或目录的拥有者或所属群组，该命令可以向某个用户授权，使该用户变成指定文件的所有者或者改变文件所属的组。用户可以是用户或者是用户D，用户组可以是组名或组id。文件名可以使由空格分开的文件列表，在文件名中可以包含通配符。
+
+只有文件主和超级用户才可以便用该命令。
+
+    chown [选项] [参数]
+        选项
+            -c或——changes：效果类似“-v”参数，但仅回报更改的部分；
+            -f或--quite或——silent：不显示错误信息；
+            -h或--no-dereference：只对符号连接的文件作修改，而不更改其他任何相关文件；
+            -R或——recursive：递归处理，将指定目录下的所有文件及子目录一并处理；
+            -v或——version：显示指令执行过程；
+            --dereference：效果和“-h”参数相同；
+            --help：在线帮助；
+            --reference=<参考文件或目录>：把指定文件或目录的拥有者与所属群组全部设成和参考文件或目录的拥有者与所属群组相同；
+            --version：显示版本信息。
+        参数
+            用户：组：指定所有者和所属工作组。当省略“：组”，仅改变文件所有者；
+            文件：指定要改变所有者和工作组的文件列表。支持多个文件和目标，支持shell通配符。
+            
+        实例
+            将目录/usr/meng及其下面的所有文件、子目录的文件主改成 liu：
+            chown -R liu /usr/meng
+         
 ##### cmp
 
+用来比较两个文件是否有差异。当相互比较的两个文件完全一样时，则该指令不会显示任何信息。若发现有差异，预设会标示出第一个不通之处的字符和列数编号。若不指定任何文件名称或是所给予的文件名为“-”，则cmp指令会从标准输入设备读取数据。
+
+    cmp [选项] [参数]
+        选项
+            -c或--print-chars：除了标明差异处的十进制字码之外，一并显示该字符所对应字符；
+            -i<字符数目>或--ignore-initial=<字符数目>：指定一个数目；
+            -l或——verbose：标示出所有不一样的地方；
+            -s或--quiet或——silent：不显示错误信息；
+            -v或——version：显示版本信息；
+            --help：在线帮助。
+        参数
+            目录：比较两个文件的差异。
+        
+        实例
+            使用cmp命令比较文件"testfile"和文件"testfile1"两个文件，则输入下面的命令：
+            cmp testfile testfile1            #比较两个指定的文件
+            
+            在上述指令执行之前，使用cat命令查看两个指定的文件内容，如下所示：
+            cat testfile                    #查看文件内容  
+            Absncn 50                       #显示文件“testfile”  
+            Asldssja 60  
+            Jslkadjls 85 
+            
+            cat testfile1                   #查看文件内容  
+            Absncn 50                       #显示文件“testfile1”  
+            AsldssjE 62  
+            Jslkadjls 85  
+            然后，再执行cmp命令，并返回比较结果，具体如下所示：
+            
+            cmp testfile testfile1       #比较两个文件  
+            testfile testfile1           #有差异：第8字节，第2行  
+            
+            注意：在比较结果中，只能够显示第一比较结果。   
+            
 ##### cut
+
+用来显示行中的指定部分，删除文件中指定字段。cut 经常用来显示文件的内容，类似于 type 命令。
+
+说明：该命令有两项功能，其一是用来显示文件的内容，它依次读取由参数 file 所指 明的文件，将它们的内容输出到标准输出上；其二是连接两个或多个文件，如cut fl f2 > f3将把文件 fl 和 f2 的内容合并起来，然后通过输出重定向符“>”的作用，将它们放入文件 f3 中。
+
+当文件较大时，文本在屏幕上迅速闪过（滚屏），用户往往看不清所显示的内容。因此，一般用 more 等命令分屏显示。为了控制滚屏，可以按 Ctrl+S 键，停止滚屏；按 Ctrl+Q 键可以恢复滚屏。按 Ctrl+C（中断）键可以终止该命令的执行，并且返回 Shell 提示符状态。
+
+    cut（选项）（参数）
+    
+        选项
+            -b：仅显示行中指定直接范围的内容；
+            -c：仅显示行中指定范围的字符；
+            -d：指定字段的分隔符，默认的字段分隔符为“TAB”；
+            -f：显示指定字段的内容；
+            -n：与“-b”选项连用，不分割多字节字符；
+            --complement：补足被选择的字节、字符或字段；
+            --out-delimiter= 字段分隔符：指定输出内容是的字段分割符；
+            --help：显示指令的帮助信息；
+            --version：显示指令的版本信息。
+        参数
+            文件：指定要进行内容过滤的文件。
+
+实例
+
+例如有一个学生报表信息，包含 No、Name、Mark、Percent：
+
+    [root@localhost text]# cat test.txt
+    No Name Mark Percent
+    01 tom 69 91
+    02 jack 71 87
+    03 alex 68 98
+
+使用 -f 选项提取指定字段（这里的 f 参数可以简单记忆为 --fields的缩写）：
+
+    [root@localhost text]# cut -f 1 test.txt
+    No
+    01
+    02
+    03
+
+    [root@localhost text]# cut -f2,3 test.txt
+    Name Mark
+    tom 69
+    jack 71
+    alex 68
+
+--complement 选项提取指定字段之外的列（打印除了第二列之外的列）：
+
+    [root@localhost text]# cut -f2 --complement test.txt
+    No Mark Percent
+    01 69 91
+    02 71 87
+    03 68 98
+
+使用 -d 选项指定字段分隔符：
+
+    [root@localhost text]# cat test2.txt
+    No;Name;Mark;Percent
+    01;tom;69;91
+    02;jack;71;87
+    03;alex;68;98
+
+    [root@localhost text]# cut -f2 -d";" test2.txt
+    Name
+    tom
+    jack
+    alex
+
+指定字段的字符或者字节范围
+
+cut 命令可以将一串字符作为列来显示，字符字段的记法：
+
+    N- ：从第 N 个字节、字符、字段到结尾；
+    N-M ：从第 N 个字节、字符、字段到第 M 个（包括 M 在内）字节、字符、字段；
+    -M ：从第 1 个字节、字符、字段到第 M 个（包括 M 在内）字节、字符、字段。
+
+上面是记法，结合下面选项将摸个范围的字节、字符指定为字段：
+
+    -b 表示字节；
+    -c 表示字符；
+    -f 表示定义字段。
+
+示例
+
+    [root@localhost text]# cat test.txt
+    abcdefghijklmnopqrstuvwxyz
+    abcdefghijklmnopqrstuvwxyz
+    abcdefghijklmnopqrstuvwxyz
+    abcdefghijklmnopqrstuvwxyz
+    abcdefghijklmnopqrstuvwxyz
+    
+打印第 1 个到第 3 个字符：
+
+    [root@localhost text]# cut -c1-3 test.txt
+    abc
+    abc
+    abc
+    abc
+    abc
+
+打印前 2 个字符：
+
+    [root@localhost text]# cut -c-2 test.txt
+    ab
+    ab
+    ab
+    ab
+    ab
+
+打印从第 5 个字符开始到结尾：
+
+    [root@localhost text]# cut -c5- test.txt
+    efghijklmnopqrstuvwxyz
+    efghijklmnopqrstuvwxyz
+    efghijklmnopqrstuvwxyz
+    efghijklmnopqrstuvwxyz
+    efghijklmnopqrstuvwxyz
 
 ##### cp
 
