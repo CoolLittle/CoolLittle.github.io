@@ -8,9 +8,9 @@ description: 文件管理常用命令....
 date: 2020-02-16 13:19:00
 ---
 
-##### awk
+#### awk
 
-##### cat
+#### cat
 
 连接多个文件并打印到标准输出。
 
@@ -39,9 +39,9 @@ date: 2020-02-16 13:19:00
     # 显示文件并在所有非空行开头附加行号
     cat -b test.log
     # 将标准输入的内容和文件内容一并显示
-    echo '######' |cat - test.log
+    echo '#####' |cat - test.log
 
-##### chgrp
+#### chgrp
 
 用来变更文件或目录的所属群组。该命令用来改变指定文件所属的用户组。其中，组名可以是用户组的id，也可以是用户组的组名。文件名可以 是由空格分开的要改变属组的文件列表，也可以是由通配符描述的文件集合。如果用户不是该文件的文件主或超级用户(root)，则不能改变该文件的组。
 
@@ -71,7 +71,7 @@ date: 2020-02-16 13:19:00
     更改文件ah的组群所有者为 newuser
     [root@rhel ~]# chgrp newuser ah
             
-##### chmod
+#### chmod
 
 用来变更文件或目录的权限
 
@@ -79,23 +79,24 @@ date: 2020-02-16 13:19:00
 2. 通过八进制数的方式更改目标文件或目录的权限。
 3. 通过参考文件的权限来更改目标文件或目录的权限。      
 
-    chmod [选项]... 模式[,模式]... 文件...
-    chmod [选项]... 八进制模式 文件...
-    chmod [选项]... --reference=参考文件 文件...
-    将每个文件的权限模式变更至指定模式。
-    使用 --reference 选项时，把指定文件的模式设置为与参考文件相同。
-    
-        选项
-            -c, --changes          like verbose but report only when a change is made
-            -f, --silent, --quiet  suppress most error messages
-            -v, --verbose          output a diagnostic for every file processed
-              --no-preserve-root  do not treat '/' specially (the default)
-              --preserve-root    fail to operate recursively on '/'
-              --reference=参考文件  使用参考文件的模式而非给定模式的值
-            -R, --recursive        递归修改文件和目录
-              --help		显示此帮助信息并退出
-              --version		显示版本信息并退出
-        
+```
+chmod [选项]... 模式[,模式]... 文件...
+chmod [选项]... 八进制模式 文件...
+chmod [选项]... --reference=参考文件 文件...
+将每个文件的权限模式变更至指定模式。
+使用 --reference 选项时，把指定文件的模式设置为与参考文件相同。
+
+    选项
+        -c, --changes          like verbose but report only when a change is made
+        -f, --silent, --quiet  suppress most error messages
+        -v, --verbose          output a diagnostic for every file processed
+            --no-preserve-root  do not treat '/' specially (the default)
+            --preserve-root    fail to operate recursively on '/'
+            --reference=参考文件  使用参考文件的模式而非给定模式的值
+        -R, --recursive        递归修改文件和目录
+            --help		显示此帮助信息并退出
+            --version		显示版本信息并退出
+```    
 实例：
 
     # 添加组用户的写权限。
@@ -142,7 +143,7 @@ linux文件的用户权限说明：
     # 第5到7位代表组用户的权限。
     # 第8到10位代表其他用户的权限。
 
-##### chown
+#### chown
 
 用来变更文件或目录的拥有者或所属群组，该命令可以向某个用户授权，使该用户变成指定文件的所有者或者改变文件所属的组。用户可以是用户或者是用户D，用户组可以是组名或组id。文件名可以使由空格分开的文件列表，在文件名中可以包含通配符。
 
@@ -168,7 +169,7 @@ linux文件的用户权限说明：
     将目录/usr/meng及其下面的所有文件、子目录的文件主改成 liu：
     chown -R liu /usr/meng
          
-##### cmp
+#### cmp
 
 用来比较两个文件是否有差异。当相互比较的两个文件完全一样时，则该指令不会显示任何信息。若发现有差异，预设会标示出第一个不通之处的字符和列数编号。若不指定任何文件名称或是所给予的文件名为“-”，则cmp指令会从标准输入设备读取数据。
 
@@ -205,7 +206,7 @@ linux文件的用户权限说明：
     
     注意：在比较结果中，只能够显示第一比较结果。   
             
-##### cut
+#### cut
 
 用来显示行中的指定部分，删除文件中指定字段。cut 经常用来显示文件的内容，类似于 type 命令。
 
@@ -324,7 +325,7 @@ cut 命令可以将一串字符作为列来显示，字符字段的记法：
     efghijklmnopqrstuvwxyz
     efghijklmnopqrstuvwxyz
 
-##### cp
+#### cp
 
 将源文件或目录复制到目标文件或目录中 - copy files and directories
 用来将一个或多个源文件或者目录复制到指定的目的文件或目录。它可以将单个源文件复制成一个指定文件名的具体的文件或一个已经存在的目录下。cp命令还支持同时复制多个文件，当一次复制多个文件时，目标文件参数必须是一个已经存在的目录，否则将出现错误
@@ -360,7 +361,7 @@ cut 命令可以将一串字符作为列来显示，字符字段的记法：
     # 将当前目录下所有文件，复制到当前目录的兄弟目录 backup 文件夹中
     cp -rfb ./* ../backup
 
-##### diff
+#### diff
 
 比较给定的两个文件的不同
 
@@ -418,7 +419,7 @@ cut 命令可以将一串字符作为列来显示，字符字段的记法：
 
 注意：以上说明指定了两个文件中不同处的行号及其相应的操作。在输出形式中，每一行后面将跟随受到影响的若干行。其中，以<开始的行属于文件1，以>开始的行属于文件2。
 
-##### file
+#### file
 
 用来探测给定文件的类型
 
@@ -464,40 +465,40 @@ cut 命令可以将一串字符作为列来显示，字符字段的记法：
     /var/spool/mail: directory
 
 
-##### find
+#### find
 
-##### ln
+#### ln
 
-##### less
+#### less
 
-##### locate
+#### locate
 
-##### lsattr
+#### lsattr
 
-##### more
+#### more
 
-##### mv
+#### mv
 
-##### paste 
+#### paste 
 
-##### read 
+#### read 
 
-##### rcp
+#### rcp
  
-##### rm
+#### rm
 
-##### split
+#### split
 
-##### touch
+#### touch
 
-##### which
+#### which
 
-##### whereis
+#### whereis
 
 
 
   
-### 参考
+#### 参考
 
 [Linux命令查询](https://jaywcjlove.gitee.io/linux-command)    
 [菜鸟教程](https://www.runoob.com/linux)    
