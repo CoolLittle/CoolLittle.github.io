@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"top","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="磁盘管理命令命令详解.....">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常用命令-磁盘管理">
+<meta property="og:url" content="http://yoursite.com/linux/linux-command-disk/index.html">
+<meta property="og:site_name" content="CHZ个人博客">
+<meta property="og:description" content="磁盘管理命令命令详解.....">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-16T06:04:44.196Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux常用命令-磁盘管理">
+<meta name="twitter:description" content="磁盘管理命令命令详解.....">
+  <link rel="canonical" href="http://yoursite.com/linux/linux-command-disk/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Linux常用命令-磁盘管理 | CHZ个人博客</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CHZ个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/blog/linux/linux-command-disk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="czh">
+      <meta itemprop="description" content="博客">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CHZ个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Linux常用命令-磁盘管理
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-16 13:19:00 / 修改时间：06:04:44" itemprop="dateCreated datePublished" datetime="2020-02-16T13:19:00+00:00">2020-02-16</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <div class="post-description">磁盘管理命令命令详解.....</div>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h5 id="df"><a href="#df" class="headerlink" title="df"></a>df</h5><p>显示磁盘空间 — 用于显示磁盘分区上的可使用的磁盘空间。默认显示单位为KB。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。</p>
+<pre><code>df [选项] [参数]
+    选项
+        -a或--all：包含全部的文件系统；
+        --block-size=&lt;区块大小&gt;：以指定的区块大小来显示区块数目；
+        -h或--human-readable：以可读性较高的方式来显示信息；
+        -H或--si：与-h参数相同，但在计算时是以1000 Bytes为换算单位而非1024 Bytes；
+        -i或--inodes：显示inode的信息；
+        -k或--kilobytes：指定区块大小为1024字节；
+        -l或--local：仅显示本地端的文件系统；
+        -m或--megabytes：指定区块大小为1048576字节；
+        --no-sync：在取得磁盘使用信息前，不要执行sync指令，此为预设值；
+        -P或--portability：使用POSIX的输出格式；
+        --sync：在取得磁盘使用信息前，先执行sync指令；
+        -t&lt;文件系统类型&gt;或--type=&lt;文件系统类型&gt;：仅显示指定文件系统类型的磁盘信息；
+        -T或--print-type：显示文件系统的类型；
+        -x&lt;文件系统类型&gt;或--exclude-type=&lt;文件系统类型&gt;：不要显示指定文件系统类型的磁盘信息；
+        --help：显示帮助；
+        --version：显示版本信息。
+参数：文件 — 指定文件系统上的文件。</code></pre><h5 id="fdisk"><a href="#fdisk" class="headerlink" title="fdisk"></a>fdisk</h5><p>用于观察硬盘实体使用情况，也可对硬盘分区。它采用传统的问答式界面，而非类似DOS fdisk的cfdisk互动式操作界面，因此在使用上较为不便，但功能却丝毫不打折扣。</p>
+<pre><code>fdisk [选项] [参数]
+    选项
+         -b &lt;大小&gt;             扇区大小(512、1024、2048或4096)
+         -c[=&lt;模式&gt;]           兼容模式：“dos”或“nondos”(默认)
+         -h                    打印此帮助文本
+         -u[=&lt;单位&gt;]           显示单位：“cylinders”(柱面)或“sectors”(扇区，默认)
+         -v                    打印程序版本
+         -C &lt;数字&gt;             指定柱面数
+         -H &lt;数字&gt;             指定磁头数
+         -S &lt;数字&gt;             指定每个磁道的扇区数
+    参数
+        设备文件：指定要进行分区或者显示分区的硬盘设备文件。</code></pre><p> 实例</p>
+<p> 首先选择要进行操作的磁盘：</p>
+<pre><code>[root@localhost ~]# fdisk /dev/sdb</code></pre><p> 输入m列出可以执行的命令：</p>
+<pre><code>command (m for help): m
+Command action
+   a   toggle a bootable flag
+   b   edit bsd disklabel
+   c   toggle the dos compatibility flag
+   d   delete a partition
+   l   list known partition types
+   m   print this menu
+   n   add a new partition
+   o   create a new empty DOS partition table
+   p   print the partition table
+   q   quit without saving changes
+   s   create a new empty Sun disklabel
+   t   change a partition&apos;s system id
+   u   change display/entry units
+   v   verify the partition table
+   w   write table to disk and exit
+   x   extra functionality (experts only)</code></pre><p> 输入p列出磁盘目前的分区情况：</p>
+<pre><code>Command (m for help): p
+
+Disk /dev/sdb: 3221 MB, 3221225472 bytes
+255 heads, 63 sectors/track, 391 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1               1           1        8001   8e  Linux LVM
+/dev/sdb2               2          26      200812+  83  Linux</code></pre><p> 输入d然后选择分区，删除现有分区：</p>
+<pre><code>Command (m for help): d
+Partition number (1-4): 1
+
+Command (m for help): d
+Selected partition 2</code></pre><p> 查看分区情况，确认分区已经删除：</p>
+<pre><code>Command (m for help): print
+
+Disk /dev/sdb: 3221 MB, 3221225472 bytes
+255 heads, 63 sectors/track, 391 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+   Device Boot      Start         End      Blocks   Id  System
+
+Command (m for help):</code></pre><p> 输入n建立新的磁盘分区，首先建立两个主磁盘分区：</p>
+<pre><code>Command (m for help): n
+Command action
+   e   extended
+   p   primary partition (1-4)
+p    //建立主分区
+Partition number (1-4): 1  //分区号
+First cylinder (1-391, default 1):  //分区起始位置
+Using default value 1
+last cylinder or +size or +sizeM or +sizeK (1-391, default 391): 100  //分区结束位置，单位为扇区
+
+Command (m for help): n  //再建立一个分区
+Command action
+   e   extended
+   p   primary partition (1-4)
+p 
+Partition number (1-4): 2  //分区号为2
+First cylinder (101-391, default 101):
+Using default value 101
+Last cylinder or +size or +sizeM or +sizeK (101-391, default 391): +200M  //分区结束位置，单位为M</code></pre><p> 确认分区建立成功：</p>
+<pre><code>Command (m for help): p
+
+Disk /dev/sdb: 3221 MB, 3221225472 bytes
+255 heads, 63 sectors/track, 391 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1               1         100      803218+  83  Linux
+/dev/sdb2             101         125      200812+  83  Linux</code></pre><p> 再建立一个逻辑分区：</p>
+<pre><code>Command (m for help): n
+Command action
+   e   extended
+   p   primary partition (1-4)
+e  //选择扩展分区
+Partition number (1-4): 3
+First cylinder (126-391, default 126):
+Using default value 126
+Last cylinder or +size or +sizeM or +sizeK (126-391, default 391):
+Using default value 391</code></pre><p> 确认扩展分区建立成功：</p>
+<pre><code>Command (m for help): p
+
+Disk /dev/sdb: 3221 MB, 3221225472 bytes
+255 heads, 63 sectors/track, 391 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1               1         100      803218+  83  Linux
+/dev/sdb2             101         125      200812+  83  Linux
+/dev/sdb3             126         391     2136645    5  Extended</code></pre><p> 在扩展分区上建立两个逻辑分区：</p>
+<pre><code>Command (m for help): n
+Command action
+   l   logical (5 or over)
+   p   primary partition (1-4)
+l //选择逻辑分区
+First cylinder (126-391, default 126):
+Using default value 126
+Last cylinder or +size or +sizeM or +sizeK (126-391, default 391): +400M    
+
+Command (m for help): n
+Command action
+   l   logical (5 or over)
+   p   primary partition (1-4)
+l
+First cylinder (176-391, default 176):
+Using default value 176
+Last cylinder or +size or +sizeM or +sizeK (176-391, default 391):
+Using default value 391</code></pre><p> 确认逻辑分区建立成功：</p>
+<pre><code>Command (m for help): p
+
+Disk /dev/sdb: 3221 MB, 3221225472 bytes
+255 heads, 63 sectors/track, 391 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1               1         100      803218+  83  Linux
+/dev/sdb2             101         125      200812+  83  Linux
+/dev/sdb3             126         391     2136645    5  Extended
+/dev/sdb5             126         175      401593+  83  Linux
+/dev/sdb6             176         391     1734988+  83  Linux
+
+Command (m for help):</code></pre><p> 从上面的结果我们可以看到，在硬盘sdb我们建立了2个主分区（sdb1，sdb2），1个扩展分区（sdb3），2个逻辑分区（sdb5，sdb6）</p>
+<p> 注意：主分区和扩展分区的磁盘号位1-4，也就是说最多有4个主分区或者扩展分区，逻辑分区开始的磁盘号为5，因此在这个实验中试没有sdb4的。</p>
+<p> 最后对分区操作进行保存：</p>
+<pre><code>Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.</code></pre><p> 建立好分区之后我们还需要对分区进行格式化才能在系统中使用磁盘。</p>
+<p> 在sdb1上建立ext2分区：</p>
+<pre><code>[root@localhost ~]# mkfs.ext2 /dev/sdb1
+mke2fs 1.39 (29-May-2006)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+100576 inodes, 200804 blocks
+10040 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=209715200
+7 block groups
+32768 blocks per group, 32768 fragments per group
+14368 inodes per group
+Superblock backups stored on blocks:
+        32768, 98304, 163840
+
+Writing inode tables: done                           
+Writing superblocks and filesystem accounting information: done
+
+This filesystem will be automatically checked every 32 mounts or
+180 days, whichever comes first.  Use tune2fs -c or -i to override.</code></pre><p> 在sdb6上建立ext3分区：</p>
+<pre><code>[root@localhost ~]# mkfs.ext3 /dev/sdb6
+mke2fs 1.39 (29-May-2006)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+217280 inodes, 433747 blocks
+21687 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=444596224
+14 block groups
+32768 blocks per group, 32768 fragments per group
+15520 inodes per group
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912
+
+Writing inode tables: done                           
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+This filesystem will be automatically checked every 32 mounts or
+180 days, whichever comes first.  Use tune2fs -c or -i to override.
+[root@localhost ~]#</code></pre><p> 建立两个目录/oracle和/web，将新建好的两个分区挂载到系统：</p>
+<pre><code>[root@localhost ~]# mkdir /oracle
+[root@localhost ~]# mkdir /web
+[root@localhost ~]# mount /dev/sdb1 /oracle
+[root@localhost ~]# mount /dev/sdb6 /web</code></pre><p> 查看分区挂载情况：</p>
+<pre><code>[root@localhost ~]# df -h
+
+文件系统              容量  已用 可用 已用% 挂载点
+ /dev/mapper/VolGroup00-LogVol00
+                       6.7G  2.8G  3.6G  44% /
+ /dev/sda1              99M   12M   82M  13% /boot
+ tmpfs                 125M     0  125M   0% /dev/shm
+ /dev/sdb1             773M  808K  733M   1% /oracle
+ /dev/sdb6             1.7G   35M  1.6G   3% /web</code></pre><p> 如果需要每次开机自动挂载则需要修改/etc/fstab文件，加入两行配置：</p>
+<pre><code>[root@localhost ~]# vim /etc/fstab
+
+/dev/VolGroup00/LogVol00 /                       ext3    defaults        1 1
+LABEL=/boot             /boot                   ext3    defaults        1 2
+tmpfs                   /dev/shm                tmpfs   defaults        0 0
+devpts                  /dev/pts                devpts  gid=5,mode=620  0 0
+sysfs                   /sys                    sysfs   defaults        0 0
+proc                    /proc                   proc    defaults        0 0
+/dev/VolGroup00/LogVol01 swap                    swap    defaults        0 0
+/dev/sdb1               /oracle                 ext2    defaults        0 0
+/dev/sdb6               /web                    ext3    defaults        0 0</code></pre><h5 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h5><p>用于挂载Linux系统外的文件</p>
+<pre><code>mount [-hV]
+mount -a [-fFnrsvw] [-t vfstype]
+mount [-fnrsvw] [-o options [,...]] device | dir
+mount [-fnrsvw] [-t vfstype] [-o options] device dir
+
+    选项
+        -V：显示程序版本
+        -h：显示辅助讯息
+        -v：显示较讯息，通常和 -f 用来除错。
+        -a：将 /etc/fstab 中定义的所有档案系统挂上。
+        -F：这个命令通常和 -a 一起使用，它会为每一个 mount 的动作产生一个行程负责执行。在系统需要挂上大量 NFS 档案系统时可以加快挂上的动作。
+        -f：通常用在除错的用途。它会使 mount 并不执行实际挂上的动作，而是模拟整个挂上的过程。通常会和 -v 一起使用。
+        -n：一般而言，mount 在挂上后会在 /etc/mtab 中写入一笔资料。但在系统中没有可写入档案系统存在的情况下可以用这个选项取消这个动作。
+        -s-r：等于 -o ro
+        -w：等于 -o rw
+        -L：将含有特定标签的硬盘分割挂上。
+        -U：将档案分割序号为 的档案系统挂下。-L 和 -U 必须在/proc/partition 这种档案存在时才有意义。
+        -t：指定档案系统的型态，通常不必指定。mount 会自动选择正确的型态。
+        -o async：打开非同步模式，所有的档案读写动作都会用非同步模式执行。
+        -o sync：在同步模式下执行。
+        -o atime、-o noatime：当 atime 打开时，系统会在每次读取档案时更新档案的『上一次调用时间』。当我们使用 flash 档案系统时可能会选项把这个选项关闭以减少写入的次数。
+        -o auto、-o noauto：打开/关闭自动挂上模式。
+        -o defaults:使用预设的选项 rw, suid, dev, exec, auto, nouser, and async.
+        -o dev、-o nodev-o exec、-o noexec允许执行档被执行。
+        -o suid、-o nosuid：
+        允许执行档在 root 权限下执行。
+        -o user、-o nouser：使用者可以执行 mount/umount 的动作。
+        -o remount：将一个已经挂下的档案系统重新用不同的方式挂上。例如原先是唯读的系统，现在用可读写的模式重新挂上。
+        -o ro：用唯读模式挂上。
+        -o rw：用可读写模式挂上。
+        -o loop=：使用 loop 模式用来将一个档案当成硬盘分割挂上系统。</code></pre><p>实例：</p>
+<p>将 /dev/hda1 挂在 /mnt 之下        </p>
+<pre><code>#mount /dev/hda1 /mnt</code></pre><p>将 /dev/hda1 用唯读模式挂在 /mnt 之下。</p>
+<pre><code>#mount -o ro /dev/hda1 /mnt</code></pre><p>将 /tmp/image.iso 这个光碟的 image 档使用 loop 模式挂在 /mnt/cdrom 之下。用这种方法可以将一般网络上可以找到的 Linux 光 碟 ISO 档在不烧录成光碟的情况下检视其内容。</p>
+<pre><code>#mount -o loop /tmp/image.iso /mnt/cdrom</code></pre><h5 id="umount"><a href="#umount" class="headerlink" title="umount"></a>umount</h5><p>用于卸载已经加载的文件系统。利用设备名或挂载点都能umount文件系统，不过最好还是通过挂载点卸载，以免使用绑定挂载（一个设备，多个挂载点）时产生混乱。 </p>
+<pre><code>umount [选项] (参数)
+    选项:
+        -a：卸除/etc/mtab中记录的所有文件系统；
+        -h：显示帮助；
+        -n：卸除时不要将信息存入/etc/mtab文件中；
+        -r：若无法成功卸除，则尝试以只读的方式重新挂入文件系统；
+        -t&lt;文件系统类型&gt;：仅卸除选项中所指定的文件系统；
+        -v：执行时显示详细的信息；
+        -V：显示版本信息。</code></pre><p>实例：</p>
+<p>下面两条命令分别通过设备名和挂载点卸载文件系统，同时输出详细信息：</p>
+<p>通过设备名卸载</p>
+<pre><code>umount -v /dev/sda1
+/dev/sda1 umounted</code></pre><p>通过挂载点卸载</p>
+<pre><code>umount -v /mnt/mymount/
+/tmp/diskboot.img umounted</code></pre><p>如果设备正忙，卸载即告失败。卸载失败的常见原因是，某个打开的shell当前目录为挂载点里的某个目录：</p>
+<pre><code>umount -v /mnt/mymount/
+umount: /mnt/mymount: device is busy
+umount: /mnt/mymount: device is busy</code></pre><p>有时，导致设备忙的原因并不好找。碰到这种情况时，可以用lsof列出已打开文件，然后搜索列表查找待卸载的挂载点：</p>
+<pre><code>lsof | grep mymount         查找mymount分区里打开的文件
+bash   9341  francois  cwd   DIR   8,1   1024    2 /mnt/mymount</code></pre><p>从上面的输出可知，mymount分区无法卸载的原因在于，francois运行的PID为9341的bash进程。</p>
+<p>对付系统文件正忙的另一种方法是执行延迟卸载：</p>
+<pre><code>umount -vl /mnt/mymount/     执行延迟卸载</code></pre><p>延迟卸载（lazy unmount）会立即卸载目录树里的文件系统，等到设备不再繁忙时才清理所有相关资源。卸载可移动存储介质还可以用eject命令。下面这条命令会卸载cd并弹出CD：</p>
+<pre><code>eject /dev/cdrom      卸载并弹出CD </code></pre><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/blog/tags/linux/" rel="tag"># linux</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/linux/linux-command-file/" rel="next" title="Linux常用命令-文件管理">
+                  <i class="fa fa-chevron-left"></i> Linux常用命令-文件管理
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/linux/linux-command-file-dr/" rel="prev" title="Linux常用命令-文件目录管理">
+                  Linux常用命令-文件目录管理 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#df"><span class="nav-number">1.</span> <span class="nav-text">df</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fdisk"><span class="nav-number">2.</span> <span class="nav-text">fdisk</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mount"><span class="nav-number">3.</span> <span class="nav-text">mount</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#umount"><span class="nav-number">4.</span> <span class="nav-text">umount</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">czh</p>
+  <div class="site-description" itemprop="description">博客</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/blog/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/blog/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/CoolLittle" title="GitHub &rarr; https://github.com/CoolLittle" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">czh</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/blog/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/blog/js/utils.js?v=7.4.0"></script><script src="/blog/js/motion.js?v=7.4.0"></script>
+<script src="/blog/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/blog/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
