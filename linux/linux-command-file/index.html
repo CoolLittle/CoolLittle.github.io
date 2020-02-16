@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="文件管理常用命令....">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-16T06:15:19.499Z">
+<meta property="og:updated_time" content="2020-02-16T06:27:26.045Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令-文件管理">
 <meta name="twitter:description" content="文件管理常用命令....">
@@ -258,7 +258,7 @@
                 
               
 
-              <time title="创建时间：2020-02-16 13:19:00 / 修改时间：06:15:19" itemprop="dateCreated datePublished" datetime="2020-02-16T13:19:00+00:00">2020-02-16</time>
+              <time title="创建时间：2020-02-16 13:19:00 / 修改时间：06:27:26" itemprop="dateCreated datePublished" datetime="2020-02-16T13:19:00+00:00">2020-02-16</time>
             </span>
           
             
@@ -292,7 +292,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h5><h5 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h5><p>连接多个文件并打印到标准输出。</p>
+        <h4 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h4><h4 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h4><p>连接多个文件并打印到标准输出。</p>
 <pre><code>cat [选项] [文件]
     选项
         -n 或 --number：由 1 开始对所有输出的行数编号。
@@ -315,7 +315,7 @@ cat -n test.log
 # 显示文件并在所有非空行开头附加行号
 cat -b test.log
 # 将标准输入的内容和文件内容一并显示
-echo &apos;######&apos; |cat - test.log</code></pre><h5 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h5><p>用来变更文件或目录的所属群组。该命令用来改变指定文件所属的用户组。其中，组名可以是用户组的id，也可以是用户组的组名。文件名可以 是由空格分开的要改变属组的文件列表，也可以是由通配符描述的文件集合。如果用户不是该文件的文件主或超级用户(root)，则不能改变该文件的组。</p>
+echo &apos;#####&apos; |cat - test.log</code></pre><h4 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h4><p>用来变更文件或目录的所属群组。该命令用来改变指定文件所属的用户组。其中，组名可以是用户组的id，也可以是用户组的组名。文件名可以 是由空格分开的要改变属组的文件列表，也可以是由通配符描述的文件集合。如果用户不是该文件的文件主或超级用户(root)，则不能改变该文件的组。</p>
 <p>在UNIX系统家族里，文件或目录权限的掌控以拥有者及所属群组来管理。您可以使用chgrp指令去变更文件与目录的所属群组，设置方式采用群组名称或群组识别码皆可。</p>
 <pre><code>chgrp [选项][组群][文件|目录]
     选项
@@ -336,26 +336,28 @@ echo &apos;######&apos; |cat - test.log</code></pre><h5 id="chgrp"><a href="#chg
 <pre><code>将/usr/meng及其子目录下的所有文件的用户组改为mengxin
 chgrp -R mengxin /usr/meng
 更改文件ah的组群所有者为 newuser
-[root@rhel ~]# chgrp newuser ah</code></pre><h5 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h5><p>用来变更文件或目录的权限</p>
+[root@rhel ~]# chgrp newuser ah</code></pre><h4 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h4><p>用来变更文件或目录的权限</p>
 <ol>
-<li><p>通过符号组合的方式更改目标文件或目录的权限。</p>
-</li>
-<li><p>通过八进制数的方式更改目标文件或目录的权限。</p>
-</li>
-<li><p>通过参考文件的权限来更改目标文件或目录的权限。      </p>
-<p> chmod [选项]… 模式[,模式]… 文件…<br> chmod [选项]… 八进制模式 文件…<br> chmod [选项]… –reference=参考文件 文件…<br> 将每个文件的权限模式变更至指定模式。<br> 使用 –reference 选项时，把指定文件的模式设置为与参考文件相同。</p>
-<pre><code>选项
-    -c, --changes          like verbose but report only when a change is made
-    -f, --silent, --quiet  suppress most error messages
-    -v, --verbose          output a diagnostic for every file processed
-      --no-preserve-root  do not treat &apos;/&apos; specially (the default)
-      --preserve-root    fail to operate recursively on &apos;/&apos;
-      --reference=参考文件  使用参考文件的模式而非给定模式的值
-    -R, --recursive        递归修改文件和目录
-      --help        显示此帮助信息并退出
-      --version        显示版本信息并退出</code></pre></li>
+<li>通过符号组合的方式更改目标文件或目录的权限。</li>
+<li>通过八进制数的方式更改目标文件或目录的权限。</li>
+<li>通过参考文件的权限来更改目标文件或目录的权限。      </li>
 </ol>
-<p>实例：</p>
+<pre><code>chmod [选项]... 模式[,模式]... 文件...
+chmod [选项]... 八进制模式 文件...
+chmod [选项]... --reference=参考文件 文件...
+将每个文件的权限模式变更至指定模式。
+使用 --reference 选项时，把指定文件的模式设置为与参考文件相同。
+
+    选项
+        -c, --changes          like verbose but report only when a change is made
+        -f, --silent, --quiet  suppress most error messages
+        -v, --verbose          output a diagnostic for every file processed
+            --no-preserve-root  do not treat &apos;/&apos; specially (the default)
+            --preserve-root    fail to operate recursively on &apos;/&apos;
+            --reference=参考文件  使用参考文件的模式而非给定模式的值
+        -R, --recursive        递归修改文件和目录
+            --help        显示此帮助信息并退出
+            --version        显示版本信息并退出</code></pre><p>实例：</p>
 <pre><code># 添加组用户的写权限。
 chmod g+w ./test.log
 # 删除其他用户的所有权限。
@@ -383,7 +385,7 @@ ls -la
 # 更多详情请参阅info coreutils &apos;ls invocation&apos;（ls命令的info文档）的&apos;-l&apos;选项部分。
 # 第2到4位代表当前用户的权限。
 # 第5到7位代表组用户的权限。
-# 第8到10位代表其他用户的权限。</code></pre><h5 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h5><p>用来变更文件或目录的拥有者或所属群组，该命令可以向某个用户授权，使该用户变成指定文件的所有者或者改变文件所属的组。用户可以是用户或者是用户D，用户组可以是组名或组id。文件名可以使由空格分开的文件列表，在文件名中可以包含通配符。</p>
+# 第8到10位代表其他用户的权限。</code></pre><h4 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h4><p>用来变更文件或目录的拥有者或所属群组，该命令可以向某个用户授权，使该用户变成指定文件的所有者或者改变文件所属的组。用户可以是用户或者是用户D，用户组可以是组名或组id。文件名可以使由空格分开的文件列表，在文件名中可以包含通配符。</p>
 <p>只有文件主和超级用户才可以便用该命令。</p>
 <pre><code>chown [选项] [参数]
     选项
@@ -400,7 +402,7 @@ ls -la
         用户：组：指定所有者和所属工作组。当省略“：组”，仅改变文件所有者；
         文件：指定要改变所有者和工作组的文件列表。支持多个文件和目标，支持shell通配符。</code></pre><p>实例</p>
 <pre><code>将目录/usr/meng及其下面的所有文件、子目录的文件主改成 liu：
-chown -R liu /usr/meng</code></pre><h5 id="cmp"><a href="#cmp" class="headerlink" title="cmp"></a>cmp</h5><p>用来比较两个文件是否有差异。当相互比较的两个文件完全一样时，则该指令不会显示任何信息。若发现有差异，预设会标示出第一个不通之处的字符和列数编号。若不指定任何文件名称或是所给予的文件名为“-”，则cmp指令会从标准输入设备读取数据。</p>
+chown -R liu /usr/meng</code></pre><h4 id="cmp"><a href="#cmp" class="headerlink" title="cmp"></a>cmp</h4><p>用来比较两个文件是否有差异。当相互比较的两个文件完全一样时，则该指令不会显示任何信息。若发现有差异，预设会标示出第一个不通之处的字符和列数编号。若不指定任何文件名称或是所给予的文件名为“-”，则cmp指令会从标准输入设备读取数据。</p>
 <pre><code>cmp [选项] [参数]
     选项
         -c或--print-chars：除了标明差异处的十进制字码之外，一并显示该字符所对应字符；
@@ -429,7 +431,7 @@ Jslkadjls 85
 cmp testfile testfile1       #比较两个文件  
 testfile testfile1           #有差异：第8字节，第2行  
 
-注意：在比较结果中，只能够显示第一比较结果。   </code></pre><h5 id="cut"><a href="#cut" class="headerlink" title="cut"></a>cut</h5><p>用来显示行中的指定部分，删除文件中指定字段。cut 经常用来显示文件的内容，类似于 type 命令。</p>
+注意：在比较结果中，只能够显示第一比较结果。   </code></pre><h4 id="cut"><a href="#cut" class="headerlink" title="cut"></a>cut</h4><p>用来显示行中的指定部分，删除文件中指定字段。cut 经常用来显示文件的内容，类似于 type 命令。</p>
 <p>说明：该命令有两项功能，其一是用来显示文件的内容，它依次读取由参数 file 所指 明的文件，将它们的内容输出到标准输出上；其二是连接两个或多个文件，如cut fl f2 &gt; f3将把文件 fl 和 f2 的内容合并起来，然后通过输出重定向符“&gt;”的作用，将它们放入文件 f3 中。</p>
 <p>当文件较大时，文本在屏幕上迅速闪过（滚屏），用户往往看不清所显示的内容。因此，一般用 more 等命令分屏显示。为了控制滚屏，可以按 Ctrl+S 键，停止滚屏；按 Ctrl+Q 键可以恢复滚屏。按 Ctrl+C（中断）键可以终止该命令的执行，并且返回 Shell 提示符状态。</p>
 <pre><code>cut（选项）（参数）
@@ -509,7 +511,7 @@ efghijklmnopqrstuvwxyz
 efghijklmnopqrstuvwxyz
 efghijklmnopqrstuvwxyz
 efghijklmnopqrstuvwxyz
-efghijklmnopqrstuvwxyz</code></pre><h5 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h5><p>将源文件或目录复制到目标文件或目录中 - copy files and directories<br>用来将一个或多个源文件或者目录复制到指定的目的文件或目录。它可以将单个源文件复制成一个指定文件名的具体的文件或一个已经存在的目录下。cp命令还支持同时复制多个文件，当一次复制多个文件时，目标文件参数必须是一个已经存在的目录，否则将出现错误</p>
+efghijklmnopqrstuvwxyz</code></pre><h4 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h4><p>将源文件或目录复制到目标文件或目录中 - copy files and directories<br>用来将一个或多个源文件或者目录复制到指定的目的文件或目录。它可以将单个源文件复制成一个指定文件名的具体的文件或一个已经存在的目录下。cp命令还支持同时复制多个文件，当一次复制多个文件时，目标文件参数必须是一个已经存在的目录，否则将出现错误</p>
 <pre><code>cp [选项] [参数]
     选项：
         -a：此参数的效果和同时指定&quot;-dpR&quot;参数相同；
@@ -536,7 +538,7 @@ $ ls
 test1.py test1.py.~1~ test1.py.~2~
 
 # 将当前目录下所有文件，复制到当前目录的兄弟目录 backup 文件夹中
-cp -rfb ./* ../backup</code></pre><h5 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h5><p>比较给定的两个文件的不同</p>
+cp -rfb ./* ../backup</code></pre><h4 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h4><p>比较给定的两个文件的不同</p>
 <pre><code>diff [选项] [参数]
     选项：
         -&lt;行数&gt;：指定要显示多少行的文本。此参数必须与-c或-u参数一并使用；
@@ -584,7 +586,7 @@ n1 a n3,n4
 n1,n2 d n3  
 n1,n2 c n3,n4 </code></pre><p>其中，字母”a”、”d”、”c”分别表示添加、删除及修改操作。而”n1”、”n2”表示在文件1中的行号，”n3”、”n4”表示在文件2中的行号。</p>
 <p>注意：以上说明指定了两个文件中不同处的行号及其相应的操作。在输出形式中，每一行后面将跟随受到影响的若干行。其中，以&lt;开始的行属于文件1，以&gt;开始的行属于文件2。</p>
-<h5 id="file"><a href="#file" class="headerlink" title="file"></a>file</h5><p>用来探测给定文件的类型</p>
+<h4 id="file"><a href="#file" class="headerlink" title="file"></a>file</h4><p>用来探测给定文件的类型</p>
 <pre><code>file [选项] [参数]
     -b：列出辨识结果时，不显示文件名称；
     -c：详细显示指令执行过程，便于排错或分析程序执行的情形；
@@ -618,7 +620,7 @@ lrwxrwxrwx 1 root root 10 08-13 00:11 /var/mail -&gt; spool/mail
 /var/spool/mail: directory
 
 [root@localhost ~]# file -L /var/spool/mail
-/var/spool/mail: directory</code></pre><h5 id="find"><a href="#find" class="headerlink" title="find"></a>find</h5><h5 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h5><h5 id="less"><a href="#less" class="headerlink" title="less"></a>less</h5><h5 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h5><h5 id="lsattr"><a href="#lsattr" class="headerlink" title="lsattr"></a>lsattr</h5><h5 id="more"><a href="#more" class="headerlink" title="more"></a>more</h5><h5 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h5><h5 id="paste"><a href="#paste" class="headerlink" title="paste"></a>paste</h5><h5 id="read"><a href="#read" class="headerlink" title="read"></a>read</h5><h5 id="rcp"><a href="#rcp" class="headerlink" title="rcp"></a>rcp</h5><h5 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h5><h5 id="split"><a href="#split" class="headerlink" title="split"></a>split</h5><h5 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h5><h5 id="which"><a href="#which" class="headerlink" title="which"></a>which</h5><h5 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h5><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
+/var/spool/mail: directory</code></pre><h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><h4 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h4><h4 id="less"><a href="#less" class="headerlink" title="less"></a>less</h4><h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><h4 id="lsattr"><a href="#lsattr" class="headerlink" title="lsattr"></a>lsattr</h4><h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><h4 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h4><h4 id="paste"><a href="#paste" class="headerlink" title="paste"></a>paste</h4><h4 id="read"><a href="#read" class="headerlink" title="read"></a>read</h4><h4 id="rcp"><a href="#rcp" class="headerlink" title="rcp"></a>rcp</h4><h4 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h4><h4 id="split"><a href="#split" class="headerlink" title="split"></a>split</h4><h4 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h4><h4 id="which"><a href="#which" class="headerlink" title="which"></a>which</h4><h4 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h4><h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
 
     </div>
 
@@ -705,7 +707,7 @@ lrwxrwxrwx 1 root root 10 08-13 00:11 /var/mail -&gt; spool/mail
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#awk"><span class="nav-number">1.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cat"><span class="nav-number">2.</span> <span class="nav-text">cat</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#chgrp"><span class="nav-number">3.</span> <span class="nav-text">chgrp</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#chmod"><span class="nav-number">4.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#chown"><span class="nav-number">5.</span> <span class="nav-text">chown</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cmp"><span class="nav-number">6.</span> <span class="nav-text">cmp</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cut"><span class="nav-number">7.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cp"><span class="nav-number">8.</span> <span class="nav-text">cp</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#diff"><span class="nav-number">9.</span> <span class="nav-text">diff</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#file"><span class="nav-number">10.</span> <span class="nav-text">file</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#find"><span class="nav-number">11.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ln"><span class="nav-number">12.</span> <span class="nav-text">ln</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#less"><span class="nav-number">13.</span> <span class="nav-text">less</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#locate"><span class="nav-number">14.</span> <span class="nav-text">locate</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lsattr"><span class="nav-number">15.</span> <span class="nav-text">lsattr</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#more"><span class="nav-number">16.</span> <span class="nav-text">more</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mv"><span class="nav-number">17.</span> <span class="nav-text">mv</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#paste"><span class="nav-number">18.</span> <span class="nav-text">paste</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#read"><span class="nav-number">19.</span> <span class="nav-text">read</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rcp"><span class="nav-number">20.</span> <span class="nav-text">rcp</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rm"><span class="nav-number">21.</span> <span class="nav-text">rm</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#split"><span class="nav-number">22.</span> <span class="nav-text">split</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#touch"><span class="nav-number">23.</span> <span class="nav-text">touch</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#which"><span class="nav-number">24.</span> <span class="nav-text">which</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#whereis"><span class="nav-number">25.</span> <span class="nav-text">whereis</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#awk"><span class="nav-number">1.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cat"><span class="nav-number">2.</span> <span class="nav-text">cat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chgrp"><span class="nav-number">3.</span> <span class="nav-text">chgrp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chmod"><span class="nav-number">4.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chown"><span class="nav-number">5.</span> <span class="nav-text">chown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cmp"><span class="nav-number">6.</span> <span class="nav-text">cmp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cut"><span class="nav-number">7.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp"><span class="nav-number">8.</span> <span class="nav-text">cp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#diff"><span class="nav-number">9.</span> <span class="nav-text">diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#file"><span class="nav-number">10.</span> <span class="nav-text">file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">11.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ln"><span class="nav-number">12.</span> <span class="nav-text">ln</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#less"><span class="nav-number">13.</span> <span class="nav-text">less</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#locate"><span class="nav-number">14.</span> <span class="nav-text">locate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lsattr"><span class="nav-number">15.</span> <span class="nav-text">lsattr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#more"><span class="nav-number">16.</span> <span class="nav-text">more</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mv"><span class="nav-number">17.</span> <span class="nav-text">mv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#paste"><span class="nav-number">18.</span> <span class="nav-text">paste</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#read"><span class="nav-number">19.</span> <span class="nav-text">read</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rcp"><span class="nav-number">20.</span> <span class="nav-text">rcp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm"><span class="nav-number">21.</span> <span class="nav-text">rm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#split"><span class="nav-number">22.</span> <span class="nav-text">split</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#touch"><span class="nav-number">23.</span> <span class="nav-text">touch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#which"><span class="nav-number">24.</span> <span class="nav-text">which</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis"><span class="nav-number">25.</span> <span class="nav-text">whereis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">26.</span> <span class="nav-text">参考</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
