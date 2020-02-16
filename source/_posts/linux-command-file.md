@@ -26,19 +26,20 @@ date: 2020-02-16 13:19:00
             -e：等价于"-vE"选项；
             -t：等价于"-vT"选项
     
-        实例
-            # 合并显示多个文件
-            cat ./1.log ./2.log ./3.log
-            # 显示文件中的非打印字符、tab、换行符
-            cat -A test.log
-            # 压缩文件的空行
-            cat -s test.log
-            # 显示文件并在所有行开头附加行号
-            cat -n test.log
-            # 显示文件并在所有非空行开头附加行号
-            cat -b test.log
-            # 将标准输入的内容和文件内容一并显示
-            echo '######' |cat - test.log
+实例
+
+    # 合并显示多个文件
+    cat ./1.log ./2.log ./3.log
+    # 显示文件中的非打印字符、tab、换行符
+    cat -A test.log
+    # 压缩文件的空行
+    cat -s test.log
+    # 显示文件并在所有行开头附加行号
+    cat -n test.log
+    # 显示文件并在所有非空行开头附加行号
+    cat -b test.log
+    # 将标准输入的内容和文件内容一并显示
+    echo '######' |cat - test.log
 
 ##### chgrp
 
@@ -62,12 +63,13 @@ date: 2020-02-16 13:19:00
             所属新群组
         文件|目录
             待修改的文件或者目录
-            
-        实例
-            将/usr/meng及其子目录下的所有文件的用户组改为mengxin
-            chgrp -R mengxin /usr/meng
-            更改文件ah的组群所有者为 newuser
-            [root@rhel ~]# chgrp newuser ah
+    
+实例
+
+    将/usr/meng及其子目录下的所有文件的用户组改为mengxin
+    chgrp -R mengxin /usr/meng
+    更改文件ah的组群所有者为 newuser
+    [root@rhel ~]# chgrp newuser ah
             
 ##### chmod
 
@@ -75,8 +77,7 @@ date: 2020-02-16 13:19:00
 
 1. 通过符号组合的方式更改目标文件或目录的权限。
 2. 通过八进制数的方式更改目标文件或目录的权限。
-3. 通过参考文件的权限来更改目标文件或目录的权限。
-
+3. 通过参考文件的权限来更改目标文件或目录的权限。      
 
     chmod [选项]... 模式[,模式]... 文件...
     chmod [选项]... 八进制模式 文件...
@@ -94,23 +95,24 @@ date: 2020-02-16 13:19:00
             -R, --recursive        递归修改文件和目录
               --help		显示此帮助信息并退出
               --version		显示版本信息并退出
-              
-        实例：
-            # 添加组用户的写权限。
-            chmod g+w ./test.log
-            # 删除其他用户的所有权限。
-            chmod o= ./test.log
-            # 使得所有用户都没有写权限。
-            chmod a-w ./test.log
-            # 当前用户具有所有权限，组用户有读写权限，其他用户只有读权限。
-            chmod u=rwx, g=rw, o=r ./test.log
-            # 等价的八进制数表示：
-            chmod 754 ./test.log
-            # 将目录以及目录下的文件都设置为所有用户拥有读写权限。
-            # 注意，使用'-R'选项一定要保留当前用户的执行和读取权限，否则会报错！
-            chmod -R a=rw ./testdir/
-            # 根据其他文件的权限设置文件权限。
-            chmod --reference=./1.log  ./test.log
+        
+实例：
+
+    # 添加组用户的写权限。
+    chmod g+w ./test.log
+    # 删除其他用户的所有权限。
+    chmod o= ./test.log
+    # 使得所有用户都没有写权限。
+    chmod a-w ./test.log
+    # 当前用户具有所有权限，组用户有读写权限，其他用户只有读权限。
+    chmod u=rwx, g=rw, o=r ./test.log
+    # 等价的八进制数表示：
+    chmod 754 ./test.log
+    # 将目录以及目录下的文件都设置为所有用户拥有读写权限。
+    # 注意，使用'-R'选项一定要保留当前用户的执行和读取权限，否则会报错！
+    chmod -R a=rw ./testdir/
+    # 根据其他文件的权限设置文件权限。
+    chmod --reference=./1.log  ./test.log
 
 说明：
     
@@ -161,9 +163,10 @@ linux文件的用户权限说明：
             用户：组：指定所有者和所属工作组。当省略“：组”，仅改变文件所有者；
             文件：指定要改变所有者和工作组的文件列表。支持多个文件和目标，支持shell通配符。
             
-        实例
-            将目录/usr/meng及其下面的所有文件、子目录的文件主改成 liu：
-            chown -R liu /usr/meng
+实例
+
+    将目录/usr/meng及其下面的所有文件、子目录的文件主改成 liu：
+    chown -R liu /usr/meng
          
 ##### cmp
 
@@ -179,27 +182,28 @@ linux文件的用户权限说明：
             --help：在线帮助。
         参数
             目录：比较两个文件的差异。
-        
-        实例
-            使用cmp命令比较文件"testfile"和文件"testfile1"两个文件，则输入下面的命令：
-            cmp testfile testfile1            #比较两个指定的文件
-            
-            在上述指令执行之前，使用cat命令查看两个指定的文件内容，如下所示：
-            cat testfile                    #查看文件内容  
-            Absncn 50                       #显示文件“testfile”  
-            Asldssja 60  
-            Jslkadjls 85 
-            
-            cat testfile1                   #查看文件内容  
-            Absncn 50                       #显示文件“testfile1”  
-            AsldssjE 62  
-            Jslkadjls 85  
-            然后，再执行cmp命令，并返回比较结果，具体如下所示：
-            
-            cmp testfile testfile1       #比较两个文件  
-            testfile testfile1           #有差异：第8字节，第2行  
-            
-            注意：在比较结果中，只能够显示第一比较结果。   
+
+实例
+
+    使用cmp命令比较文件"testfile"和文件"testfile1"两个文件，则输入下面的命令：
+    cmp testfile testfile1            #比较两个指定的文件
+    
+    在上述指令执行之前，使用cat命令查看两个指定的文件内容，如下所示：
+    cat testfile                    #查看文件内容  
+    Absncn 50                       #显示文件“testfile”  
+    Asldssja 60  
+    Jslkadjls 85 
+    
+    cat testfile1                   #查看文件内容  
+    Absncn 50                       #显示文件“testfile1”  
+    AsldssjE 62  
+    Jslkadjls 85  
+    然后，再执行cmp命令，并返回比较结果，具体如下所示：
+    
+    cmp testfile testfile1       #比较两个文件  
+    testfile testfile1           #有差异：第8字节，第2行  
+    
+    注意：在比较结果中，只能够显示第一比较结果。   
             
 ##### cut
 
@@ -342,17 +346,19 @@ cut 命令可以将一串字符作为列来显示，字符字段的记法：
         参数：
             源文件：制定源文件列表。默认情况下，cp命令不能复制目录，如果要复制目录，则必须使用-R选项；
             目标文件：指定目标文件。当“源文件”为多个文件时，要求“目标文件”为指定的目录。
-    实例：
-        （-r 是“递归”， -u 是“更新”，-v 是“详细”）
-        $ cp -r -u -v /usr/men/tmp ~/men/tmp 
 
-        版本备份 --backup=numbered 参数意思为“我要做个备份，而且是带编号的连续备份”。所以一个备份就是 1 号，第二个就是 2 号，等等。
-        $ cp --force --backup=numbered test1.py test1.py
-        $ ls
-        test1.py test1.py.~1~ test1.py.~2~
+实例：
 
-        # 将当前目录下所有文件，复制到当前目录的兄弟目录 backup 文件夹中
-        cp -rfb ./* ../backup
+    （-r 是“递归”， -u 是“更新”，-v 是“详细”）
+    $ cp -r -u -v /usr/men/tmp ~/men/tmp 
+
+    版本备份 --backup=numbered 参数意思为“我要做个备份，而且是带编号的连续备份”。所以一个备份就是 1 号，第二个就是 2 号，等等。
+    $ cp --force --backup=numbered test1.py test1.py
+    $ ls
+    test1.py test1.py.~1~ test1.py.~2~
+
+    # 将当前目录下所有文件，复制到当前目录的兄弟目录 backup 文件夹中
+    cp -rfb ./* ../backup
 
 ##### diff
 
@@ -396,15 +402,17 @@ cut 命令可以将一串字符作为列来显示，字符字段的记法：
         参数：
             文件1：指定要比较的第一个文件；
             文件2：指定要比较的第二个文件。
-    实例：
-       将目录/usr/li下的文件"test.txt"与当前目录下的文件"test.txt"进行比较，输入如下命令：
 
-       diff /usr/li test.txt     #使用diff指令对文件进行比较
+实例：
 
-       上面的命令执行后，会将比较后的不同之处以指定的形式列出，如下所示：
-       n1 a n3,n4  
-       n1,n2 d n3  
-       n1,n2 c n3,n4 
+    将目录/usr/li下的文件"test.txt"与当前目录下的文件"test.txt"进行比较，输入如下命令：
+
+    diff /usr/li test.txt     #使用diff指令对文件进行比较
+
+    上面的命令执行后，会将比较后的不同之处以指定的形式列出，如下所示：
+    n1 a n3,n4  
+    n1,n2 d n3  
+    n1,n2 c n3,n4 
 
 其中，字母"a"、"d"、"c"分别表示添加、删除及修改操作。而"n1"、"n2"表示在文件1中的行号，"n3"、"n4"表示在文件2中的行号。
 
@@ -422,37 +430,38 @@ cut 命令可以将一串字符作为列来显示，字符字段的记法：
         -m<魔法数字文件>：指定魔法数字文件；
         -v：显示版本信息；
         -z：尝试去解读压缩文件的内容。
-    实例：
-        显示文件类型
+实例：    
 
-            [root@localhost ~]# file install.log
-            install.log: UTF-8 Unicode text
+显示文件类型
 
-            [root@localhost ~]# file -b install.log      <== 不显示文件名称
-            UTF-8 Unicode text
+    [root@localhost ~]# file install.log
+    install.log: UTF-8 Unicode text
 
-            [root@localhost ~]# file -i install.log      <== 显示MIME类别。
-            install.log: text/plain; charset=utf-8
+    [root@localhost ~]# file -b install.log      <== 不显示文件名称
+    UTF-8 Unicode text
 
-            [root@localhost ~]# file -b -i install.log
-            text/plain; charset=utf-8
-            
-        显示符号链接的文件类型
+    [root@localhost ~]# file -i install.log      <== 显示MIME类别。
+    install.log: text/plain; charset=utf-8
 
-            [root@localhost ~]# ls -l /var/mail
-            lrwxrwxrwx 1 root root 10 08-13 00:11 /var/mail -> spool/mail
+    [root@localhost ~]# file -b -i install.log
+    text/plain; charset=utf-8
+    
+显示符号链接的文件类型
 
-            [root@localhost ~]# file /var/mail
-            /var/mail: symbolic link to `spool/mail'
+    [root@localhost ~]# ls -l /var/mail
+    lrwxrwxrwx 1 root root 10 08-13 00:11 /var/mail -> spool/mail
 
-            [root@localhost ~]# file -L /var/mail
-            /var/mail: directory
+    [root@localhost ~]# file /var/mail
+    /var/mail: symbolic link to `spool/mail'
 
-            [root@localhost ~]# file /var/spool/mail
-            /var/spool/mail: directory
+    [root@localhost ~]# file -L /var/mail
+    /var/mail: directory
 
-            [root@localhost ~]# file -L /var/spool/mail
-            /var/spool/mail: directory
+    [root@localhost ~]# file /var/spool/mail
+    /var/spool/mail: directory
+
+    [root@localhost ~]# file -L /var/spool/mail
+    /var/spool/mail: directory
 
 
 ##### find
