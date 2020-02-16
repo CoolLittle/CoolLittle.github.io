@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="文件管理常用命令....">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-16T06:45:49.077Z">
+<meta property="og:updated_time" content="2020-02-16T08:42:18.457Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令-文件管理">
 <meta name="twitter:description" content="文件管理常用命令....">
@@ -258,7 +258,7 @@
                 
               
 
-              <time title="创建时间：2020-02-16 13:19:00 / 修改时间：06:45:49" itemprop="dateCreated datePublished" datetime="2020-02-16T13:19:00+00:00">2020-02-16</time>
+              <time title="创建时间：2020-02-16 13:19:00 / 修改时间：08:42:18" itemprop="dateCreated datePublished" datetime="2020-02-16T13:19:00+00:00">2020-02-16</time>
             </span>
           
             
@@ -631,7 +631,152 @@ lrwxrwxrwx 1 root root 10 08-13 00:11 /var/mail -&gt; spool/mail
 
 [root@localhost ~]# file -L /var/spool/mail
 /var/spool/mail: directory</code></pre><hr>
-<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><h4 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h4><h4 id="less"><a href="#less" class="headerlink" title="less"></a>less</h4><h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><h4 id="lsattr"><a href="#lsattr" class="headerlink" title="lsattr"></a>lsattr</h4><h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><h4 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h4><h4 id="paste"><a href="#paste" class="headerlink" title="paste"></a>paste</h4><h4 id="read"><a href="#read" class="headerlink" title="read"></a>read</h4><h4 id="rcp"><a href="#rcp" class="headerlink" title="rcp"></a>rcp</h4><h4 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h4><h4 id="split"><a href="#split" class="headerlink" title="split"></a>split</h4><h4 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h4><h4 id="which"><a href="#which" class="headerlink" title="which"></a>which</h4><h4 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h4><h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><p>用来在指定目录下查找文件。任何位于参数之前的字符串都将被视为欲查找的目录名。如果使用该命令时，不设置任何参数，则find命令将在当前目录下查找子目录与文件。并且将查找到的子目录和文件全部进行显示。</p>
+<pre><code>find [选项] [参数]
+    选项
+        -amin&lt;分钟&gt;：查找在指定时间曾被存取过的文件或目录，单位以分钟计算；
+        -anewer&lt;参考文件或目录&gt;：查找其存取时间较指定文件或目录的存取时间更接近现在的文件或目录；
+        -atime&lt;24小时数&gt;：查找在指定时间曾被存取过的文件或目录，单位以24小时计算；
+        -cmin&lt;分钟&gt;：查找在指定时间之时被更改过的文件或目录；
+        -cnewer&lt;参考文件或目录&gt;查找其更改时间较指定文件或目录的更改时间更接近现在的文件或目录；
+        -ctime&lt;24小时数&gt;：查找在指定时间之时被更改的文件或目录，单位以24小时计算；
+        -daystart：从本日开始计算时间；
+        -depth：从指定目录下最深层的子目录开始查找；
+        -expty：寻找文件大小为0 Byte的文件，或目录下没有任何子目录或文件的空目录；
+        -exec&lt;执行指令&gt;：假设find指令的回传值为True，就执行该指令；
+        -false：将find指令的回传值皆设为False；
+        -fls&lt;列表文件&gt;：此参数的效果和指定“-ls”参数类似，但会把结果保存为指定的列表文件；
+        -follow：排除符号连接；
+        -fprint&lt;列表文件&gt;：此参数的效果和指定“-print”参数类似，但会把结果保存成指定的列表文件；
+        -fprint0&lt;列表文件&gt;：此参数的效果和指定“-print0”参数类似，但会把结果保存成指定的列表文件；
+        -fprintf&lt;列表文件&gt;&lt;输出格式&gt;：此参数的效果和指定“-printf”参数类似，但会把结果保存成指定的列表文件；
+        -fstype&lt;文件系统类型&gt;：只寻找该文件系统类型下的文件或目录；
+        -gid&lt;群组识别码&gt;：查找符合指定之群组识别码的文件或目录；
+        -group&lt;群组名称&gt;：查找符合指定之群组名称的文件或目录；
+        -help或——help：在线帮助；
+        -ilname&lt;范本样式&gt;：此参数的效果和指定“-lname”参数类似，但忽略字符大小写的差别；
+        -iname&lt;范本样式&gt;：此参数的效果和指定“-name”参数类似，但忽略字符大小写的差别；
+        -inum&lt;inode编号&gt;：查找符合指定的inode编号的文件或目录；
+        -ipath&lt;范本样式&gt;：此参数的效果和指定“-path”参数类似，但忽略字符大小写的差别；
+        -iregex&lt;范本样式&gt;：此参数的效果和指定“-regexe”参数类似，但忽略字符大小写的差别；
+        -links&lt;连接数目&gt;：查找符合指定的硬连接数目的文件或目录；
+        -iname&lt;范本样式&gt;：指定字符串作为寻找符号连接的范本样式；
+        -ls：假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出；
+        -maxdepth&lt;目录层级&gt;：设置最大目录层级；
+        -mindepth&lt;目录层级&gt;：设置最小目录层级；
+        -mmin&lt;分钟&gt;：查找在指定时间曾被更改过的文件或目录，单位以分钟计算；
+        -mount：此参数的效果和指定“-xdev”相同；
+        -mtime&lt;24小时数&gt;：查找在指定时间曾被更改过的文件或目录，单位以24小时计算；
+        -name&lt;范本样式&gt;：指定字符串作为寻找文件或目录的范本样式；
+        -newer&lt;参考文件或目录&gt;：查找其更改时间较指定文件或目录的更改时间更接近现在的文件或目录；
+        -nogroup：找出不属于本地主机群组识别码的文件或目录；
+        -noleaf：不去考虑目录至少需拥有两个硬连接存在；
+        -nouser：找出不属于本地主机用户识别码的文件或目录；
+        -ok&lt;执行指令&gt;：此参数的效果和指定“-exec”类似，但在执行指令之前会先询问用户，若回答“y”或“Y”，则放弃执行命令；
+        -path&lt;范本样式&gt;：指定字符串作为寻找目录的范本样式；
+        -perm&lt;权限数值&gt;：查找符合指定的权限数值的文件或目录；
+        -print：假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出。格式为每列一个名称，每个名称前皆有“./”字符串；
+        -print0：假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出。格式为全部的名称皆在同一行；
+        -printf&lt;输出格式&gt;：假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出。格式可以自行指定；
+        -prune：不寻找字符串作为寻找文件或目录的范本样式;
+        -regex&lt;范本样式&gt;：指定字符串作为寻找文件或目录的范本样式；
+        -size&lt;文件大小&gt;：查找符合指定的文件大小的文件；
+        -true：将find指令的回传值皆设为True；
+        -type&lt;文件类型&gt;：只寻找符合指定的文件类型的文件；
+        -uid&lt;用户识别码&gt;：查找符合指定的用户识别码的文件或目录；
+        -used&lt;日数&gt;：查找文件或目录被更改之后在指定时间曾被存取过的文件或目录，单位以日计算；
+        -user&lt;拥有者名称&gt;：查找符和指定的拥有者名称的文件或目录；
+        -version或——version：显示版本信息；
+        -xdev：将范围局限在先行的文件系统中；
+        -xtype&lt;文件类型&gt;：此参数的效果和指定“-type”参数类似，差别在于它针对符号连接检查。
+    参数
+        起始目录：查找文件的起始目录。</code></pre><p>实例</p>
+<ol>
+<li><strong>根据文件或者正则表达式进行匹配</strong></li>
+</ol>
+<p>在/home目录下查找以.txt结尾的文件名</p>
+<pre><code>find /home -name &quot;*.txt&quot;</code></pre><p>基于正则表达式匹配文件路径</p>
+<pre><code>find . -regex &quot;.*\(\.txt\|\.pdf\)$&quot;</code></pre><p>当前目录及子目录下查找所有以.txt和.pdf结尾的文件</p>
+<pre><code>find . \( -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot; \)
+或
+find . -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot;</code></pre><p>匹配文件路径或者文件</p>
+<pre><code>find /usr/ -path &quot;*local*&quot;</code></pre><ol start="2">
+<li><strong>否定参数</strong></li>
+</ol>
+<p>找出/home下不是以.txt结尾的文件</p>
+<pre><code>find /home ! -name &quot;*.txt&quot;</code></pre><p>根据文件类型进行搜索</p>
+<pre><code>find . -type 类型参数</code></pre><p>类型参数列表：</p>
+<pre><code>f 普通文件
+l 符号连接
+d 目录
+c 字符设备
+b 块设备
+s 套接字
+p Fifo</code></pre><ol start="3">
+<li><strong>基于目录深度搜索</strong></li>
+</ol>
+<p>向下最大深度限制为3</p>
+<pre><code>find . -maxdepth 3 -type f</code></pre><p>搜索出深度距离当前目录至少2个子目录的所有文件</p>
+<pre><code>find . -mindepth 2 -type f</code></pre><ol start="4">
+<li><p><strong>根据文件时间戳进行搜索</strong></p>
+<p> find . -type f 时间戳 （’-‘之内   ‘+’表示之前 无表示当前时间）</p>
+</li>
+</ol>
+<p>UNIX/Linux文件系统每个文件都有三种时间戳：</p>
+<pre><code>访问时间 （-atime/天，-amin/分钟）：用户最近一次访问时间。
+修改时间 （-mtime/天，-mmin/分钟）：文件最后一次修改时间。
+变化时间 （-ctime/天，-cmin/分钟）：文件数据元（例如权限等）最后一次修改时间。</code></pre><p>搜索最近七天内被访问过的所有文件</p>
+<pre><code>find . -type f -atime -7</code></pre><p>搜索恰好在第七天被访问过的所有文件</p>
+<pre><code>find . -type f -atime 7</code></pre><p>搜索超过七天内被访问过的所有文件</p>
+<pre><code>find . -type f -atime +7</code></pre><p>搜索访问时间超过10分钟的所有文件</p>
+<pre><code>find . -type f -amin +10</code></pre><p>找出比file.log修改时间更长的所有文件</p>
+<pre><code>find . -type f -newer file.log</code></pre><ol start="5">
+<li><p><strong>根据文件大小进行匹配</strong></p>
+<p> find . -type f -size 文件大小单元 (-表示小于  +表示大于  无表示等于)</p>
+</li>
+</ol>
+<p>文件大小单元：</p>
+<pre><code>b —— 块（512字节）
+c —— 字节
+w —— 字（2字节）
+k —— 千字节
+M —— 兆字节
+G —— 吉字节</code></pre><p>搜索大于10KB的文件</p>
+<pre><code>find . -type f -size +10k</code></pre><p>搜索小于10KB的文件</p>
+<pre><code>find . -type f -size -10k</code></pre><p>搜索等于10KB的文件</p>
+<pre><code>find . -type f -size 10k</code></pre><ol start="6">
+<li><strong>删除匹配文件</strong></li>
+</ol>
+<p>删除当前目录下所有.txt文件</p>
+<pre><code>find . -type f -name &quot;*.txt&quot; -delete</code></pre><ol start="7">
+<li><strong>根据文件权限/所有权进行匹配</strong></li>
+</ol>
+<p>当前目录下搜索出权限为777的文件</p>
+<pre><code>find . -type f -perm 777</code></pre><p>找出当前目录下权限不是644的php文件</p>
+<pre><code>find . -type f -name &quot;*.php&quot; ! -perm 644</code></pre><p>找出当前目录用户tom拥有的所有文件</p>
+<pre><code>find . -type f -user tom</code></pre><p>找出当前目录用户组sunk拥有的所有文件</p>
+<pre><code>find . -type f -group sunk</code></pre><ol start="8">
+<li><strong>借助-exec选项与其他命令结合使用</strong></li>
+</ol>
+<p>找出当前目录下所有root的文件，并把所有权更改为用户tom</p>
+<pre><code>find .-type f -user root -exec chown tom {} \; </code></pre><p>上例中， {} 用于与 -exec 选项结合使用来匹配所有文件，然后会被替换为相应的文件名，反斜杠必须加。</p>
+<p>查找当前目录下所有.txt文件并把他们拼接起来写入到all.txt文件中</p>
+<pre><code>find . -type f -name &quot;*.txt&quot; -exec cat {} \;&gt; /all.txt</code></pre><p>将30天前的.log文件移动到old目录中</p>
+<pre><code>find . -type f -mtime +30 -name &quot;*.log&quot; -exec cp {} old \;</code></pre><p>找出当前目录下所有.txt文件并以“File:文件名”的形式打印出来</p>
+<pre><code>find . -type f -name &quot;*.txt&quot; -exec printf &quot;File: %s\n&quot; {} \;</code></pre><p>因为单行命令中-exec参数中无法使用多个命令，以下方法可以实现在-exec之后接受多条命令</p>
+<pre><code>-exec ./text.sh {} \;</code></pre><ol start="9">
+<li><strong>搜索但跳出指定的目录</strong></li>
+</ol>
+<p>查找当前目录或者子目录下所有.txt文件，但是跳过子目录sk</p>
+<pre><code>find . -path &quot;./sk&quot; -prune -o -name &quot;*.txt&quot; -print</code></pre><ol start="10">
+<li><strong>find其他技巧收集</strong></li>
+</ol>
+<p>要列出所有长度为零的文件</p>
+<pre><code>find . -empty</code></pre><p>统计代码行数</p>
+<pre><code>find . -name &quot;*.java&quot;|xargs cat|grep -v ^$|wc -l # 代码行数统计, 排除空行</code></pre><p>在主目录中找到对所有人可读的文件。</p>
+<pre><code>find ~ -perm -o=r</code></pre><p>删除 mac 下自动生成的文件</p>
+<pre><code>find ./ -name &apos;__MACOSX&apos; -depth -exec rm -rf {} \;</code></pre><hr>
+<h4 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h4><h4 id="less"><a href="#less" class="headerlink" title="less"></a>less</h4><h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><h4 id="lsattr"><a href="#lsattr" class="headerlink" title="lsattr"></a>lsattr</h4><h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><h4 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h4><h4 id="paste"><a href="#paste" class="headerlink" title="paste"></a>paste</h4><h4 id="read"><a href="#read" class="headerlink" title="read"></a>read</h4><h4 id="rcp"><a href="#rcp" class="headerlink" title="rcp"></a>rcp</h4><h4 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h4><h4 id="split"><a href="#split" class="headerlink" title="split"></a>split</h4><h4 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h4><h4 id="which"><a href="#which" class="headerlink" title="which"></a>which</h4><h4 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h4><h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
 
     </div>
 
