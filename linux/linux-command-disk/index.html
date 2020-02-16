@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="磁盘管理命令命令详解.....">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-16T06:27:26.045Z">
+<meta property="og:updated_time" content="2020-02-16T06:45:49.077Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令-磁盘管理">
 <meta name="twitter:description" content="磁盘管理命令命令详解.....">
@@ -258,7 +258,7 @@
                 
               
 
-              <time title="创建时间：2020-02-16 13:19:00 / 修改时间：06:27:26" itemprop="dateCreated datePublished" datetime="2020-02-16T13:19:00+00:00">2020-02-16</time>
+              <time title="创建时间：2020-02-16 13:19:00 / 修改时间：06:45:49" itemprop="dateCreated datePublished" datetime="2020-02-16T13:19:00+00:00">2020-02-16</time>
             </span>
           
             
@@ -292,7 +292,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h5 id="df"><a href="#df" class="headerlink" title="df"></a>df</h5><p>显示磁盘空间 — 用于显示磁盘分区上的可使用的磁盘空间。默认显示单位为KB。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。</p>
+        <hr>
+<h4 id="df"><a href="#df" class="headerlink" title="df"></a>df</h4><p>显示磁盘空间 — 用于显示磁盘分区上的可使用的磁盘空间。默认显示单位为KB。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。</p>
 <pre><code>df [选项] [参数]
     选项
         -a或--all：包含全部的文件系统；
@@ -311,7 +312,8 @@
         -x&lt;文件系统类型&gt;或--exclude-type=&lt;文件系统类型&gt;：不要显示指定文件系统类型的磁盘信息；
         --help：显示帮助；
         --version：显示版本信息。
-参数：文件 — 指定文件系统上的文件。</code></pre><h5 id="fdisk"><a href="#fdisk" class="headerlink" title="fdisk"></a>fdisk</h5><p>用于观察硬盘实体使用情况，也可对硬盘分区。它采用传统的问答式界面，而非类似DOS fdisk的cfdisk互动式操作界面，因此在使用上较为不便，但功能却丝毫不打折扣。</p>
+参数：文件 — 指定文件系统上的文件。</code></pre><hr>
+<h4 id="fdisk"><a href="#fdisk" class="headerlink" title="fdisk"></a>fdisk</h4><p>用于观察硬盘实体使用情况，也可对硬盘分区。它采用传统的问答式界面，而非类似DOS fdisk的cfdisk互动式操作界面，因此在使用上较为不便，但功能却丝毫不打折扣。</p>
 <pre><code>fdisk [选项] [参数]
     选项
          -b &lt;大小&gt;             扇区大小(512、1024、2048或4096)
@@ -522,7 +524,8 @@ sysfs                   /sys                    sysfs   defaults        0 0
 proc                    /proc                   proc    defaults        0 0
 /dev/VolGroup00/LogVol01 swap                    swap    defaults        0 0
 /dev/sdb1               /oracle                 ext2    defaults        0 0
-/dev/sdb6               /web                    ext3    defaults        0 0</code></pre><h5 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h5><p>用于挂载Linux系统外的文件</p>
+/dev/sdb6               /web                    ext3    defaults        0 0</code></pre><hr>
+<h4 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h4><p>用于挂载Linux系统外的文件</p>
 <pre><code>mount [-hV]
 mount -a [-fFnrsvw] [-t vfstype]
 mount [-fnrsvw] [-o options [,...]] device | dir
@@ -557,7 +560,8 @@ mount [-fnrsvw] [-t vfstype] [-o options] device dir
 <p>将 /dev/hda1 挂在 /mnt 之下        </p>
 <pre><code>#mount /dev/hda1 /mnt</code></pre><p>将 /dev/hda1 用唯读模式挂在 /mnt 之下。</p>
 <pre><code>#mount -o ro /dev/hda1 /mnt</code></pre><p>将 /tmp/image.iso 这个光碟的 image 档使用 loop 模式挂在 /mnt/cdrom 之下。用这种方法可以将一般网络上可以找到的 Linux 光 碟 ISO 档在不烧录成光碟的情况下检视其内容。</p>
-<pre><code>#mount -o loop /tmp/image.iso /mnt/cdrom</code></pre><h5 id="umount"><a href="#umount" class="headerlink" title="umount"></a>umount</h5><p>用于卸载已经加载的文件系统。利用设备名或挂载点都能umount文件系统，不过最好还是通过挂载点卸载，以免使用绑定挂载（一个设备，多个挂载点）时产生混乱。 </p>
+<pre><code>#mount -o loop /tmp/image.iso /mnt/cdrom</code></pre><hr>
+<h4 id="umount"><a href="#umount" class="headerlink" title="umount"></a>umount</h4><p>用于卸载已经加载的文件系统。利用设备名或挂载点都能umount文件系统，不过最好还是通过挂载点卸载，以免使用绑定挂载（一个设备，多个挂载点）时产生混乱。 </p>
 <pre><code>umount [选项] (参数)
     选项:
         -a：卸除/etc/mtab中记录的所有文件系统；
@@ -580,7 +584,8 @@ umount: /mnt/mymount: device is busy</code></pre><p>有时，导致设备忙的�
 bash   9341  francois  cwd   DIR   8,1   1024    2 /mnt/mymount</code></pre><p>从上面的输出可知，mymount分区无法卸载的原因在于，francois运行的PID为9341的bash进程。</p>
 <p>对付系统文件正忙的另一种方法是执行延迟卸载：</p>
 <pre><code>umount -vl /mnt/mymount/     执行延迟卸载</code></pre><p>延迟卸载（lazy unmount）会立即卸载目录树里的文件系统，等到设备不再繁忙时才清理所有相关资源。卸载可移动存储介质还可以用eject命令。下面这条命令会卸载cd并弹出CD：</p>
-<pre><code>eject /dev/cdrom      卸载并弹出CD </code></pre><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
+<pre><code>eject /dev/cdrom      卸载并弹出CD </code></pre><hr>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
 
     </div>
 
@@ -667,7 +672,7 @@ bash   9341  francois  cwd   DIR   8,1   1024    2 /mnt/mymount</code></pre><p>�
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#df"><span class="nav-number">1.</span> <span class="nav-text">df</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fdisk"><span class="nav-number">2.</span> <span class="nav-text">fdisk</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mount"><span class="nav-number">3.</span> <span class="nav-text">mount</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#umount"><span class="nav-number">4.</span> <span class="nav-text">umount</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#df"><span class="nav-number">1.</span> <span class="nav-text">df</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fdisk"><span class="nav-number">2.</span> <span class="nav-text">fdisk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mount"><span class="nav-number">3.</span> <span class="nav-text">mount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#umount"><span class="nav-number">4.</span> <span class="nav-text">umount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->

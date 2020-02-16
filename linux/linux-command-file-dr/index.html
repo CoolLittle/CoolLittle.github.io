@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="文件目录管理命令详解.....">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-16T06:27:26.045Z">
+<meta property="og:updated_time" content="2020-02-16T06:45:49.077Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令-文件目录管理">
 <meta name="twitter:description" content="文件目录管理命令详解.....">
@@ -258,7 +258,7 @@
                 
               
 
-              <time title="创建时间：2020-02-16 13:19:00 / 修改时间：06:27:26" itemprop="dateCreated datePublished" datetime="2020-02-16T13:19:00+00:00">2020-02-16</time>
+              <time title="创建时间：2020-02-16 13:19:00 / 修改时间：06:45:49" itemprop="dateCreated datePublished" datetime="2020-02-16T13:19:00+00:00">2020-02-16</time>
             </span>
           
             
@@ -304,7 +304,9 @@
         cd -  返回进入此目录之前所在的目录；
         cd ..  返回上级目录（若当前目录为“/“，则执行完后还在“/&quot;；&quot;..&quot;为上级目录的意思）；
         cd ../..  返回上两级目录；
-        cd !$  把上个命令的参数作为cd参数使用。</code></pre><h5 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h5><p>显示当前工作目录的绝对路径</p>
+        cd !$  把上个命令的参数作为cd参数使用。</code></pre><hr>
+<h5 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h5><p>显示当前工作目录的绝对路径</p>
+<hr>
 <h5 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h5><p><code>ls - list directory contents</code> 列出当前目录内容</p>
 <p>说明：ll = ls -lh，开启方式：vim ~/.bashrc </p>
 <pre><code>常用参数：
@@ -453,7 +455,24 @@
 
     # 输出的时间包括秒是非常有用的。（ Unix 文件系统储存文件的时间信息精确到秒，
         # 因此这个选项已经给出了系统所知的全部信息。）例如，当你有一个         Makefile          文件
-        # 不能恰当的生成文件时，这个选项会提供帮助。</code></pre><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
+        # 不能恰当的生成文件时，这个选项会提供帮助。</code></pre><hr>
+<h4 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h4><p>创建目录 - <code>make directories</code></p>
+<pre><code>mkdir [选项] [参数]
+    选项
+        -Z：设置安全上下文，当使用SELinux时有效；
+        -m&lt;目标属性&gt;或--mode&lt;目标属性&gt;建立目录的同时设置目录的权限；
+        -p或--parents 若所要建立目录的上层目录目前尚未建立，则会一并建立上层目录；
+        --version 显示版本信息。
+    参数
+        目录：指定要创建的目录列表，多个目录之间用空格隔开。</code></pre><p>实例</p>
+<p>在目录/usr/meng下建立子目录test，并且只有文件主有读、写和执行权限，其他人无权访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -m 700 /usr/meng/test</span><br></pre></td></tr></table></figure>
+
+<p>在当前目录中建立bin和bin下的os_1目录，权限设置为文件主可读、写、执行，同组用户可读和执行，其他用户无权访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p-m 750 bin/os_1</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
 
     </div>
 
@@ -536,7 +555,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#cd"><span class="nav-number">1.</span> <span class="nav-text">cd</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pwd"><span class="nav-number">2.</span> <span class="nav-text">pwd</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ls"><span class="nav-number">3.</span> <span class="nav-text">ls</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#cd"><span class="nav-number">1.</span> <span class="nav-text">cd</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pwd"><span class="nav-number">2.</span> <span class="nav-text">pwd</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ls"><span class="nav-number">3.</span> <span class="nav-text">ls</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mkdir"><span class="nav-number"></span> <span class="nav-text">mkdir</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
         
       </div>
       <!--/noindex-->
