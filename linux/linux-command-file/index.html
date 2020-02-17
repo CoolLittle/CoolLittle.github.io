@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="文件管理常用命令....">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-17T08:13:23.051Z">
+<meta property="og:updated_time" content="2020-02-17T08:54:00.068Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令-文件管理">
 <meta name="twitter:description" content="文件管理常用命令....">
@@ -269,7 +269,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-17 08:13:23" itemprop="dateModified" datetime="2020-02-17T08:13:23+00:00">2020-02-17</time>
+                <time title="修改时间：2020-02-17 08:54:00" itemprop="dateModified" datetime="2020-02-17T08:54:00+00:00">2020-02-17</time>
               </span>
             
           
@@ -792,13 +792,13 @@ ln /mub1/m2.c /usr/liu/a2.c</code></pre><p>在执行ln命令之前，目录/usr/
 <p>Linux具有为一个文件起多个名字的功能，称为链接。被链接的文件可以存放在相同的目录下，但是必须有不同的文件名，而不用在硬盘上为同样的数据重复备份。另外，被链接的文件也可以有相同的文件名，但是存放在不同的目录下，这样只要对一个目录下的该文件进行修改，就可以完成对所有目录下同名链接文件的修改。对于某个文件的各链接文件，我们可以给它们指定不同的存取权限，以控制对信息的共享和增强安全性。</p>
 <p>文件链接有两种形式，即硬链接和符号链接。</p>
 <p><strong>硬链接</strong></p>
-<p>建立硬链接时，在另外的目录或本目录中增加目标文件的一个目录项，这样，一个文件就登记在多个目录中。如图所示的m2.c文件就在目录mub1和liu中都建立了目录项。</p>
+<p>建立硬链接时，在另外的目录或本目录中增加目标文件的一个目录项，这样，一个文件就登记在多个目录中。如上所示的m2.c文件就在目录mub1和liu中都建立了目录项。</p>
 <p>创建硬链接后，己经存在的文件的I节点号（Inode）会被多个目录文件项使用。一个文件的硬链接数可以在目录的长列表格式的第二列中看到，无额外链接的文件的链接数为l。</p>
 <p>在默认情况下，ln命令创建硬链接。ln命令会增加链接数，rm命令会减少链接数。一个文件除非链接数为0，否则不会从文件系统中被物理地删除。</p>
 <p>对硬链接有如下限制：</p>
 <pre><code>不能对目录文件做硬链接。
 不能在不同的文件系统之间做硬链接。就是说，链接文件和被链接文件必须位于同一个文件系统中。</code></pre><p><strong>符号链接</strong></p>
-<p>符号链接也称为软链接，是将一个路径名链接到一个文件。这些文件是一种特别类型的文件。事实上，它只是一个文本文件（如图中的abc文件），其中包含它提供链接的另一个文件的路径名，如图中虚线箭头所示。另一个文件是实际包含所有数据的文件。所有读、写文件内容的命令被用于符号链接时，将沿着链接方向前进来访问实际的文件。</p>
+<p>符号链接也称为软链接，是将一个路径名链接到一个文件。这些文件是一种特别类型的文件。事实上，它只是一个文本文件，其中包含它提供链接的另一个文件的路径名。另一个文件是实际包含所有数据的文件。所有读、写文件内容的命令被用于符号链接时，将沿着链接方向前进来访问实际的文件。</p>
 <p>!符号连接</p>
 <p>与硬链接不同的是，符号链接确实是一个新文件，当然它具有不同的I节点号；而硬链接并没有建立新文件。</p>
 <p>符号链接没有硬链接的限制，可以对目录文件做符号链接，也可以在不同文件系统之间做符号链接。</p>
@@ -808,7 +808,33 @@ ln /mub1/m2.c /usr/liu/a2.c</code></pre><p>在执行ln命令之前，目录/usr/
 在目录长列表中，符号链接作为一种特殊的文件类型显示出来，其第一个字母是l。
 符号链接的大小是其链接文件的路径名中的字节数。
 当用ln -s命令列出文件时，可以看到符号链接名后有一个箭头指向源文件或目录，例如lrwxrwxrwx … 14 jun 20 10:20 /etc/motd-&gt;/original_file其中，表示“文件大小”的数字“14”恰好说明源文件名original_file由14个字符构成。</code></pre><hr>
-<h4 id="less"><a href="#less" class="headerlink" title="less"></a>less</h4><h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><h4 id="lsattr"><a href="#lsattr" class="headerlink" title="lsattr"></a>lsattr</h4><h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><h4 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h4><h4 id="paste"><a href="#paste" class="headerlink" title="paste"></a>paste</h4><h4 id="read"><a href="#read" class="headerlink" title="read"></a>read</h4><h4 id="rcp"><a href="#rcp" class="headerlink" title="rcp"></a>rcp</h4><h4 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h4><h4 id="split"><a href="#split" class="headerlink" title="split"></a>split</h4><h4 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h4><h4 id="which"><a href="#which" class="headerlink" title="which"></a>which</h4><h4 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h4><h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
+<h4 id="less"><a href="#less" class="headerlink" title="less"></a>less</h4><p>less命令 的作用与 <a href="#more">more</a> 十分相似，都可以用来浏览文字档案的内容，不同的是less命令允许用户向前或向后浏览文件，而more命令只能向前浏览。用less命令显示文件时，用PageUp键向上翻页，用PageDown键向下翻页。要退出less程序，应按Q键。</p>
+<p>less每次只加载文件显示部分内容。</p>
+<pre><code>less [选项] [参数]
+    选项：
+        -e：文件内容显示完毕后，自动退出；
+        -f：强制显示文件；
+        -g：不加亮显示搜索到的所有关键词，仅显示当前显示的关键字，以提高显示速度；
+        -l：搜索时忽略大小写的差异；
+        -N：每一行行首显示行号；
+        -s：将连续多个空行压缩成一行显示；
+        -S：在单行显示较长的内容，而不换行显示；
+        -x&lt;数字&gt;：将TAB字符显示为指定个数的空格字符。
+    参数：
+        文件：指定要分屏显示内容的文件。    </code></pre><p>快捷操作：</p>
+<pre><code>b（back） - 向上翻一页
+u（undo） - 向上翻半页
+空格/z    - 向下翻一页
+d（down） - 向下翻半页
+回车/e/j - 向下一行
+y/k - 向上一行
+g[n] - 跳转到第n行,默认第一行
+G - 跳转到结尾
+p[n] - 跳转到百分之n行
+/ - 向下匹配
+? - 向上匹配</code></pre><p>实例：</p>
+<pre><code>less a.md</code></pre><hr>
+<h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><h4 id="lsattr"><a href="#lsattr" class="headerlink" title="lsattr"></a>lsattr</h4><h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><h4 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h4><h4 id="paste"><a href="#paste" class="headerlink" title="paste"></a>paste</h4><h4 id="read"><a href="#read" class="headerlink" title="read"></a>read</h4><h4 id="rcp"><a href="#rcp" class="headerlink" title="rcp"></a>rcp</h4><h4 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h4><h4 id="split"><a href="#split" class="headerlink" title="split"></a>split</h4><h4 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h4><h4 id="which"><a href="#which" class="headerlink" title="which"></a>which</h4><h4 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h4><h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
 
     </div>
 
