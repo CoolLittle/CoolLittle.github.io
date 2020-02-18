@@ -46,6 +46,46 @@ date: 2020-02-16 13:19:00
 
 --------------------------------------------------------------------
 
+#### chattr
+
+修改文件属性;查看文件属性：[lsattr](#lsattr)
+
+    chattr [选项] [参数]
+        选项:
+            -R     递归处理
+            -f     Suppress most error messages.
+            -p     查看项目编号
+
+文件有如下属性：
+
+    A：即Atime，告诉系统不要修改对这个文件的最后访问时间。
+    S：即Sync，一旦应用程序对这个文件执行了写操作，使系统立刻把修改的结果写到磁盘。
+    a：即Append Only，系统只允许在这个文件之后追加数据，不允许任何进程覆盖或截断这个文件。如果目录具有这个属性，系统将只允许在这个目录下建立和修改文件，而不允许删除任何文件。
+    b：不更新文件或目录的最后存取时间。
+    c：将文件或目录压缩后存放。
+    d：当dump程序执行时，该文件或目录不会被dump备份。
+    D:检查压缩文件中的错误。
+    i：即Immutable，系统不允许对这个文件进行任何的修改。如果目录具有这个属性，那么任何的进程只能修改目录之下的文件，不允许建立和删除文件。
+    s：彻底删除文件，不可恢复，因为是从磁盘上删除，然后用0填充文件所在区域。
+    u：当一个应用程序请求删除这个文件，系统会保留其数据块以便以后能够恢复删除这个文件，用来防止意外删除文件或目录。
+    t:文件系统支持尾部合并（tail-merging）。
+    X：可以直接访问压缩文件的内容。
+
+实例：
+
+用chattr命令防止系统中某个关键文件被修改：
+
+    chattr +i /etc/fstab
+
+然后试一下rm、mv、rename等命令操作于该文件，都是得到Operation not permitted的结果。
+
+让某个文件只能往里面追加内容，不能删除，一些日志文件适用于这种操作：
+
+    chattr +a /data1/user_act.log
+
+
+--------------------------------------------------------------------
+
 #### chgrp
 
 用来变更文件或目录的所属群组。该命令用来改变指定文件所属的用户组。其中，组名可以是用户组的id，也可以是用户组的组名。文件名可以 是由空格分开的要改变属组的文件列表，也可以是由通配符描述的文件集合。如果用户不是该文件的文件主或超级用户(root)，则不能改变该文件的组。
@@ -839,18 +879,20 @@ less每次只加载文件显示部分内容。
             文件：指定要分屏显示内容的文件。    
 
 快捷操作：
-   
-    b（back） - 向上翻一页
-    u（undo） - 向上翻半页
-    空格/z    - 向下翻一页
-    d（down） - 向下翻半页
-    回车/e/j - 向下一行
-    y/k - 向上一行
-    g[n] - 跳转到第n行,默认第一行
-    G - 跳转到结尾
-    p[n] - 跳转到百分之n行
-    / - 向下匹配
-    ? - 向上匹配
+
+| 按键       | 说明        |
+|------------|------------|
+| b（back）  | 向上翻一页  |
+| u（undo）  | 向上翻半页  |
+| 空格、z     | 向下翻一页  |
+| d（down）  | 向下翻半页  |
+| 回车、e、j   | 向下一行    |
+| y、k        | 向上一行    |
+| g\[n]       | 跳转到第n行,默认第一行 |
+| G          | 跳转到结尾  |
+| p\[n]       |  跳转到百分之n行 |
+| /          | 向下匹配     |
+| ?          | 向上匹配     |
 
 实例：
 
@@ -860,9 +902,83 @@ less每次只加载文件显示部分内容。
 
 #### locate
 
+通过名字查找文件
+
+    locate [选项] [样式]
+        选项：
+            -A, --all              打印所有匹配条目
+            -b, --basename         打印匹配名字的路径
+            -c, --count            打印匹配数量
+            -d, --database DBPATH  使用 DBPATH 替换 默认 database 
+            -e, --existing         打印当前存在的文件的条目
+            -L, --follow           检查文件是否存在时，跟随后面的符号链接(默认)
+            -i, --ignore-case      忽略大小写
+            -l, --limit, -n LIMIT  输出限制条数
+            -m, --mmap             ignored, for backward compatibility
+            -P, --nofollow, -H     检查文件时不要跟随后面的符号链接存在
+            -0, --null             在输出中使用NUL分隔条目
+            -S, --statistics       数据库不要搜索条目，打印每个条目的统计数据
+            -q, --quiet            安静模式，不打印读取数据库的错误
+            -r, --regexp REGEXP    基于正则匹配搜索
+                --regex            patterns are extended regexps
+            -s, --stdio            ignored, for backward compatibility
+            -w, --wholename       输出全路径名 (默认)
+
+实例：
+
+搜索etc目录下，所有以m开头的文件
+
+    root ~ # locate /etc/m
+    /etc/magic
+    /etc/magic.mime
+    /etc/mailcap
+    /etc/mailcap.order
+    /etc/manpath.config
+    /etc/mate-settings-daemon
+
+ -----------------------------------------------------------------
+
 #### lsattr
 
+查看文件的第二扩展文件系统属性；修改文件属性：[chattr](#chattr)
+
+    lsattr [选项] [参数]
+        选项：
+            -R     Recursively list attributes of directories and their contents.
+            -a    列出所有文件包括隐藏文件
+            -d    列出目录，不列出它们的内容。
+            -l     使用长名称而不是单个字符缩写来打印选项。
+            -p     列出文件的项目编号。
+
+实例
+
+查看文件属性
+    
+    lsattr -l a.md
+
+ -----------------------------------------------------------------
+
 #### more
+
+一个基于vi编辑器文本过滤器，它以全屏幕的方式按页显示文本文件的内容，支持vi中的关键字定位操作。more名单中内置了若干快捷键，常用的有H（获得帮助信息），Enter（向下翻滚一行），空格（向下滚动一屏），Q（退出命令）
+
+    more [选项] [参数]
+        选项：
+            -d          显示“[press space to continue,'q' to quit.]”和“[Press 'h' for instructions]”
+            -f          count logical rather than screen lines
+            -l          suppress pause after form feed
+            -c          不进行滚屏操作，每次刷新这个屏幕
+            -p          do not scroll, clean screen and display text
+            -s          将多个空行压缩至一行
+            -u          禁止下划线
+            -<number>   每屏显示的行数
+            +<number>   从指定行数开始显示
+            +/<string>  从搜索字符开始显示
+
+
+
+
+ -----------------------------------------------------------------
 
 #### mv
 
