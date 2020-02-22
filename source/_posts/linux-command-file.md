@@ -1088,21 +1088,102 @@ less每次只加载文件显示部分内容。
 
 #### read 
 
+从键盘读取变量，通常用在shell脚本中与用户进行交互的场合。该命令可以一次读取多个变量的值，变量和输入的值都需要使用空格隔开。在read命令后面，如果没有指定变量名，读取的数据将被自动赋值给特定的变量REPLY
+
+    read [选项] [参数]
+        选项：
+                -a 数组	
+                -d 自定义定界符结束输入行，用于代替 enter 结束
+                -e	use Readline to obtain the line in an interactive shell
+                -i text	use TEXT as the initial text for Readline
+                -n 从输入中读取指定字符并存入变量，不需要按回车读取。
+                -N 用于限定最多可以有多少字符可以作为有效读入。例
+                -p 指定读取值时的提示符；
+                -r 允许反斜杠、转义及?等特殊字符
+                -s 将标准输入内容隐藏，多用于输入密码。
+                -t 用于表示等待输入的时间，单位为秒，等待时间超过，将继续执行后面的脚本，注意不作为null输入，参数将保留原有的值
+                -u fd	read from file descriptor FD instead of the standard input
+
+        参数：
+            变量：指定读取值的变量名。
+
+实例：
+
+从标准输入读取输入并赋值给变量1987name。
+
+    #read 1987name        #等待读取输入，直到回车后表示输入完毕，并将输入赋值给变量answer
+    HelloWorld            #控制台输入Hello
+
+    #echo $1987name       #打印变量
+    HelloWorld
+
+等待一组输入，每个单词之间使用空格隔开，直到回车结束，并分别将单词依次赋值给这三个读入变量。
+
+    #read one two three
+    1 2 3                   #在控制台输入1 2 3，它们之间用空格隔开。
+
+    #echo "one = $one, two = $two, three = $three"
+    one = 1, two = 2, three = 3
+
+REPLY示例
+
+    #read                  #等待控制台输入，并将结果赋值给特定内置变量REPLY。
+    This is REPLY          #在控制台输入该行。 
+
+    #echo $REPLY           #打印输出特定内置变量REPLY，以确认是否被正确赋值。
+
+    This is REPLY
+
+-p选项示例
+
+    #read -p "Enter your name: "            #输出文本提示，同时等待输入，并将结果赋值给REPLY。
+    Enter you name: stephen                 #在提示文本之后输入stephen
+
+    #echo $REPLY
+    stephen
+
+等待控制台输入，并将输入信息视为数组，赋值给数组变量friends，输入信息用空格隔开数组的每个元素。
+
+    #read -a friends
+    Tim Tom Helen
+
+    #echo "They are ${friends[0]}, ${friends[1]} and ${friends[2]}."
+    They are Tim, Tom and Helen.
+
+ -----------------------------------------------------------------
+
 #### rcp
  
+ -----------------------------------------------------------------
+
 #### rm
+
+
+
+ -----------------------------------------------------------------
 
 #### split
 
+
+
+ -----------------------------------------------------------------
+
 #### touch
 
+
+ -----------------------------------------------------------------
+
 #### which
+
+
+-----------------------------------------------------------------
 
 #### whereis
 
 
 
-  
+-----------------------------------------------------------------
+
 #### 参考
 
 [Linux命令查询](https://jaywcjlove.gitee.io/linux-command)    
