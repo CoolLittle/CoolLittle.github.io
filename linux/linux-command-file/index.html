@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="文件管理常用命令....">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-22T07:28:41.711Z">
+<meta property="og:updated_time" content="2020-02-24T10:45:28.208Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令-文件管理">
 <meta name="twitter:description" content="文件管理常用命令....">
@@ -269,7 +269,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-22 07:28:41" itemprop="dateModified" datetime="2020-02-22T07:28:41+00:00">2020-02-22</time>
+                <time title="修改时间：2020-02-24 10:45:28" itemprop="dateModified" datetime="2020-02-24T10:45:28+00:00">2020-02-24</time>
               </span>
             
           
@@ -309,7 +309,55 @@
 
       
         <h4 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h4><hr>
-<hr>
+<h4 id="ar"><a href="#ar" class="headerlink" title="ar"></a>ar</h4><p>ar命令 是一个建立或修改备存文件，或是从备存文件中抽取文件的工具，ar可让您集合许多文件，成为单一的备存文件。在备存文件中，所有成员文件皆保有原来的属性与权限</p>
+<p>类似命令：<a href="#tar">tar</a></p>
+<pre><code>ar [选项] [参数]
+    选项：
+        d            - 从归档文件中删除文件
+        m[ab]        - 在归档文件中移动文件
+        p            - 打印在归档文件中找到的文件
+        q[f]         - 将文件快速追加到归档文件中
+        r[ab][f][u]  - 替换归档文件中已有的文件或加入新文件
+        s            - 作为 ranlib 工作
+        t[O][v]      - display contents of the archive
+        x[o]         - 从归档文件中分解文件
+        特定命令修饰符：
+        [a]          - 将文件置于 [成员名] 之后
+        [b]          - 将文件置于 [成员名] 之前 (于 [i] 相同)
+        [D]          - 将 0 用于时间戳和 uid/gid（默认）
+        [D]          - 使用实际时间戳和 uid/gid
+        [N]          - 使用名称的实例 [数量]
+        [f]          - 截去插入的文件名称
+        [P]          - 在匹配时使用完整的路径名
+        [o]          - 保留原来的日期
+        [O]          - display offsets of files in the archive
+        [u]          - 只替换比当前归档内容更新的文件
+        通用修饰符：
+        [c]          - 不在必须创建库的时候给出警告
+        [s]          - 创建归档索引 (cf. ranlib)
+        [S]          - 不要创建符号表
+        [T]          - 产生一个简单归档
+        [v]          - 输出较多信息
+        [V]          - 显示版本号</code></pre><p>实例：</p>
+<p>打包文件</p>
+<pre><code>[root@localhost ~]# ar rv one.bak a.c b.c  # 打包 a.c b.c文件 
+ar: 正在创建 one.bak
+a - a.c
+a - b.c</code></pre><p>打包多个文件</p>
+<pre><code>[root@localhost ~]# ar rv two.bak *.c  // 打包以.c结尾的文件  
+ar: 正在创建 two.bak
+a - a.c
+a - b.c
+a - c.c
+a - d.c</code></pre><p>显示打包文件的内容</p>
+<pre><code>[root@localhost ~]# ar t two.bak    
+a.c
+b.c
+c.c
+d.c</code></pre><p>删除打包文件的成员文件</p>
+<pre><code>[root@localhost ~]# ar d two.bak a.c b.c c.c  
+[root@localhost ~]# ar t two.bak       
+d.c</code></pre><hr>
 <h4 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h4><p>连接多个文件并打印到标准输出。</p>
 <pre><code>cat [选项] [文件]
     选项
@@ -1036,9 +1084,140 @@ Tim Tom Helen
 
 #echo &quot;They are ${friends[0]}, ${friends[1]} and ${friends[2]}.&quot;
 They are Tim, Tom and Helen.</code></pre><hr>
-<h4 id="rcp"><a href="#rcp" class="headerlink" title="rcp"></a>rcp</h4><hr>
 <h4 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h4><hr>
+<h4 id="rsync"><a href="#rsync" class="headerlink" title="rsync"></a>rsync</h4><p>a fast, versatile, remote (and local) file-copying tool -<br>一个远程数据同步工具，可通过LAN/WAN快速同步多台主机间的文件。rsync使用所谓的“rsync算法”来使本地和远程两个主机之间的文件达到同步，这个算法只传送两个文件的不同部分，而不是每次都整份传送，因此速度相当快。</p>
+<pre><code>rsync [选项]... 源地址 目标地址
+rsync [选项]... SRC [USER@]host:DEST
+rsync [选项]... [USER@]HOST:SRC DEST
+rsync [选项]... [USER@]HOST::SRC DEST
+rsync [选项]... SRC [USER@]HOST::DEST
+rsync [选项]... rsync://[USER@]HOST[:PORT]/SRC [DEST]</code></pre><p>对应于以上六种命令格式，rsync有六种不同的工作模式：</p>
+<ol>
+<li><p>拷贝本地文件。当SRC和DES路径信息都不包含有单个冒号”:”分隔符时就启动这种工作模式。如：rsync -a /data /backup</p>
+</li>
+<li><p>使用一个远程shell程序(如rsh、ssh)来实现将本地机器的内容拷贝到远程机器。当DST路径地址包含单个冒号”:”分隔符时启动该模式。如：rsync -avz *.c foo:src</p>
+</li>
+<li><p>使用一个远程shell程序(如rsh、ssh)来实现将远程机器的内容拷贝到本地机器。当SRC地址路径包含单个冒号”:”分隔符时启动该模式。如：rsync -avz foo:src/bar /data</p>
+</li>
+<li><p>从远程rsync服务器中拷贝文件到本地机。当SRC路径信息包含”::”分隔符时启动该模式。如：rsync -av <a href="mailto:root@192.168.78.192" target="_blank" rel="noopener">root@192.168.78.192</a>::www /databack</p>
+</li>
+<li><p>从本地机器拷贝文件到远程rsync服务器中。当DST路径信息包含”::”分隔符时启动该模式。如：rsync -av /databack <a href="mailto:root@192.168.78.192" target="_blank" rel="noopener">root@192.168.78.192</a>::www</p>
+</li>
+<li><p>列远程机的文件列表。这类似于rsync传输，不过只要在命令中省略掉本地机信息即可。如：rsync -v rsync://192.168.78.192/www</p>
+<p> 选项：</p>
+<pre><code>-v, --verbose 详细模式输出。
+-q, --quiet 精简输出模式。
+-c, --checksum 打开校验开关，强制对文件传输进行校验。
+-a, --archive 归档模式，表示以递归方式传输文件，并保持所有文件属性，等于-rlptgoD。
+-r, --recursive 对子目录以递归模式处理。
+-R, --relative 使用相对路径信息。
+-b, --backup 创建备份，也就是对于目的已经存在有同样的文件名时，将老的文件重新命名为~filename。可以使用--suffix选项来指定不同的备份文件前缀。
+--backup-dir 将备份文件(如~filename)存放在在目录下。
+-suffix=SUFFIX 定义备份文件前缀。
+-u, --update 仅仅进行更新，也就是跳过所有已经存在于DST，并且文件时间晚于要备份的文件，不覆盖更新的文件。
+-l, --links 保留软链结。
+-L, --copy-links 想对待常规文件一样处理软链结。
+--copy-unsafe-links 仅仅拷贝指向SRC路径目录树以外的链结。
+--safe-links 忽略指向SRC路径目录树以外的链结。
+-H, --hard-links 保留硬链结。
+-p, --perms 保持文件权限。
+-o, --owner 保持文件属主信息。
+-g, --group 保持文件属组信息。
+-D, --devices 保持设备文件信息。
+-t, --times 保持文件时间信息。
+-S, --sparse 对稀疏文件进行特殊处理以节省DST的空间。
+-n, --dry-run现实哪些文件将被传输。
+-w, --whole-file 拷贝文件，不进行增量检测。
+-x, --one-file-system 不要跨越文件系统边界。
+-B, --block-size=SIZE 检验算法使用的块尺寸，默认是700字节。
+-e, --rsh=command 指定使用rsh、ssh方式进行数据同步。
+--rsync-path=PATH 指定远程服务器上的rsync命令所在路径信息。
+-C, --cvs-exclude 使用和CVS一样的方法自动忽略文件，用来排除那些不希望传输的文件。
+--existing 仅仅更新那些已经存在于DST的文件，而不备份那些新创建的文件。
+--delete 删除那些DST中SRC没有的文件。
+--delete-excluded 同样删除接收端那些被该选项指定排除的文件。
+--delete-after 传输结束以后再删除。
+--ignore-errors 及时出现IO错误也进行删除。
+--max-delete=NUM 最多删除NUM个文件。
+--partial 保留那些因故没有完全传输的文件，以是加快随后的再次传输。
+--force 强制删除目录，即使不为空。
+--numeric-ids 不将数字的用户和组id匹配为用户名和组名。
+--timeout=time ip超时时间，单位为秒。
+-I, --ignore-times 不跳过那些有同样的时间和长度的文件。
+--size-only 当决定是否要备份文件时，仅仅察看文件大小而不考虑文件时间。
+--modify-window=NUM 决定文件是否时间相同时使用的时间戳窗口，默认为0。
+-T --temp-dir=DIR 在DIR中创建临时文件。
+--compare-dest=DIR 同样比较DIR中的文件来决定是否需要备份。
+-P 等同于 --partial。
+--progress 显示备份过程。
+-z, --compress 对备份的文件在传输时进行压缩处理。
+--exclude=PATTERN 指定排除不需要传输的文件模式。
+--include=PATTERN 指定不排除而需要传输的文件模式。
+--exclude-from=FILE 排除FILE中指定模式的文件。
+--include-from=FILE 不排除FILE指定模式匹配的文件。
+--version 打印版本信息。
+--address 绑定到特定的地址。
+--config=FILE 指定其他的配置文件，不使用默认的rsyncd.conf文件。
+--port=PORT 指定其他的rsync服务端口。
+--blocking-io 对远程shell使用阻塞IO。
+-stats 给出某些文件的传输状态。
+--progress 在传输时现实传输过程。
+--log-format=formAT 指定日志文件格式。
+--password-file=FILE 从FILE中得到密码。
+--bwlimit=KBPS 限制I/O带宽，KBytes per second。</code></pre></li>
+</ol>
+<p>实例：</p>
+<p><strong>普通rsync方式</strong></p>
+<pre><code>rsync -vzrtopg --progress -e ssh --delete work@172.16.78.192:/www/* /databack/experiment/rsync</code></pre><p><strong>后台服务方式</strong></p>
+<p>1、启动rsync服务，编辑/etc/xinetd.d/rsync文件，将其中的disable=yes改为disable=no，并重启xinetd服务，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>default: off</span><br><span class="line"><span class="meta">#</span> description: The rsync server is a good addition to an ftp server, as it \</span><br><span class="line"><span class="meta">#</span> allows crc checksumming etc.</span><br><span class="line">service rsync &#123;</span><br><span class="line">disable = no</span><br><span class="line">socket_type = stream</span><br><span class="line">wait = no</span><br><span class="line">user = root</span><br><span class="line">server = /usr/bin/rsync</span><br><span class="line">server_args = --daemon</span><br><span class="line">log_on_failure += USERID</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/etc/init.d/xinetd restart</span><br><span class="line">停止 xinetd： [确定]</span><br><span class="line">启动 xinetd： [确定]</span><br></pre></td></tr></table></figure>
+
+<p>2、创建配置文件，默认安装好rsync程序后，并不会自动创建rsync的主配置文件，需要手工来创建，其主配置文件为“/etc/rsyncd.conf”，创建该文件并插入如下内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">uid=root</span><br><span class="line">gid=root</span><br><span class="line">max connections=4</span><br><span class="line">log file=/var/log/rsyncd.log</span><br><span class="line">pid file=/var/run/rsyncd.pid</span><br><span class="line">lock file=/var/run/rsyncd.lock</span><br><span class="line">secrets file=/etc/rsyncd.passwd</span><br><span class="line">hosts deny=172.16.78.0/22</span><br><span class="line"></span><br><span class="line">[www]</span><br><span class="line">comment= backup web</span><br><span class="line">path=/www</span><br><span class="line">read only = no</span><br><span class="line">exclude=test</span><br><span class="line">auth users=work</span><br></pre></td></tr></table></figure>
+
+<p>3、创建密码文件，采用这种方式不能使用系统用户对客户端进行认证，所以需要创建一个密码文件，其格式为“username:password”，用户名可以和密码可以随便定义，最好不要和系统帐户一致，同时要把创建的密码文件权限设置为600，这在前面的模块参数做了详细介绍。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo "work:abc123" &gt; /etc/rsyncd.passwd</span><br><span class="line">chmod 600 /etc/rsyncd.passwd</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h4><p>scp - secure copy (remote file copy program)。<br>用于在Linux下进行远程拷贝文件的命令，和它类似的命令有<a href="#cp">cp</a>，不过cp只是在本机进行拷贝不能跨服务器，而且scp传输是加密的。可能会稍微影响一下速度。当你服务器硬盘变为只读read only system时，用scp可以帮你把文件移出来。另外，scp还非常不占资源，不会提高多少系统负荷，在这一点上，<a href="#rsync">rsync</a>就远远不及它了。虽然 rsync比scp会快一点，但当小文件众多的情况下，rsync会导致硬盘I/O非常高，而scp基本不影响系统正常使用。</p>
+<pre><code>scp [选项] [参数]
+    选项：
+        -1：使用ssh协议版本1；
+        -2：使用ssh协议版本2；
+        -4：使用ipv4；
+        -6：使用ipv6；
+        -B：以批处理模式运行；
+        -C：使用压缩；
+        -F：指定ssh配置文件；
+        -i：identity_file 从指定文件中读取传输时使用的密钥文件（例如亚马逊云pem），此参数直接传递给ssh；
+        -l：指定宽带限制；
+        -o：指定使用的ssh选项；
+        -P：指定远程主机的端口号；
+        -p：保留文件的最后修改时间，最后访问时间和权限模式（即用户读写权限）；
+        -q：不显示复制进度；
+        -r：以递归方式复制。
+    参数：
+        源文件 - 指定要复制的源文件.
+        目标文件 - 目标文件. 格式为user@host：filename（文件名为目标文件的名称）。</code></pre><p>实例：</p>
+<p>从远程复制到本地descp命令与上面的命令相同，只要将从本地复制到远程的命令后面2个参数互换位置即可</p>
+<p><strong>从远程复制文件到本地目录</strong></p>
+<pre><code>scp root@10.10.10.10:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/</code></pre><p>从10.10.10.10机器上的/opt/soft/的目录中下载nginx-0.5.38.tar.gz 文件到本地/opt/soft/目录中。</p>
+<p><strong>从亚马逊云复制OpenVPN到本地目录</strong></p>
+<pre><code>scp -i amazon.pem ubuntu@10.10.10.10:/usr/local/openvpn_as/etc/exe/openvpn-connect-2.1.3.110.dmg openvpn-connect-2.1.3.110.dmg</code></pre><p>从10.10.10.10机器上下载openvpn安装文件到本地当前目录来。</p>
+<p><strong>从远处复制到本地</strong></p>
+<pre><code>scp -r root@10.10.10.10:/opt/soft/mongodb /opt/soft/</code></pre><p>从10.10.10.10机器上的/opt/soft/中下载mongodb目录到本地的/opt/soft/目录来。</p>
+<p><strong>上传本地文件到远程机器指定目录</strong></p>
+<pre><code>scp /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest
+# 指定端口 2222
+
+scp -rp -P 2222 /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest</code></pre><p>复制本地/opt/soft/目录下的文件nginx-0.5.38.tar.gz到远程机器10.10.10.10的opt/soft/scptest目录。</p>
+<p><strong>上传本地目录到远程机器指定目录</strong></p>
+<pre><code>scp -r /opt/soft/mongodb root@10.10.10.10:/opt/soft/scptest</code></pre><p>上传本地目录/opt/soft/mongodb到远程机器10.10.10.10上/opt/soft/scptest的目录中去。</p>
+<hr>
 <h4 id="split"><a href="#split" class="headerlink" title="split"></a>split</h4><hr>
+<h4 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h4><hr>
 <h4 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h4><hr>
 <h4 id="which"><a href="#which" class="headerlink" title="which"></a>which</h4><hr>
 <h4 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h4><hr>
@@ -1068,8 +1247,8 @@ They are Tim, Tom and Helen.</code></pre><hr>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/blog/girl/girl/" rel="next" title="那个女孩">
-                  <i class="fa fa-chevron-left"></i> 那个女孩
+                <a href="/blog/linux/linux-command-disk/" rel="next" title="Linux常用命令-磁盘管理">
+                  <i class="fa fa-chevron-left"></i> Linux常用命令-磁盘管理
                 </a>
               
             </div>
@@ -1078,8 +1257,8 @@ They are Tim, Tom and Helen.</code></pre><hr>
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/blog/linux/linux-command-disk/" rel="prev" title="Linux常用命令-磁盘管理">
-                  Linux常用命令-磁盘管理 <i class="fa fa-chevron-right"></i>
+                <a href="/blog/linux/linux-command-shell/" rel="prev" title="Linux-Shell脚本">
+                  Linux-Shell脚本 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -1129,7 +1308,7 @@ They are Tim, Tom and Helen.</code></pre><hr>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#awk"><span class="nav-number">1.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cat"><span class="nav-number">2.</span> <span class="nav-text">cat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chattr"><span class="nav-number">3.</span> <span class="nav-text">chattr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chgrp"><span class="nav-number">4.</span> <span class="nav-text">chgrp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chmod"><span class="nav-number">5.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chown"><span class="nav-number">6.</span> <span class="nav-text">chown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cmp"><span class="nav-number">7.</span> <span class="nav-text">cmp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cut"><span class="nav-number">8.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp"><span class="nav-number">9.</span> <span class="nav-text">cp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#diff"><span class="nav-number">10.</span> <span class="nav-text">diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#file"><span class="nav-number">11.</span> <span class="nav-text">file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">12.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ln"><span class="nav-number">13.</span> <span class="nav-text">ln</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#less"><span class="nav-number">14.</span> <span class="nav-text">less</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#locate"><span class="nav-number">15.</span> <span class="nav-text">locate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lsattr"><span class="nav-number">16.</span> <span class="nav-text">lsattr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#more"><span class="nav-number">17.</span> <span class="nav-text">more</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mv"><span class="nav-number">18.</span> <span class="nav-text">mv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#paste"><span class="nav-number">19.</span> <span class="nav-text">paste</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#read"><span class="nav-number">20.</span> <span class="nav-text">read</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rcp"><span class="nav-number">21.</span> <span class="nav-text">rcp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm"><span class="nav-number">22.</span> <span class="nav-text">rm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#split"><span class="nav-number">23.</span> <span class="nav-text">split</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#touch"><span class="nav-number">24.</span> <span class="nav-text">touch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#which"><span class="nav-number">25.</span> <span class="nav-text">which</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis"><span class="nav-number">26.</span> <span class="nav-text">whereis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">27.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#awk"><span class="nav-number">1.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ar"><span class="nav-number">2.</span> <span class="nav-text">ar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cat"><span class="nav-number">3.</span> <span class="nav-text">cat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chattr"><span class="nav-number">4.</span> <span class="nav-text">chattr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chgrp"><span class="nav-number">5.</span> <span class="nav-text">chgrp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chmod"><span class="nav-number">6.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chown"><span class="nav-number">7.</span> <span class="nav-text">chown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cmp"><span class="nav-number">8.</span> <span class="nav-text">cmp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cut"><span class="nav-number">9.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp"><span class="nav-number">10.</span> <span class="nav-text">cp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#diff"><span class="nav-number">11.</span> <span class="nav-text">diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#file"><span class="nav-number">12.</span> <span class="nav-text">file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">13.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ln"><span class="nav-number">14.</span> <span class="nav-text">ln</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#less"><span class="nav-number">15.</span> <span class="nav-text">less</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#locate"><span class="nav-number">16.</span> <span class="nav-text">locate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lsattr"><span class="nav-number">17.</span> <span class="nav-text">lsattr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#more"><span class="nav-number">18.</span> <span class="nav-text">more</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mv"><span class="nav-number">19.</span> <span class="nav-text">mv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#paste"><span class="nav-number">20.</span> <span class="nav-text">paste</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#read"><span class="nav-number">21.</span> <span class="nav-text">read</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm"><span class="nav-number">22.</span> <span class="nav-text">rm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rsync"><span class="nav-number">23.</span> <span class="nav-text">rsync</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scp"><span class="nav-number">24.</span> <span class="nav-text">scp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#split"><span class="nav-number">25.</span> <span class="nav-text">split</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tar"><span class="nav-number">26.</span> <span class="nav-text">tar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#touch"><span class="nav-number">27.</span> <span class="nav-text">touch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#which"><span class="nav-number">28.</span> <span class="nav-text">which</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis"><span class="nav-number">29.</span> <span class="nav-text">whereis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">30.</span> <span class="nav-text">参考</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -1144,7 +1323,7 @@ They are Tim, Tom and Helen.</code></pre><hr>
         
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1194,7 +1373,13 @@ They are Tim, Tom and Helen.</code></pre><hr>
         
           
         
-        <span class="site-state-item-count">5</span>
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
