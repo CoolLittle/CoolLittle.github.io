@@ -9,7 +9,75 @@ date: 2020-02-16 13:19:00
 ---
 
 #### awk
+
 --------------------------------------------------------------------
+
+#### ar
+
+ar命令 是一个建立或修改备存文件，或是从备存文件中抽取文件的工具，ar可让您集合许多文件，成为单一的备存文件。在备存文件中，所有成员文件皆保有原来的属性与权限
+
+类似命令：[tar](#tar)
+
+    ar [选项] [参数]
+        选项：
+            d            - 从归档文件中删除文件
+            m[ab]        - 在归档文件中移动文件
+            p            - 打印在归档文件中找到的文件
+            q[f]         - 将文件快速追加到归档文件中
+            r[ab][f][u]  - 替换归档文件中已有的文件或加入新文件
+            s            - 作为 ranlib 工作
+            t[O][v]      - display contents of the archive
+            x[o]         - 从归档文件中分解文件
+            特定命令修饰符：
+            [a]          - 将文件置于 [成员名] 之后
+            [b]          - 将文件置于 [成员名] 之前 (于 [i] 相同)
+            [D]          - 将 0 用于时间戳和 uid/gid（默认）
+            [D]          - 使用实际时间戳和 uid/gid
+            [N]          - 使用名称的实例 [数量]
+            [f]          - 截去插入的文件名称
+            [P]          - 在匹配时使用完整的路径名
+            [o]          - 保留原来的日期
+            [O]          - display offsets of files in the archive
+            [u]          - 只替换比当前归档内容更新的文件
+            通用修饰符：
+            [c]          - 不在必须创建库的时候给出警告
+            [s]          - 创建归档索引 (cf. ranlib)
+            [S]          - 不要创建符号表
+            [T]          - 产生一个简单归档
+            [v]          - 输出较多信息
+            [V]          - 显示版本号
+
+实例：
+
+打包文件
+
+    [root@localhost ~]# ar rv one.bak a.c b.c  # 打包 a.c b.c文件 
+    ar: 正在创建 one.bak
+    a - a.c
+    a - b.c
+
+打包多个文件
+
+    [root@localhost ~]# ar rv two.bak *.c  // 打包以.c结尾的文件  
+    ar: 正在创建 two.bak
+    a - a.c
+    a - b.c
+    a - c.c
+    a - d.c
+
+显示打包文件的内容
+
+    [root@localhost ~]# ar t two.bak    
+    a.c
+    b.c
+    c.c
+    d.c
+
+删除打包文件的成员文件
+
+    [root@localhost ~]# ar d two.bak a.c b.c c.c  
+    [root@localhost ~]# ar t two.bak       
+    d.c
 
 --------------------------------------------------------------------
 
@@ -1152,13 +1220,216 @@ REPLY示例
 
  -----------------------------------------------------------------
 
-#### rcp
- 
- -----------------------------------------------------------------
-
 #### rm
 
 
+
+ -----------------------------------------------------------------
+
+#### rsync
+
+a fast, versatile, remote (and local) file-copying tool - 
+一个远程数据同步工具，可通过LAN/WAN快速同步多台主机间的文件。rsync使用所谓的“rsync算法”来使本地和远程两个主机之间的文件达到同步，这个算法只传送两个文件的不同部分，而不是每次都整份传送，因此速度相当快。
+
+    rsync [选项]... 源地址 目标地址
+    rsync [选项]... SRC [USER@]host:DEST
+    rsync [选项]... [USER@]HOST:SRC DEST
+    rsync [选项]... [USER@]HOST::SRC DEST
+    rsync [选项]... SRC [USER@]HOST::DEST
+    rsync [选项]... rsync://[USER@]HOST[:PORT]/SRC [DEST]
+
+对应于以上六种命令格式，rsync有六种不同的工作模式：
+
+1. 拷贝本地文件。当SRC和DES路径信息都不包含有单个冒号":"分隔符时就启动这种工作模式。如：rsync -a /data /backup
+2. 使用一个远程shell程序(如rsh、ssh)来实现将本地机器的内容拷贝到远程机器。当DST路径地址包含单个冒号":"分隔符时启动该模式。如：rsync -avz *.c foo:src
+3. 使用一个远程shell程序(如rsh、ssh)来实现将远程机器的内容拷贝到本地机器。当SRC地址路径包含单个冒号":"分隔符时启动该模式。如：rsync -avz foo:src/bar /data
+4. 从远程rsync服务器中拷贝文件到本地机。当SRC路径信息包含"::"分隔符时启动该模式。如：rsync -av root@192.168.78.192::www /databack
+5. 从本地机器拷贝文件到远程rsync服务器中。当DST路径信息包含"::"分隔符时启动该模式。如：rsync -av /databack root@192.168.78.192::www
+6. 列远程机的文件列表。这类似于rsync传输，不过只要在命令中省略掉本地机信息即可。如：rsync -v rsync://192.168.78.192/www
+
+    选项：
+        -v, --verbose 详细模式输出。
+        -q, --quiet 精简输出模式。
+        -c, --checksum 打开校验开关，强制对文件传输进行校验。
+        -a, --archive 归档模式，表示以递归方式传输文件，并保持所有文件属性，等于-rlptgoD。
+        -r, --recursive 对子目录以递归模式处理。
+        -R, --relative 使用相对路径信息。
+        -b, --backup 创建备份，也就是对于目的已经存在有同样的文件名时，将老的文件重新命名为~filename。可以使用--suffix选项来指定不同的备份文件前缀。
+        --backup-dir 将备份文件(如~filename)存放在在目录下。
+        -suffix=SUFFIX 定义备份文件前缀。
+        -u, --update 仅仅进行更新，也就是跳过所有已经存在于DST，并且文件时间晚于要备份的文件，不覆盖更新的文件。
+        -l, --links 保留软链结。
+        -L, --copy-links 想对待常规文件一样处理软链结。
+        --copy-unsafe-links 仅仅拷贝指向SRC路径目录树以外的链结。
+        --safe-links 忽略指向SRC路径目录树以外的链结。
+        -H, --hard-links 保留硬链结。
+        -p, --perms 保持文件权限。
+        -o, --owner 保持文件属主信息。
+        -g, --group 保持文件属组信息。
+        -D, --devices 保持设备文件信息。
+        -t, --times 保持文件时间信息。
+        -S, --sparse 对稀疏文件进行特殊处理以节省DST的空间。
+        -n, --dry-run现实哪些文件将被传输。
+        -w, --whole-file 拷贝文件，不进行增量检测。
+        -x, --one-file-system 不要跨越文件系统边界。
+        -B, --block-size=SIZE 检验算法使用的块尺寸，默认是700字节。
+        -e, --rsh=command 指定使用rsh、ssh方式进行数据同步。
+        --rsync-path=PATH 指定远程服务器上的rsync命令所在路径信息。
+        -C, --cvs-exclude 使用和CVS一样的方法自动忽略文件，用来排除那些不希望传输的文件。
+        --existing 仅仅更新那些已经存在于DST的文件，而不备份那些新创建的文件。
+        --delete 删除那些DST中SRC没有的文件。
+        --delete-excluded 同样删除接收端那些被该选项指定排除的文件。
+        --delete-after 传输结束以后再删除。
+        --ignore-errors 及时出现IO错误也进行删除。
+        --max-delete=NUM 最多删除NUM个文件。
+        --partial 保留那些因故没有完全传输的文件，以是加快随后的再次传输。
+        --force 强制删除目录，即使不为空。
+        --numeric-ids 不将数字的用户和组id匹配为用户名和组名。
+        --timeout=time ip超时时间，单位为秒。
+        -I, --ignore-times 不跳过那些有同样的时间和长度的文件。
+        --size-only 当决定是否要备份文件时，仅仅察看文件大小而不考虑文件时间。
+        --modify-window=NUM 决定文件是否时间相同时使用的时间戳窗口，默认为0。
+        -T --temp-dir=DIR 在DIR中创建临时文件。
+        --compare-dest=DIR 同样比较DIR中的文件来决定是否需要备份。
+        -P 等同于 --partial。
+        --progress 显示备份过程。
+        -z, --compress 对备份的文件在传输时进行压缩处理。
+        --exclude=PATTERN 指定排除不需要传输的文件模式。
+        --include=PATTERN 指定不排除而需要传输的文件模式。
+        --exclude-from=FILE 排除FILE中指定模式的文件。
+        --include-from=FILE 不排除FILE指定模式匹配的文件。
+        --version 打印版本信息。
+        --address 绑定到特定的地址。
+        --config=FILE 指定其他的配置文件，不使用默认的rsyncd.conf文件。
+        --port=PORT 指定其他的rsync服务端口。
+        --blocking-io 对远程shell使用阻塞IO。
+        -stats 给出某些文件的传输状态。
+        --progress 在传输时现实传输过程。
+        --log-format=formAT 指定日志文件格式。
+        --password-file=FILE 从FILE中得到密码。
+        --bwlimit=KBPS 限制I/O带宽，KBytes per second。
+
+实例：
+
+**普通rsync方式**
+
+    rsync -vzrtopg --progress -e ssh --delete work@172.16.78.192:/www/* /databack/experiment/rsync
+
+**后台服务方式**
+
+1、启动rsync服务，编辑/etc/xinetd.d/rsync文件，将其中的disable=yes改为disable=no，并重启xinetd服务，如下：
+
+```shell
+#default: off
+# description: The rsync server is a good addition to an ftp server, as it \
+# allows crc checksumming etc.
+service rsync {
+disable = no
+socket_type = stream
+wait = no
+user = root
+server = /usr/bin/rsync
+server_args = --daemon
+log_on_failure += USERID
+}
+```
+
+```shell
+
+/etc/init.d/xinetd restart
+停止 xinetd： [确定]
+启动 xinetd： [确定]
+
+```
+
+2、创建配置文件，默认安装好rsync程序后，并不会自动创建rsync的主配置文件，需要手工来创建，其主配置文件为“/etc/rsyncd.conf”，创建该文件并插入如下内容：
+
+```shell
+uid=root
+gid=root
+max connections=4
+log file=/var/log/rsyncd.log
+pid file=/var/run/rsyncd.pid
+lock file=/var/run/rsyncd.lock
+secrets file=/etc/rsyncd.passwd
+hosts deny=172.16.78.0/22
+
+[www]
+comment= backup web
+path=/www
+read only = no
+exclude=test
+auth users=work
+```
+3、创建密码文件，采用这种方式不能使用系统用户对客户端进行认证，所以需要创建一个密码文件，其格式为“username:password”，用户名可以和密码可以随便定义，最好不要和系统帐户一致，同时要把创建的密码文件权限设置为600，这在前面的模块参数做了详细介绍。
+
+```shell
+echo "work:abc123" > /etc/rsyncd.passwd
+chmod 600 /etc/rsyncd.passwd
+```
+
+ -----------------------------------------------------------------
+
+#### scp
+
+scp - secure copy (remote file copy program)。
+用于在Linux下进行远程拷贝文件的命令，和它类似的命令有[cp](#cp)，不过cp只是在本机进行拷贝不能跨服务器，而且scp传输是加密的。可能会稍微影响一下速度。当你服务器硬盘变为只读read only system时，用scp可以帮你把文件移出来。另外，scp还非常不占资源，不会提高多少系统负荷，在这一点上，[rsync](#rsync)就远远不及它了。虽然 rsync比scp会快一点，但当小文件众多的情况下，rsync会导致硬盘I/O非常高，而scp基本不影响系统正常使用。
+
+    scp [选项] [参数]
+        选项：
+            -1：使用ssh协议版本1；
+            -2：使用ssh协议版本2；
+            -4：使用ipv4；
+            -6：使用ipv6；
+            -B：以批处理模式运行；
+            -C：使用压缩；
+            -F：指定ssh配置文件；
+            -i：identity_file 从指定文件中读取传输时使用的密钥文件（例如亚马逊云pem），此参数直接传递给ssh；
+            -l：指定宽带限制；
+            -o：指定使用的ssh选项；
+            -P：指定远程主机的端口号；
+            -p：保留文件的最后修改时间，最后访问时间和权限模式（即用户读写权限）；
+            -q：不显示复制进度；
+            -r：以递归方式复制。
+        参数：
+            源文件 - 指定要复制的源文件.
+            目标文件 - 目标文件. 格式为user@host：filename（文件名为目标文件的名称）。
+实例：
+
+从远程复制到本地descp命令与上面的命令相同，只要将从本地复制到远程的命令后面2个参数互换位置即可
+
+**从远程复制文件到本地目录**
+
+    scp root@10.10.10.10:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/
+
+从10.10.10.10机器上的/opt/soft/的目录中下载nginx-0.5.38.tar.gz 文件到本地/opt/soft/目录中。
+
+**从亚马逊云复制OpenVPN到本地目录**
+
+    scp -i amazon.pem ubuntu@10.10.10.10:/usr/local/openvpn_as/etc/exe/openvpn-connect-2.1.3.110.dmg openvpn-connect-2.1.3.110.dmg
+
+从10.10.10.10机器上下载openvpn安装文件到本地当前目录来。
+
+**从远处复制到本地**
+
+    scp -r root@10.10.10.10:/opt/soft/mongodb /opt/soft/
+
+从10.10.10.10机器上的/opt/soft/中下载mongodb目录到本地的/opt/soft/目录来。
+
+**上传本地文件到远程机器指定目录**
+
+    scp /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest
+    # 指定端口 2222
+
+    scp -rp -P 2222 /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest
+
+复制本地/opt/soft/目录下的文件nginx-0.5.38.tar.gz到远程机器10.10.10.10的opt/soft/scptest目录。
+
+**上传本地目录到远程机器指定目录**
+
+    scp -r /opt/soft/mongodb root@10.10.10.10:/opt/soft/scptest
+
+上传本地目录/opt/soft/mongodb到远程机器10.10.10.10上/opt/soft/scptest的目录中去。
 
  -----------------------------------------------------------------
 
@@ -1167,6 +1438,12 @@ REPLY示例
 
 
  -----------------------------------------------------------------
+
+#### tar
+
+
+-----------------------------------------------------------------
+
 
 #### touch
 
