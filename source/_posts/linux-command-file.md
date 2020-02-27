@@ -897,6 +897,83 @@ UNIX/Linux文件系统每个文件都有三种时间戳：
 
  -----------------------------------------------------------------
 
+#### gzip
+
+用来压缩文件。gzip是个使用广泛的压缩程序，文件经它压缩过后，其名称后面会多处“.gz”扩展名。
+
+gzip是在Linux系统中经常使用的一个对文件进行压缩和解压缩的命令，既方便又好用。gzip不仅可以用来压缩大的、较少使用的文件以节省磁盘空间，还可以和tar命令一起构成Linux操作系统中比较流行的压缩文件格式。据统计，gzip命令对文本文件有60%～70%的压缩率。减少文件大小有两个明显的好处，一是可以减少存储空间，二是通过网络传输文件时，可以减少传输的时间。
+
+    gzip [选项] [参数]
+        选项：
+            -a或——ascii：使用ASCII文字模式；
+            -d或--decompress或----uncompress：解开压缩文件；
+            -f或——force：强行压缩文件。不理会文件名称或硬连接是否存在以及该文件是否为符号连接；
+            -h或——help：在线帮助；
+            -l或——list：列出压缩文件的相关信息；
+            -L或——license：显示版本与版权信息；
+            -n或--no-name：压缩文件时，不保存原来的文件名称及时间戳记；
+            -N或——name：压缩文件时，保存原来的文件名称及时间戳记；
+            -q或——quiet：不显示警告信息；
+            -r或——recursive：递归处理，将指定目录下的所有文件及子目录一并处理；
+            -S或<压缩字尾字符串>或----suffix<压缩字尾字符串>：更改压缩字尾字符串；
+            -t或——test：测试压缩文件是否正确无误；
+            -v或——verbose：显示指令执行过程；
+            -V或——version：显示版本信息；
+            -<压缩效率>：压缩效率是一个介于1~9的数值，预设值为“6”，指定愈大的数值，压缩效率就会愈高；
+            --best：此参数的效果和指定“-9”参数相同；
+            --fast：此参数的效果和指定“-1”参数相同。
+            -num 用指定的数字num调整压缩的速度，-1或--fast表示最快压缩方法（低压缩比），-9或--best表示最慢压缩方法（高压缩比）。系统缺省值为6。
+        参数：
+            文件列表：指定要压缩的文件列表。
+
+实例：
+
+把test6目录下的每个文件压缩成.gz文件
+
+    gzip *
+
+把上例中每个压缩的文件解压，并列出详细的信息
+
+    gzip -dv *
+
+详细显示例1中每个压缩的文件的信息，并不解压
+
+    gzip -l *
+
+压缩一个tar备份文件，此时压缩文件的扩展名为.tar.gz
+
+    gzip -r log.tar
+
+递归的压缩目录
+
+    gzip -rv test6
+
+这样，所有test下面的文件都变成了.gz，_目录依然存在只是目录里面的文件相应变成了.gz.这就是压缩，和打包不同_。因为是对目录操作，所以需要加上-r选项，这样也可以对子目录进行递归了。
+
+递归地解压目录
+
+    gzip -dr test6
+
+#### gunzip
+
+用来解压缩文件。gunzip是个使用广泛的解压缩程序，它用于解开被gzip压缩过的文件，这些压缩文件预设最后的扩展名为.gz。事实上gunzip就是[gzip](#gzip)的硬连接，因此不论是压缩或解压缩，都可通过gzip指令单独完成。
+
+    gunzip [选项] [参数]
+        选项：查看gzip
+        参数：查看gzip
+
+实例：
+
+解压etc.zip.gz文件到当前目录。
+
+    [root@mylinux ~]#gzip –d /opt/etc.zip.gz 
+    或者执行
+    [root@mylinux ~]#gunzip /opt/etc.zip.gz
+
+通过上面的示例可以知道gzip –d等价于gunzip命令。
+
+--------------------------------------------------------------------
+
 #### ln
 
 ln命令 用来为文件创建链接，链接类型分为硬链接和符号链接两种，默认的链接类型是硬链接。如果要创建符号链接必须使用"-s"选项。
@@ -1427,7 +1504,7 @@ a fast, versatile, remote (and local) file-copying tool - 一个远程数据同�
 1、启动rsync服务，编辑/etc/xinetd.d/rsync文件，将其中的disable=yes改为disable=no，并重启xinetd服务，如下：
 
 ```shell
-#default: off
+# default: off
 # description: The rsync server is a good addition to an ftp server, as it \
 # allows crc checksumming etc.
 service rsync {
@@ -1442,11 +1519,9 @@ log_on_failure += USERID
 ```
 
 ```shell
-
 /etc/init.d/xinetd restart
 停止 xinetd： [确定]
 启动 xinetd： [确定]
-
 ```
 
 2、创建配置文件，默认安装好rsync程序后，并不会自动创建rsync的主配置文件，需要手工来创建，其主配置文件为“/etc/rsyncd.conf”，创建该文件并插入如下内容：
@@ -1460,7 +1535,6 @@ pid file=/var/run/rsyncd.pid
 lock file=/var/run/rsyncd.lock
 secrets file=/etc/rsyncd.passwd
 hosts deny=172.16.78.0/22
-
 [www]
 comment= backup web
 path=/www
@@ -1787,6 +1861,27 @@ tar -cvf test.tar test --remove-files
 查　询：tar -jtv -f filename.tar.bz2
 解压缩：tar -jxv -f filename.tar.bz2 -C 欲解压缩的目录
 ```
+-----------------------------------------------------------------
+
+#### zcat
+
+用于不真正解压缩文件，就能显示压缩包中文件的内容的场合。配合[gzip](#gzip)、使用。
+
+    zcat [选项] [参数]
+        选项：
+            -S：指定gzip格式的压缩包的后缀。当后缀不是标准压缩包后缀时使用此选项；
+            -c：将文件内容写到标注输出；
+            -d：执行解压缩操作；
+            -l：显示压缩包中文件的列表；
+            -L：显示软件许可信息；
+            -q：禁用警告信息；
+            -r：在目录上执行递归操作；
+            -t：测试压缩文件的完整性；
+            -V：显示指令的版本信息；
+            -l：更快的压缩速度；
+            -9：更高的压缩比。
+        参数：
+            文件：指定要显示其中文件内容的压缩包。
 
 -----------------------------------------------------------------
 
