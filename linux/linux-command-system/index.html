@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="系统管理命令命令详解.....">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-29T05:18:23.867Z">
+<meta property="og:updated_time" content="2020-02-29T07:05:37.433Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令-系统管理">
 <meta name="twitter:description" content="系统管理命令命令详解.....">
@@ -269,7 +269,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-29 05:18:23" itemprop="dateModified" datetime="2020-02-29T05:18:23+00:00">2020-02-29</time>
+                <time title="修改时间：2020-02-29 07:05:37" itemprop="dateModified" datetime="2020-02-29T07:05:37+00:00">2020-02-29</time>
               </span>
             
           
@@ -309,7 +309,200 @@
 
       
         <hr>
-<h4 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h4><h4 id="bg"><a href="#bg" class="headerlink" title="bg"></a>bg</h4><hr>
+<h4 id="bg"><a href="#bg" class="headerlink" title="bg"></a>bg</h4><p><strong><em>作业控制命令</em></strong>，将前台终端作业移动到后台运行</p>
+<blockquote>
+<p>用于将作业放到后台运行，使前台可以执行其他任务。该命令的运行效果与在指令后面添加 符号&amp;  的效果是相同的，都是将其放到系统后台执行。<br> 若后台任务中只有一个，则使用该命令时可以省略任务号。</p>
+</blockquote>
+<p>  bg [job_spec …]<br>    job_spec（可选）：指定要移动到后台执行的作业标识符，可以是一到多个。</p>
+<p>实例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 运行sleep命令，然后按下ctrl+z。</span><br><span class="line">sleep 60</span><br><span class="line">^Z</span><br><span class="line">[1]+  Stopped                 sleep 60</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 使用bg命令使得作业在后台运行。</span><br><span class="line">bg %1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 返回信息：</span><br><span class="line">[1]+ sleep 60 &amp;</span><br></pre></td></tr></table></figure>
+
+<p>注意</p>
+<ol>
+<li>bash的作业控制命令包括<a href="#bg">bg</a>、 <a href="#fg">fg</a>、 <a href="#kill">kill</a>、 <a href="#wait">wait</a>、 <a href="#disown">disown</a>、 <a href="#suspend">suspend</a>。</li>
+<li>该命令需要set选项monitor处于开启状态时才能执行；查看作业控制状态：输入set -o查看monitor行；执行 <code>set -o monitor</code> 或 <code>set -m</code>开启该选项。</li>
+<li>该命令是 <code>bash</code> 内建命令，相关的帮助信息请查看 <code>help</code> 命令。</li>
+</ol>
+<hr>
+<h4 id="disown"><a href="#disown" class="headerlink" title="disown"></a>disown</h4><hr>
+<h4 id="fg"><a href="#fg" class="headerlink" title="fg"></a>fg</h4><p>参考<a href="#bg">bg</a>,作用与之相反</p>
+<pre><code>fg [job_spec ...]
+  job_spec（可选）：指定要移动到前台执行的作业标识符，可以是一到多个。</code></pre><hr>
+<h4 id="kill"><a href="#kill" class="headerlink" title="kill"></a>kill</h4><p>发送信号到作业或进程（可以为多个）。<br>列出信号。</p>
+<pre><code>kill [-s sigspec | -n signum | -sigspec] pid | jobspec ...
+kill -l [sigspec]
+  选项：
+    -s sig    信号名称。
+    -n sig    信号名称对应的数字。
+    -l        列出信号名称。如果在该选项后提供了数字那么假设它是信号名称对应的数字。
+    -L        等价于-l选项。
+  参数：
+    pid：进程ID
+    jobspec：作业标识符</code></pre><p>所有信号名称</p>
+<pre><code>$ kill -l 9
+
+1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL
+5) SIGTRAP      6) SIGABRT      7) SIGBUS       8) SIGFPE
+9) SIGKILL     10) SIGUSR1     11) SIGSEGV     12) SIGUSR2
+13) SIGPIPE     14) SIGALRM     15) SIGTERM     16) SIGSTKFLT
+17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
+21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU
+25) SIGXFSZ     26) SIGVTALRM   27) SIGPROF     28) SIGWINCH
+29) SIGIO       30) SIGPWR      31) SIGSYS      34) SIGRTMIN
+35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3  38) SIGRTMIN+4
+39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
+43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12
+47) SIGRTMIN+13 48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14
+51) SIGRTMAX-13 52) SIGRTMAX-12 53) SIGRTMAX-11 54) SIGRTMAX-10
+55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7  58) SIGRTMAX-6
+59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
+63) SIGRTMAX-1  64) SIGRTMAX
+
+# 下面是常用的信号。
+# 只有第9种信号(SIGKILL)才可以无条件终止进程，其他信号进程都有权利忽略。
+
+HUP     1    终端挂断
+INT     2    中断（同 Ctrl + C）
+QUIT    3    退出（同 Ctrl + \）
+KILL    9    强制终止
+TERM   15    正常终止
+CONT   18    继续（与STOP相反，fg/bg命令）
+STOP   19    暂停（同 Ctrl + Z）</code></pre><p>PID：每一个PID可以是以下四种情况之一：</p>
+<table>
+<thead>
+<tr>
+<th align="right">状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">n</td>
+<td>当n大于0时，PID为n的进程接收信号。</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td>当前进程组中的所有进程均接收信号。</td>
+</tr>
+<tr>
+<td align="right">-1</td>
+<td>PID大于1的所有进程均接收信号。</td>
+</tr>
+<tr>
+<td align="right">-n</td>
+<td>当n大于1时，进程组n中的所有进程接收信号。当给出了一个参数的形式为“-n”，想要让它表示一个进程组，那么必须首先指定一个信号，或参数前必须有一个“–”选项，否则它将被视为发送的信号。</td>
+</tr>
+</tbody></table>
+<p>实例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 终止作业标识符为1的作业。</span><br><span class="line">[user2@pc] kill -9 %1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 终止作业标识符为1的作业。</span><br><span class="line">[user2@pc] kill -9 %1</span><br><span class="line"></span><br><span class="line">[user2@pc] jobs -l</span><br><span class="line">[1]+ 178420 KILLED                  ssh 192.168.1.4</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 发送停止信号。</span><br><span class="line">[user2@pc] kill -s STOP 181357</span><br><span class="line"></span><br><span class="line">[user2@pc] jobs -l</span><br><span class="line">[1]+ 181537 Stopped (signal)        sleep 90</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 发送继续信号。</span><br><span class="line">[user2@pc] kill -s CONT 181357</span><br><span class="line"></span><br><span class="line">[user2@pc] jobs -l</span><br><span class="line">[1]+ 181537 Running                 sleep 90 &amp;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h4><p>用于报告当前系统的进程状态。可以搭配kill指令随时中断、删除不必要的程序。ps命令是最基本同时也是非常强大的进程查看命令，使用该命令可以确定有哪些进程正在运行和运行的状态、进程是否结束、进程有没有僵死、哪些进程占用了过多的资源等等，总之大部分信息都是可以通过执行该命令得到的。</p>
+<pre><code>ps [选项]
+  选项：
+    -a：显示所有终端机下执行的程序，除了阶段作业领导者之外。
+    a：显示现行终端机下的所有程序，包括其他用户的程序。
+    -A：显示所有程序。
+    -c：显示CLS和PRI栏位。
+    c：列出程序时，显示每个程序真正的指令名称，而不包含路径，选项或常驻服务的标示。
+    -C&lt;指令名称&gt;：指定执行指令的名称，并列出该指令的程序的状况。
+    -d：显示所有程序，但不包括阶段作业领导者的程序。
+    -e：此选项的效果和指定&quot;A&quot;选项相同。
+    e：列出程序时，显示每个程序所使用的环境变量。
+    -f：显示UID,PPIP,C与STIME栏位。
+    f：用ASCII字符显示树状结构，表达程序间的相互关系。
+    -g&lt;群组名称&gt;：此选项的效果和指定&quot;-G&quot;选项相同，当亦能使用阶段作业领导者的名称来指定。
+    g：显示现行终端机下的所有程序，包括群组领导者的程序。
+    -G&lt;群组识别码&gt;：列出属于该群组的程序的状况，也可使用群组名称来指定。
+    h：不显示标题列。
+    -H：显示树状结构，表示程序间的相互关系。
+    -j或j：采用工作控制的格式显示程序状况。
+    -l或l：采用详细的格式来显示程序状况。
+    L：列出栏位的相关信息。
+    -m或m：显示所有的执行绪。
+    n：以数字来表示USER和WCHAN栏位。
+    -N：显示所有的程序，除了执行ps指令终端机下的程序之外。
+    -p&lt;程序识别码&gt;：指定程序识别码，并列出该程序的状况。
+    p&lt;程序识别码&gt;：此选项的效果和指定&quot;-p&quot;选项相同，只在列表格式方面稍有差异。
+    r：只列出现行终端机正在执行中的程序。
+    -s&lt;阶段作业&gt;：指定阶段作业的程序识别码，并列出隶属该阶段作业的程序的状况。
+    s：采用程序信号的格式显示程序状况。
+    S：列出程序时，包括已中断的子程序资料。
+    -t&lt;终端机编号&gt;：指定终端机编号，并列出属于该终端机的程序的状况。
+    t&lt;终端机编号&gt;：此选项的效果和指定&quot;-t&quot;选项相同，只在列表格式方面稍有差异。
+    -T：显示现行终端机下的所有程序。
+    -u&lt;用户识别码&gt;：此选项的效果和指定&quot;-U&quot;选项相同。
+    u：以用户为主的格式来显示程序状况。
+    -U&lt;用户识别码&gt;：列出属于该用户的程序的状况，也可使用用户名称来指定。
+    U&lt;用户名称&gt;：列出属于该用户的程序的状况。
+    v：采用虚拟内存的格式显示程序状况。
+    -V或V：显示版本信息。
+    -w或w：采用宽阔的格式来显示程序状况。　
+    x：显示所有程序，不以终端机来区分。
+    X：采用旧式的Linux i386登陆格式显示程序状况。
+    -y：配合选项&quot;-l&quot;使用时，不显示F(flag)栏位，并以RSS栏位取代ADDR栏位　。
+    -&lt;程序识别码&gt;：此选项的效果和指定&quot;p&quot;选项相同。
+    --cols&lt;每列字符数&gt;：设置每列的最大字符数。
+    --columns&lt;每列字符数&gt;：此选项的效果和指定&quot;--cols&quot;选项相同。
+    --cumulative：此选项的效果和指定&quot;S&quot;选项相同。
+    --deselect：此选项的效果和指定&quot;-N&quot;选项相同。
+    --forest：此选项的效果和指定&quot;f&quot;选项相同。
+    --headers：重复显示标题列。
+    --info：显示排错信息。
+    --lines&lt;显示列数&gt;：设置显示画面的列数。
+    --no-headers：此选项的效果和指定&quot;h&quot;选项相同，只在列表格式方面稍有差异。
+    --group&lt;群组名称&gt;：此选项的效果和指定&quot;-G&quot;选项相同。
+    --Group&lt;群组识别码&gt;：此选项的效果和指定&quot;-G&quot;选项相同。
+    --pid&lt;程序识别码&gt;：此选项的效果和指定&quot;-p&quot;选项相同。
+    --rows&lt;显示列数&gt;：此选项的效果和指定&quot;--lines&quot;选项相同。
+    --sid&lt;阶段作业&gt;：此选项的效果和指定&quot;-s&quot;选项相同。
+    --tty&lt;终端机编号&gt;：此选项的效果和指定&quot;-t&quot;选项相同。
+    --user&lt;用户名称&gt;：此选项的效果和指定&quot;-U&quot;选项相同。
+    --User&lt;用户识别码&gt;：此选项的效果和指定&quot;-U&quot;选项相同。
+    --widty&lt;每列字符数&gt;：此选项的效果和指定&quot;-cols&quot;选项相同。</code></pre><p>实例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">ps axo pid,comm,pcpu # 查看进程的PID、名称以及CPU 占用率</span><br><span class="line">ps aux | sort -rnk 4 # 按内存资源的使用量对进程进行排序</span><br><span class="line">ps aux | sort -nk 3  # 按 CPU 资源的使用量对进程进行排序</span><br><span class="line">ps -A # 显示所有进程信息</span><br><span class="line">ps -u root # 显示指定用户信息</span><br><span class="line">ps -efL # 查看线程数</span><br><span class="line">ps -e -o "%C : %p :%z : %a"|sort -k5 -nr # 查看进程并按内存使用大小排列</span><br><span class="line">ps -ef # 显示所有进程信息，连同命令行</span><br><span class="line">ps -ef | grep ssh # ps 与grep 常用组合用法，查找特定进程</span><br><span class="line">ps -C nginx # 通过名字或命令搜索进程</span><br><span class="line">ps aux --sort=-pcpu,+pmem # CPU或者内存进行排序,-降序，+升序</span><br><span class="line">ps -f --forest -C nginx # 用树的风格显示进程的层次关系</span><br><span class="line">ps -o pid,uname,comm -C nginx # 显示一个父进程的子进程</span><br><span class="line">ps -e -o pid,uname=USERNAME,pcpu=CPU_USAGE,pmem,comm # 重定义标签</span><br><span class="line">ps -e -o pid,comm,etime # 显示进程运行的时间</span><br><span class="line">ps -aux | grep named # 查看named进程详细信息</span><br><span class="line">ps -o command -p 91730 | sed -n 2p # 通过进程id获取服务名称</span><br></pre></td></tr></table></figure>
+
+<p>将目前属于您自己这次登入的 PID 与相关信息列示出来</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ps -l</span><br><span class="line"><span class="meta">#</span>  UID   PID  PPID        F CPU PRI NI       SZ    RSS WCHAN     S             ADDR TTY           TIME CMD</span><br><span class="line"><span class="meta">#</span>  501   566   559     4006   0  31  0  4317620    228 -      Ss                  0 ttys001    0:00.05 /App...cOS/iTerm2 --server /usr/bin/login -fpl kenny /Ap...s/MacOS/iTerm2 --launch_shel</span><br><span class="line"><span class="meta">#</span>  501   592   577     4006   0  31  0  4297048     52 -      S                   0 ttys001    0:00.63 -zsh</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>F 代表这个程序的旗标 (flag)， 4 代表使用者为 super user<br>  S 代表这个程序的状态 (STAT)，关于各 STAT 的意义将在内文介绍<br>  UID 程序被该 UID 所拥有<br>  PID 就是这个程序的 ID ！<br>  PPID 则是其上级父程序的ID<br>  C CPU 使用的资源百分比<br>  PRI 这个是 Priority (优先执行序) 的缩写，详细后面介绍<br>  NI 这个是 Nice 值，在下一小节我们会持续介绍<br>  ADDR 这个是 kernel function，指出该程序在内存的那个部分。如果是个 running的程序，一般就是 “-“<br>  SZ 使用掉的内存大小<br>  WCHAN 目前这个程序是否正在运作当中，若为 - 表示正在运作<br>  TTY 登入者的终端机位置<br>  TIME 使用掉的 CPU 时间。<br>  CMD 所下达的指令为何    </p>
+</blockquote>
+<blockquote>
+<p>在预设的情况下， ps 仅会列出与目前所在的 bash shell 有关的 PID 而已，所以， 当我使用 ps -l 的时候，只有三个 PID。</p>
+</blockquote>
+<p>列出目前所有的正在内存当中的程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ps aux</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> USER               PID  %CPU %MEM      VSZ    RSS   TT  STAT STARTED      TIME COMMAND</span><br><span class="line"><span class="meta">#</span> kenny             6155  21.3  1.7  7969944 284912   ??  S    二03下午 199:14.14 /Appl...OS/WeChat</span><br><span class="line"><span class="meta">#</span> kenny              559  20.4  0.8  4963740 138176   ??  S    二03下午  33:28.27 /Appl...S/iTerm2</span><br><span class="line"><span class="meta">#</span> _windowserver      187  18.0  0.6  7005748  95884   ??  Ss   二03下午 288:44.97 /Syst...Light.WindowServer -daemon</span><br><span class="line"><span class="meta">#</span> kenny             1408  10.7  2.1  5838592 347348   ??  S    二03下午 138:51.63 /Appl...nts/MacOS/Google Chrome</span><br><span class="line"><span class="meta">#</span> kenny              327   5.8  0.5  5771984  79452   ??  S    二03下午   2:51.58 /Syst...pp/Contents/MacOS/Finder</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>USER：该 process 属于那个使用者账号的</li>
+<li>PID ：该 process 的号码</li>
+<li>%CPU：该 process 使用掉的 CPU 资源百分比</li>
+<li>%MEM：该 process 所占用的物理内存百分比</li>
+<li>VSZ ：该 process 使用掉的虚拟内存量 (Kbytes)</li>
+<li>RSS ：该 process 占用的固定的内存量 (Kbytes)</li>
+<li>TTY ：该 process 是在那个终端机上面运作，若与终端机无关，则显示 ?，另外， tty1-tty6 是本机上面的登入者程序，若为 pts/0 等等的，则表示为由网络连接进主机的程序。</li>
+<li>STAT：该程序目前的状态，主要的状态有<ul>
+<li>R ：该程序目前正在运作，或者是可被运作    </li>
+<li>S ：该程序目前正在睡眠当中 (可说是 idle 状态)，但可被某些讯号 (signal) 唤醒。    </li>
+<li>T ：该程序目前正在侦测或者是停止了    </li>
+<li>Z ：该程序应该已经终止，但是其父程序却无法正常的终止他，造成 zombie (疆尸) 程序的状态    </li>
+</ul>
+</li>
+<li>START：该 process 被触发启动的时间    </li>
+<li>TIME ：该 process 实际使用 CPU 运作的时间 </li>
+<li>COMMAND：该程序的实际指令</li>
+</ul>
+<p>列出类似程序树的程序显示</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ps -axjf</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> USER               PID  PPID  PGID   SESS JOBC STAT   TT       TIME COMMAND            UID   C STIME   TTY</span><br><span class="line"><span class="meta">#</span> root                 1     0     1      0    0 Ss     ??   10:51.90 /sbin/launchd        0   0 二03下午 ??</span><br><span class="line"><span class="meta">#</span> root                50     1    50      0    0 Ss     ??    0:10.07 /usr/sbin/syslog     0   0 二03下午 ??</span><br><span class="line"><span class="meta">#</span> root                51     1    51      0    0 Ss     ??    0:29.90 /usr/libexec/Use     0   0 二03下午 ??</span><br></pre></td></tr></table></figure>
+
+<p>找出与 cron 与 syslog 这两个服务有关的 PID 号码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ps aux | egrep '(cron|syslog)'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> root                50   0.0  0.0  4305532   1284   ??  Ss   二03下午   0:10.08 /usr/sbin/syslogd</span><br><span class="line"><span class="meta">#</span> kenny            90167   0.0  0.0  4258468    184 s007  R+    9:23下午   0:00.00 egrep (cron|syslog)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="top"><a href="#top" class="headerlink" title="top"></a>top</h4><hr>
+<h4 id="wait"><a href="#wait" class="headerlink" title="wait"></a>wait</h4><hr>
+<h4 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h4><hr>
+<h4 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h4><hr>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
 
     </div>
@@ -338,8 +531,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/blog/girl/girl/" rel="next" title="那个女孩">
-                  <i class="fa fa-chevron-left"></i> 那个女孩
+                <a href="/blog/linux/linux-command-network/" rel="next" title="Linux常用命令-网络管理">
+                  <i class="fa fa-chevron-left"></i> Linux常用命令-网络管理
                 </a>
               
             </div>
@@ -348,8 +541,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/blog/linux/linux-command-network/" rel="prev" title="Linux常用命令-网络管理">
-                  Linux常用命令-网络管理 <i class="fa fa-chevron-right"></i>
+                <a href="/blog/linux/linux-command-disk/" rel="prev" title="Linux常用命令-磁盘管理">
+                  Linux常用命令-磁盘管理 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -399,7 +592,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#bash"><span class="nav-number">1.</span> <span class="nav-text">bash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bg"><span class="nav-number">2.</span> <span class="nav-text">bg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#bg"><span class="nav-number">1.</span> <span class="nav-text">bg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#disown"><span class="nav-number">2.</span> <span class="nav-text">disown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fg"><span class="nav-number">3.</span> <span class="nav-text">fg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#kill"><span class="nav-number">4.</span> <span class="nav-text">kill</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ps"><span class="nav-number">5.</span> <span class="nav-text">ps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#top"><span class="nav-number">6.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wait"><span class="nav-number">7.</span> <span class="nav-text">wait</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wget"><span class="nav-number">8.</span> <span class="nav-text">wget</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yum"><span class="nav-number">9.</span> <span class="nav-text">yum</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
