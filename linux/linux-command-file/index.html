@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="文件管理常用命令....">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-29T07:05:37.433Z">
+<meta property="og:updated_time" content="2020-03-01T07:50:39.420Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令-文件管理">
 <meta name="twitter:description" content="文件管理常用命令....">
@@ -269,7 +269,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-29 07:05:37" itemprop="dateModified" datetime="2020-02-29T07:05:37+00:00">2020-02-29</time>
+                <time title="修改时间：2020-03-01 07:50:39" itemprop="dateModified" datetime="2020-03-01T07:50:39+00:00">2020-03-01</time>
               </span>
             
           
@@ -1441,6 +1441,28 @@ date.file  split_file000  split_file001  split_file002  split_file003  split_fil
     参数：
         文件：指定要设置时间属性的文件列表。</code></pre><p>实例：</p>
 <pre><code>touch a.txt</code></pre><hr>
+<h4 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h4><p>统计指定文件中的字节数、字数、行数，并将统计结果显示输出。利用wc指令我们可以计算文件的Byte数、字数或是列数，若不指定文件名称，或是所给予的文件名为“-”，则wc指令会从标准输入设备读取数据。wc同时也给出所指定文件的总统计数。</p>
+<pre><code>wc [选项] [参数]
+    选项：
+        -c 统计字节数，或--bytes或——chars：只显示Bytes数；。
+        -l 统计行数，或——lines：只显示列数；。
+        -m 统计字符数。这个标志不能与 -c 标志一起使用。
+        -w 统计字数，或——words：只显示字数。一个字被定义为由空白、跳格或换行字符分隔的字符串。
+        -L 打印最长行的长度。
+    参数：
+        文件：需要统计的文件列表。</code></pre><p>实例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wc -l *       # 统计当前目录下的所有文件行数及总计行数。</span><br><span class="line">wc -l *.js    # 统计当前目录下的所有 .js 后缀的文件行数及总计行数。</span><br><span class="line">find  . * | xargs wc -l # 当前目录以及子目录的所有文件行数及总计行数。</span><br></pre></td></tr></table></figure>
+
+<p>查看文件的字节数、字数、行数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wc test.txt</span><br><span class="line"><span class="meta">#</span> 输出结果</span><br><span class="line">7     8     70     test.txt</span><br><span class="line"><span class="meta">#</span> 行数 单词数 字节数 文件名</span><br></pre></td></tr></table></figure>
+
+<p>用wc命令怎么做到只打印统计数字不打印文件名</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wc -l &lt; test.txt</span><br><span class="line"><span class="meta">#</span> 输出结果</span><br><span class="line">7</span><br></pre></td></tr></table></figure>
+
+<p>用来统计当前目录下的文件数(不包含隐藏文件)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 要去除TOTAL行</span><br><span class="line">expr $(ls -l | wc -l) - 1</span><br><span class="line"><span class="meta">#</span> 输出结果</span><br><span class="line">8</span><br></pre></td></tr></table></figure>
+
+<hr>
 <h4 id="which"><a href="#which" class="headerlink" title="which"></a>which</h4><p>用于查找并显示给定命令的绝对路径，环境变量PATH中保存了查找命令时需要遍历的目录。which指令会在环境变量$PATH设置的目录里查找符合条件的文件。也就是说，使用which命令，就可以看到某个系统命令是否存在，以及执行的到底是哪一个位置的命令。</p>
 <pre><code>which [选项] [参数]
     选项：
@@ -1482,6 +1504,38 @@ svn: /usr/share/man/man1/svn.1.gz
 
 [root@localhost ~]# whereis -s svn
 svn:</code></pre><p>说明：whereis -m svn查出说明文档路径，whereis -s svn找source源文件。</p>
+<hr>
+<h4 id="xargs"><a href="#xargs" class="headerlink" title="xargs"></a>xargs</h4><p>给其他 <strong>命令传递参数</strong> 的一个过滤器，也是组合多个命令的一个工具。它擅长将标准输入数据转换成命令行参数，xargs 能够处理管道或者 stdin 并将其转换成特定命令的命令参数。xargs 也可以将单行或多行文本输入转换为其他格式，例如多行变单行，单行变多行。xargs 的默认命令是 echo，空格是默认定界符。这意味着通过管道传递给 xargs 的输入将会包含换行和空白，不过通过 xargs 的处理，换行和空白将被空格取代。xargs 是构建单行命令的重要组件之一。</p>
+<pre><code>xargs [选项] [参数]
+    选项：
+        -0  将管道输入按 \0 分割为多行
+        -a 
+        -E  EOF 指定输入结束符
+        -e  同 -E
+        -d  默认情况下xargs将其标准输入中的内容以空白(包括空格、Tab、回车换行等)分割成多个之后当作命令行参数传递给其后面的命令，并运行之，我们可以使用 -d 命令指定分隔符
+        -I  可以自定义替换字符串，这个字符串在xargs扩展时会被替换掉，当-I与xargs结合使用，每一个参数命令都会被执行一次：
+        -i  告诉 xargs 可以使用{}代替传递过来的参数， 建议使用-I，其符合POSIX标准
+        -L  
+        -l  与-n选项类似，唯一的区别是-L永远是按段划批，而-n在和独立的xargs一起使用时是按空格分段划批的
+        -n  该选项表示将xargs生成的命令行参数，每次传递几个参数给其后面的命令执行
+        -P  
+        -p  使用该选项之后xargs并不会马上执行其后面的命令，而是输出即将要执行的完整的命令(包括命令以及传递给命令的命令行参数)，询问是否执行，输入 y 才继续执行，否则不执行。
+        -r   如果没有要处理的参数传递给xargs,xargs 默认是带空参数运行一次，如果你希望无参数时，停止 xargs，直接退出，使用 
+        -s  传入最大字符长度限制，包括命令与参数
+        -t  打开调试功能，显示每次所组的命令，在调试中非常有用，可以看出xargs的执行原理
+        -x  如果有任何 Command 行大于 -s Size 标志指定的字节数，停止运行 xargs 命令，-L -I -n 默认打开-x参数</code></pre><p>实例：</p>
+<p>批量修改文件名</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls &#123;a..f&#125;.txt | xargs -i -p mv ./&#123;&#125; ./&#123;&#125;.bak</span><br></pre></td></tr></table></figure>
+
+<p>查找所有的jpg 文件，并且压缩它们：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -type f -name "*.jpg" -print | xargs tar -czvf images.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>统计文件内的行数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost tom]# ls *.md | xargs wc -l</span><br><span class="line">  202 a.md</span><br><span class="line">  208 b.md</span><br><span class="line">  202 ces.md</span><br><span class="line">  612 total</span><br></pre></td></tr></table></figure>
+
+<p>统计文件内的行数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost tom]#  ls *.md | xargs -n 2 -p wc -l</span><br><span class="line">wc -l a.md b.md ?...y</span><br><span class="line">  202 a.md</span><br><span class="line">  208 b.md</span><br><span class="line">  410 total</span><br><span class="line">wc -l ces.md ?...y</span><br><span class="line">202 ces.md</span><br></pre></td></tr></table></figure>
+
 <hr>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://jaywcjlove.gitee.io/linux-command" target="_blank" rel="noopener">Linux命令查询</a><br><a href="https://www.runoob.com/linux" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://www.bilibili.com/video/av21303002" target="_blank" rel="noopener">视频教程</a>    </p>
 
@@ -1570,7 +1624,7 @@ svn:</code></pre><p>说明：whereis -m svn查出说明文档路径，whereis -s
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#awk"><span class="nav-number">1.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ar"><span class="nav-number">2.</span> <span class="nav-text">ar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bzip2"><span class="nav-number">3.</span> <span class="nav-text">bzip2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cat"><span class="nav-number">4.</span> <span class="nav-text">cat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chattr"><span class="nav-number">5.</span> <span class="nav-text">chattr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chgrp"><span class="nav-number">6.</span> <span class="nav-text">chgrp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chmod"><span class="nav-number">7.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chown"><span class="nav-number">8.</span> <span class="nav-text">chown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cmp"><span class="nav-number">9.</span> <span class="nav-text">cmp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cut"><span class="nav-number">10.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp"><span class="nav-number">11.</span> <span class="nav-text">cp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#diff"><span class="nav-number">12.</span> <span class="nav-text">diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#file"><span class="nav-number">13.</span> <span class="nav-text">file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">14.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gzip"><span class="nav-number">15.</span> <span class="nav-text">gzip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gunzip"><span class="nav-number">16.</span> <span class="nav-text">gunzip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ln"><span class="nav-number">17.</span> <span class="nav-text">ln</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#less"><span class="nav-number">18.</span> <span class="nav-text">less</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#locate"><span class="nav-number">19.</span> <span class="nav-text">locate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lsattr"><span class="nav-number">20.</span> <span class="nav-text">lsattr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#more"><span class="nav-number">21.</span> <span class="nav-text">more</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mv"><span class="nav-number">22.</span> <span class="nav-text">mv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#paste"><span class="nav-number">23.</span> <span class="nav-text">paste</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#read"><span class="nav-number">24.</span> <span class="nav-text">read</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm"><span class="nav-number">25.</span> <span class="nav-text">rm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rsync"><span class="nav-number">26.</span> <span class="nav-text">rsync</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scp"><span class="nav-number">27.</span> <span class="nav-text">scp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#split"><span class="nav-number">28.</span> <span class="nav-text">split</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tar"><span class="nav-number">29.</span> <span class="nav-text">tar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zcat"><span class="nav-number">30.</span> <span class="nav-text">zcat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#touch"><span class="nav-number">31.</span> <span class="nav-text">touch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#which"><span class="nav-number">32.</span> <span class="nav-text">which</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis"><span class="nav-number">33.</span> <span class="nav-text">whereis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">34.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#awk"><span class="nav-number">1.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ar"><span class="nav-number">2.</span> <span class="nav-text">ar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bzip2"><span class="nav-number">3.</span> <span class="nav-text">bzip2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cat"><span class="nav-number">4.</span> <span class="nav-text">cat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chattr"><span class="nav-number">5.</span> <span class="nav-text">chattr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chgrp"><span class="nav-number">6.</span> <span class="nav-text">chgrp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chmod"><span class="nav-number">7.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chown"><span class="nav-number">8.</span> <span class="nav-text">chown</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cmp"><span class="nav-number">9.</span> <span class="nav-text">cmp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cut"><span class="nav-number">10.</span> <span class="nav-text">cut</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp"><span class="nav-number">11.</span> <span class="nav-text">cp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#diff"><span class="nav-number">12.</span> <span class="nav-text">diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#file"><span class="nav-number">13.</span> <span class="nav-text">file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">14.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gzip"><span class="nav-number">15.</span> <span class="nav-text">gzip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gunzip"><span class="nav-number">16.</span> <span class="nav-text">gunzip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ln"><span class="nav-number">17.</span> <span class="nav-text">ln</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#less"><span class="nav-number">18.</span> <span class="nav-text">less</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#locate"><span class="nav-number">19.</span> <span class="nav-text">locate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lsattr"><span class="nav-number">20.</span> <span class="nav-text">lsattr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#more"><span class="nav-number">21.</span> <span class="nav-text">more</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mv"><span class="nav-number">22.</span> <span class="nav-text">mv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#paste"><span class="nav-number">23.</span> <span class="nav-text">paste</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#read"><span class="nav-number">24.</span> <span class="nav-text">read</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm"><span class="nav-number">25.</span> <span class="nav-text">rm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rsync"><span class="nav-number">26.</span> <span class="nav-text">rsync</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scp"><span class="nav-number">27.</span> <span class="nav-text">scp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#split"><span class="nav-number">28.</span> <span class="nav-text">split</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tar"><span class="nav-number">29.</span> <span class="nav-text">tar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zcat"><span class="nav-number">30.</span> <span class="nav-text">zcat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#touch"><span class="nav-number">31.</span> <span class="nav-text">touch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wc"><span class="nav-number">32.</span> <span class="nav-text">wc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#which"><span class="nav-number">33.</span> <span class="nav-text">which</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis"><span class="nav-number">34.</span> <span class="nav-text">whereis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xargs"><span class="nav-number">35.</span> <span class="nav-text">xargs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">36.</span> <span class="nav-text">参考</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
