@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="CHZ个人博客">
 <meta property="og:description" content="系统管理命令命令详解.....">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-01T07:50:39.420Z">
+<meta property="og:updated_time" content="2020-03-02T11:17:35.851Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令-系统管理">
 <meta name="twitter:description" content="系统管理命令命令详解.....">
@@ -269,7 +269,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-01 07:50:39" itemprop="dateModified" datetime="2020-03-01T07:50:39+00:00">2020-03-01</time>
+                <time title="修改时间：2020-03-02 11:17:35" itemprop="dateModified" datetime="2020-03-02T11:17:35+00:00">2020-03-02</time>
               </span>
             
           
@@ -499,7 +499,45 @@ STOP   19    暂停（同 Ctrl + Z）</code></pre><p>PID：每一个PID可以是
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ps aux | egrep '(cron|syslog)'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> root                50   0.0  0.0  4305532   1284   ??  Ss   二03下午   0:10.08 /usr/sbin/syslogd</span><br><span class="line"><span class="meta">#</span> kenny            90167   0.0  0.0  4258468    184 s007  R+    9:23下午   0:00.00 egrep (cron|syslog)</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h4 id="top"><a href="#top" class="headerlink" title="top"></a>top</h4><hr>
+<h4 id="top"><a href="#top" class="headerlink" title="top"></a>top</h4><p>显示或管理执行中的程序,可以实时动态地查看系统的整体运行情况，是一个综合了多方信息监测系统性能和运行信息的实用工具。通过top命令所提供的互动式界面，用热键可以管理。</p>
+<pre><code>top [选项]
+  选项：
+    -b：以批处理模式操作；
+    -c：显示完整的治命令；
+    -d：屏幕刷新间隔时间；
+    -I：忽略失效过程；
+    -s：保密模式；
+    -S：累积模式；
+    -i&lt;时间&gt;：设置间隔时间；
+    -u&lt;用户名&gt;：指定用户名；
+    -p&lt;进程号&gt;：指定进程；
+    -n&lt;次数&gt;：循环显示的次数。
+
+    内部交互命令：
+    K：终止一个进程。系统将提示用户输入需要终止的进程PID，以及需要发送给该进程什么样的信号。一般的终止进程可以使用15信号；如果不能正常结束那就使用信号9强制结束该进程。默认值是信号15。在安全模式中此命令被屏蔽。
+    r:重新安排一个进程的优先级别。系统提示用户输入需要改变的进程PID以及需要设置的进程优先级值。输入一个正值将使优先级降低，反之则可以使该进程拥有更高的优先权。默认值是10。
+    f或者F：从当前显示中添加或者删除项目。
+    o或者O：改变显示项目的顺序
+    l：切换显示平均负载和启动时间信息。
+    m:切换显示内存信息。
+    t:切换显示进程和CPU状态信息。
+    c:切换显示命令名称和完整命令行。
+    M:根据驻留内存大小进行排序。
+    P:根据CPU使用百分比大小进行排序。
+    T:根据时间/累计时间进行排序。
+    W:将当前设置写入~/.toprc文件中
+    h：显示帮助画面，给出一些简短的命令总结说明；
+    k：终止一个进程；
+    i：忽略闲置和僵死进程，这是一个开关式命令；
+    q：退出程序；
+    S：切换到累计模式；
+    s：改变两次刷新之间的延迟时间（单位为s），如果有小数，就换算成ms。输入0值则系统将不断刷新，默认值是5s；</code></pre><p>实例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">top - 09:44:56 up 16 days, 21:23,  1 user,  load average: 9.59, 4.75, 1.92</span><br><span class="line">Tasks: 145 total,   2 running, 143 sleeping,   0 stopped,   0 zombie</span><br><span class="line">Cpu(s): 99.8%us,  0.1%sy,  0.0%ni,  0.2%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st</span><br><span class="line">Mem:   4147888k total,  2493092k used,  1654796k free,   158188k buffers</span><br><span class="line">Swap:  5144568k total,       56k used,  5144512k free,  2013180k cached</span><br></pre></td></tr></table></figure>
+
+<p>解释：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">top - 09:44:56[当前系统时间],</span><br><span class="line">16 days[系统已经运行了16天],</span><br><span class="line">1 user[个用户当前登录],</span><br><span class="line">load average: 9.59, 4.75, 1.92[系统负载，即任务队列的平均长度]</span><br><span class="line">Tasks: 145 total[总进程数],</span><br><span class="line">2 running[正在运行的进程数],</span><br><span class="line">143 sleeping[睡眠的进程数],</span><br><span class="line">0 stopped[停止的进程数],</span><br><span class="line">0 zombie[冻结进程数],</span><br><span class="line">Cpu(s): 99.8%us[用户空间占用CPU百分比],</span><br><span class="line">0.1%sy[内核空间占用CPU百分比],</span><br><span class="line">0.0%ni[用户进程空间内改变过优先级的进程占用CPU百分比],</span><br><span class="line">0.2%id[空闲CPU百分比], 0.0%wa[等待输入输出的CPU时间百分比],</span><br><span class="line">0.0%hi[],</span><br><span class="line">0.0%st[],</span><br><span class="line">Mem: 4147888k total[物理内存总量],</span><br><span class="line">2493092k used[使用的物理内存总量],</span><br><span class="line">1654796k free[空闲内存总量],</span><br><span class="line">158188k buffers[用作内核缓存的内存量]</span><br><span class="line">Swap: 5144568k total[交换区总量],</span><br><span class="line">56k used[使用的交换区总量],</span><br><span class="line">5144512k free[空闲交换区总量],</span><br><span class="line">2013180k cached[缓冲的交换区总量],</span><br></pre></td></tr></table></figure>
+
+<hr>
 <h4 id="wait"><a href="#wait" class="headerlink" title="wait"></a>wait</h4><hr>
 <h4 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h4><hr>
 <h4 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h4><hr>
@@ -531,8 +569,8 @@ STOP   19    暂停（同 Ctrl + Z）</code></pre><p>PID：每一个PID可以是
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/blog/linux/linux-command-network/" rel="next" title="Linux常用命令-网络管理">
-                  <i class="fa fa-chevron-left"></i> Linux常用命令-网络管理
+                <a href="/blog/linux/linux-command-disk/" rel="next" title="Linux常用命令-磁盘管理">
+                  <i class="fa fa-chevron-left"></i> Linux常用命令-磁盘管理
                 </a>
               
             </div>
@@ -541,8 +579,8 @@ STOP   19    暂停（同 Ctrl + Z）</code></pre><p>PID：每一个PID可以是
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/blog/linux/linux-command-disk/" rel="prev" title="Linux常用命令-磁盘管理">
-                  Linux常用命令-磁盘管理 <i class="fa fa-chevron-right"></i>
+                <a href="/blog/linux/linux-command-file/" rel="prev" title="Linux常用命令-文件管理">
+                  Linux常用命令-文件管理 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
